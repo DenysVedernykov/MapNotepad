@@ -1,4 +1,6 @@
-﻿using Prism.Ioc;
+﻿using MapNotepad.Services.Repository;
+using MapNotepad.Services.SettingsManager;
+using Prism.Ioc;
 using Prism.Unity;
 using System;
 using Xamarin.Forms;
@@ -19,8 +21,9 @@ namespace MapNotepad
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //Services
-            //containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
-            
+            containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
+            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
