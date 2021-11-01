@@ -14,9 +14,6 @@ namespace MapNotepad
     {
         public App()
         {
-            InitializeComponent();
-
-            MainPage = new MainPage();
         }
 
         #region --- Ovverides ---
@@ -49,7 +46,7 @@ namespace MapNotepad
         {
             InitializeComponent();
             
-            NavigationService.NavigateAsync("/NavigationPage/MainPage");
+            NavigationService.NavigateAsync("/MainPageView");
              
         }
 

@@ -19,8 +19,10 @@ namespace MapNotepad.Services.Repository
                 var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MapNotepad.db3");
                 var database = new SQLiteAsyncConnection(path);
 
-                //database.CreateTableAsync<User>().Wait();
-                //database.CreateTableAsync<PhoneContact>().Wait();
+                database.CreateTableAsync<User>().Wait();
+                database.CreateTableAsync<Pin>().Wait();
+                database.CreateTableAsync<PhotoPin>().Wait();
+                database.CreateTableAsync<Events>().Wait();
 
                 return database;
             });
