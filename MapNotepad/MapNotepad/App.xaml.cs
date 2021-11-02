@@ -48,7 +48,7 @@ namespace MapNotepad
         {
             InitializeComponent();
             
-            NavigationService.NavigateAsync("/MainPageView");
+            NavigationService.NavigateAsync("/StartView");
              
         }
 
