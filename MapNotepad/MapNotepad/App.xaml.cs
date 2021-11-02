@@ -1,4 +1,5 @@
 ﻿using MapNotepad.Services.Repository;
+using MapNotepad.Services.Settings;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.ViewModels;
 using MapNotepad.Views;
@@ -21,6 +22,7 @@ namespace MapNotepad
         {
             //Services
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
+            containerRegistry.RegisterInstance<ISettings>(Container.Resolve<Settings>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
 
             //Navigation

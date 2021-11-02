@@ -1,36 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MapNotepad.Services.Settings;
 using Xamarin.Essentials;
 
 namespace MapNotepad.Services.SettingsManager
 {
     public class SettingsManager : ISettingsManager
     {
+        private ISettings _settings;
+        public SettingsManager(ISettings settings)
+        {
+            _settings = settings;
+        }
         public string Session
         {
-            get => Preferences.Get(nameof(Session), "");
-            set => Preferences.Set(nameof(Session), value);
+            get => _settings.Session;
+            set => _settings.Session = value;
         }
         public string Login
         {
-            get => Preferences.Get(nameof(Login), "");
-            set => Preferences.Set(nameof(Login), value);
+            get => _settings.Login;
+            set => _settings.Login = value;
         }
         public string Password
         {
-            get => Preferences.Get(nameof(Password), "");
-            set => Preferences.Set(nameof(Password), value);
+            get => _settings.Password;
+            set => _settings.Password = value;
         }
         public string ColorOfTheClock 
         {
-            get => Preferences.Get(nameof(ColorOfTheClock), "");
-            set => Preferences.Set(nameof(ColorOfTheClock), value);
+            get => _settings.ColorOfTheClock;
+            set => _settings.ColorOfTheClock = value;
         }
         public bool NightTheme
         {
-            get => Preferences.Get(nameof(NightTheme), false);
-            set => Preferences.Set(nameof(NightTheme), value);
+            get => _settings.NightTheme;
+            set => _settings.NightTheme = value;
         }
     }
 }
