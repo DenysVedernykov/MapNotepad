@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MapNotepad.ViewModels
 {
-    class BaseViewModel : BindableBase, INavigationAware, IInitializeAsync
+    public class BaseViewModel : BindableBase, INavigationAware, IInitializeAsync
     {
-        private INavigationService _navigationService;
+        protected INavigationService _navigationService;
         public BaseViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;

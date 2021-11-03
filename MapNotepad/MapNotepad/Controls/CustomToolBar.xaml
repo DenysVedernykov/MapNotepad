@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MapNotepad.Controls.CustomToolBar"
+             x:Name="customToolbar"
+             BackgroundColor="{Binding BackColor, Source={x:Reference customToolbar}}">
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal"
+                     Padding="5, 0, 5, 0">
+            <Image Source="LeftArrow.png" 
+                   HorizontalOptions="StartAndExpand"
+                   WidthRequest="30"
+                   HeightRequest="30"/>
+            <Label Text="{Binding Title, Source={x:Reference customToolbar}}" 
+                   TextColor="{Binding TitleColor, Source={x:Reference customToolbar}}" 
+                   HorizontalOptions="Center"
+                   FontSize="20"
+                   Margin="0, 15, 0, 15"
+                   FontAttributes="Bold"/>
+            <Image Source="LeftArrow.png"
+                   HorizontalOptions="EndAndExpand"
+                   WidthRequest="30"
+                   HeightRequest="30"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -93,7 +93,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\LeftArrow.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MapNotepad\MapNotepad.csproj">
       <Project>{D4222C50-855C-4D9C-9DB5-44295134BBA5}</Project>

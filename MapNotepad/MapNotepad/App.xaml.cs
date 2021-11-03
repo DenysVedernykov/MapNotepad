@@ -29,7 +29,7 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
             containerRegistry.RegisterForNavigation<StartView, StartViewModel>();
-            containerRegistry.RegisterForNavigation<LogInViewView, LogInViewModel>();
+            containerRegistry.RegisterForNavigation<LogInView, LogInViewModel>();
             containerRegistry.RegisterForNavigation<RegisterView, RegisterViewModel>();
             containerRegistry.RegisterForNavigation<RegisterPasswordView, RegisterPasswordViewModel>();
             containerRegistry.RegisterForNavigation<MainPageView, MainPageViewModel>();
@@ -48,8 +48,7 @@ namespace MapNotepad
         {
             InitializeComponent();
             
-            NavigationService.NavigateAsync("/StartView");
-             
+            NavigationService.NavigateAsync(nameof(StartView));
         }
 
         protected override void OnStart()

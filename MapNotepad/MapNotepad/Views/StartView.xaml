@@ -18,7 +18,7 @@
                         Text="Log in"
                         TextTransform="None"
                         VerticalOptions="Center"
-                        CharacterSpacing="1"/>
+                        Command="{Binding ShowLogInViewCommand}"/>
                 <Button BorderColor="#596EFB"
                         FontFamily="Montserrat"
                         FontSize="18"
@@ -29,7 +29,7 @@
                         Text="Create account"
                         TextTransform="None"
                         VerticalOptions="Center"
-                        CharacterSpacing="1"/>
+                        Command="{Binding ShowRegisterViewCommand}"/>
             </StackLayout>
         </StackLayout>
     </view:BaseContentPage.Content>
