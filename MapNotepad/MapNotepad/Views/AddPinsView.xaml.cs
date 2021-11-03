@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace MapNotepad.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddPinsView : ContentPage
+    public partial class AddPinsView : BaseContentPage
     {
         public AddPinsView()
         {

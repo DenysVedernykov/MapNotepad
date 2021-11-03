@@ -30,14 +30,13 @@ namespace MapNotepad.Services.Authorization
 
             if (!string.IsNullOrWhiteSpace(email))
             {
-                Task<AOResult<List<User>>> response = _repository.GetAllRowsAsync<User>();
+                Task<List<User>> response = _repository.GetAllRowsAsync<User>();
 
-                if (response.Result.IsSuccess)
+                if (response != null)
                 {
-                    List<User> all = response.Result.Result;
-                    if (all != null)
+                    if (response.Result != null)
                     {
-                        result = all.Where(row => row.Email == email).FirstOrDefault();
+                        result = response.Result.Where(row => row.Email == email).FirstOrDefault();
                     }
                 }
             }
@@ -113,8 +112,8 @@ namespace MapNotepad.Services.Authorization
                     TimeCreating = DateTime.Now
                 };
 
-                Task<AOResult<int>> response = _repository.InsertAsync(newUser);
-                if (response.Result.IsSuccess)
+                Task<int> response = _repository.InsertAsync(newUser);
+                if (response != null)
                 {
                     result = true;
                 }

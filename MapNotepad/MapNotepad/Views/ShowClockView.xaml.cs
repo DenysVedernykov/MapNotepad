@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace MapNotepad.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ShowClockView : ContentPage
+    public partial class ShowClockView : BaseContentPage
     {
         public ShowClockView()
         {

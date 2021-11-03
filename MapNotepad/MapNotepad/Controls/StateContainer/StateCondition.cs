@@ -1,16 +1,11 @@
-using MapNotepad.Controls.StateContainer.Animation;
 using Xamarin.Forms;
 
 namespace MapNotepad.Controls.StateContainer
 {
     [ContentProperty("Content")]
-    public class StateCondition
+    public class StateCondition : View
     {
-        public object Is { get; set; }
-        public object IsNot { get; set; }
+        public object State { get; set; }
         public View Content { get; set; }
-
-        public AnimationBase Appearing { get; set; }
-        public AnimationBase Disappearing { get; set; }
     }
 }

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+
 namespace MapNotepad.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RegisterPasswordView : BaseContentPage
+    public class BaseContentPage : ContentPage
     {
-        public RegisterPasswordView()
+        public BaseContentPage()
         {
-            InitializeComponent();
+            //BackgroundColor = Color.White;
         }
     }
 }

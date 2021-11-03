@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace MapNotepad.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EventsView : ContentPage
+    public partial class EventsView : BaseContentPage
     {
         public EventsView()
         {
