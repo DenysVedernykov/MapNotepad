@@ -3,6 +3,8 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace MapNotepad.ViewModels
 {
@@ -12,5 +14,10 @@ namespace MapNotepad.ViewModels
         {
 
         }
-}
+
+        public ICommand GoToBack => new Command((obj) =>
+        {
+            _navigationService.GoBackAsync();
+        });
+    }
 }

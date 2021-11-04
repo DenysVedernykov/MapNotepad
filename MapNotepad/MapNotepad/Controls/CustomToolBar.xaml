@@ -7,20 +7,26 @@
     <ContentView.Content>
         <StackLayout Orientation="Horizontal"
                      Padding="5, 0, 5, 0">
-            <Image Source="LeftArrow.png" 
-                   HorizontalOptions="StartAndExpand"
-                   WidthRequest="30"
-                   HeightRequest="30"/>
+            <ImageButton Source="{Binding SourceLeftImage, Source={x:Reference customToolbar}}" 
+                         Command="{Binding LeftButtonCommand, Source={x:Reference customToolbar}}"
+                         HorizontalOptions="StartAndExpand"
+                         WidthRequest="30"
+                         HeightRequest="30"
+                         BackgroundColor="Transparent"/>
             <Label Text="{Binding Title, Source={x:Reference customToolbar}}" 
-                   TextColor="{Binding TitleColor, Source={x:Reference customToolbar}}" 
+                   TextColor="{Binding TitleColor, Source={x:Reference customToolbar}}"
+                   FontFamily="{Binding FontFamily, Source={x:Reference customToolbar}}"
                    HorizontalOptions="Center"
                    FontSize="20"
                    Margin="0, 15, 0, 15"
                    FontAttributes="Bold"/>
-            <Image Source="LeftArrow.png"
-                   HorizontalOptions="EndAndExpand"
-                   WidthRequest="30"
-                   HeightRequest="30"/>
+            <ImageButton Source="{Binding SourceRigthImage, Source={x:Reference customToolbar}}"
+                         Command="{Binding RigthButtonCommand, Source={x:Reference customToolbar}}"
+                         IsVisible="{Binding IsVisibleRigthButton, Source={x:Reference customToolbar}}"
+                         HorizontalOptions="EndAndExpand"
+                         WidthRequest="30"
+                         HeightRequest="30"
+                         BackgroundColor="Transparent"/>
         </StackLayout>
     </ContentView.Content>
 </ContentView>
