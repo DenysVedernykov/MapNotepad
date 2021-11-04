@@ -13,9 +13,26 @@
                                     LeftButtonCommand="{Binding GoToBack}"
                                     RigthButtonCommand="{Binding GoToBack}" />
 
-            <Label Text="Welcome to Xamarin.Forms!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <StackLayout Padding="20, 5, 30, 5">
+                <Label Text="Name"
+                       Margin="20, 0, 0, 0"
+                       TextColor="Black"/>
+                <controls:CustomEntry Placeholder="Entry your name"
+                                      BorderColor="#D7DDE8"
+                                      BackgroundColor="White"
+                                      Source="LeftArrow.png"
+                                      ButtonCommand="{Binding GoToBack}"/>
+                
+                <Label Text="Email"
+                       Margin="20, 10, 0, 0"
+                       TextColor="Black"/>
+                <controls:CustomEntry Placeholder="Entry email"
+                                      BorderColor="#D7DDE8"
+                                      BackgroundColor="White"
+                                      Source="ic_clear.png"
+                                      ButtonCommand="{Binding GoToBack}"
+                                      IsVisibleButton="False"/>
+            </StackLayout>
         </StackLayout>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>
