@@ -28,21 +28,29 @@ namespace MapNotepad.Services.Repository
                 return database;
             });
         }
+
+        #region -- Public methods --
+
         public Task<int> InsertAsync<T>(T entity) where T : IEntityBase, new()
         {
             return _database.Value.InsertAsync(entity);
         }
+
         public Task<int> UpdateAsync<T>(T entity) where T : IEntityBase, new()
         {
             return _database.Value.UpdateAsync(entity);
         }
+
         public Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new()
         {
             return _database.Value.DeleteAsync(entity);
         }
+
         public Task<List<T>> GetAllRowsAsync<T>() where T : IEntityBase, new()
         {
             return _database.Value.Table<T>().ToListAsync();
         }
+
+        #endregion
     }
 }

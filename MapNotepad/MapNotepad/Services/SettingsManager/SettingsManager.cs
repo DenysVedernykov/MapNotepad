@@ -13,6 +13,9 @@ namespace MapNotepad.Services.SettingsManager
         {
             _settings = settings;
         }
+
+        #region -- Public properties --
+
         public string Session
         {
             get => _settings.Session;
@@ -38,5 +41,7 @@ namespace MapNotepad.Services.SettingsManager
             get => _settings.NightTheme;
             set => _settings.NightTheme = value;
         }
+
+        #endregion
     }
 }

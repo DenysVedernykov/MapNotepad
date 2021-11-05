@@ -7,6 +7,8 @@ namespace MapNotepad.Services.Settings
 {
     public class Settings : ISettings
     {
+        #region -- Public properties --
+
         public string Session
         {
             get => Preferences.Get(nameof(Session), "");
@@ -32,5 +34,7 @@ namespace MapNotepad.Services.Settings
             get => Preferences.Get(nameof(NightTheme), false);
             set => Preferences.Set(nameof(NightTheme), value);
         }
+
+        #endregion
     }
 }

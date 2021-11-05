@@ -7,20 +7,27 @@
         <StackLayout>
             <StackLayout VerticalOptions="EndAndExpand"
                          Padding="16, 0, 16, 40" >
-                <Image Source="Logo.png"/>
+                <Image Source="pic_enter_page.png"
+                       HeightRequest="185"
+                       WidthRequest="190"/>
+                <Label Text="MapNotepad"
+                       FontFamily="Montserrat-Bold"
+                       FontSize="22"
+                       TextColor="#596EFB"
+                       HorizontalTextAlignment="Center"/>
             </StackLayout>
             <StackLayout Padding="18, 0, 18, 18" 
                          VerticalOptions="EndAndExpand">
                 <Button BackgroundColor="#596EFB"
                         TextColor="White"
-                        FontFamily="Montserrat"
+                        FontFamily="Montserrat-Medium"
                         FontSize="18"
                         Text="Log in"
                         TextTransform="None"
                         VerticalOptions="Center"
                         Command="{Binding ShowLogInViewCommand}"/>
                 <Button BorderColor="#596EFB"
-                        FontFamily="Montserrat"
+                        FontFamily="Montserrat-Medium"
                         FontSize="18"
                         TextColor="#596EFB"
                         BorderWidth="1"

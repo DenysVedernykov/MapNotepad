@@ -1,8 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using MapNotepad.Helpers;
+using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MapNotepad.ViewModels
 {
@@ -12,5 +15,18 @@ namespace MapNotepad.ViewModels
         {
 
         }
-}
+
+        #region -- Public properties --
+
+        private ICommand _goToBackCommand;
+        public ICommand GoToBackCommand => _goToBackCommand ??= SingleExecutionCommand.FromFunc(OnGoToBackCommandAsync);
+        private Task OnGoToBackCommandAsync()
+        {
+            _navigationService.GoBackAsync();
+
+            return Task.CompletedTask;
+        }
+
+        #endregion
+    }
 }

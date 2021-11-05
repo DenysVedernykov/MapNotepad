@@ -18,12 +18,17 @@ namespace MapNotepad.Services.Authorization
             _repository = repository;
         }
 
-        private bool _status;
-        private User _profile;
+        #region -- Public properties --
 
+        private bool _status;
         public bool Status { get => _status; }
+
+        private User _profile;
         public User Profile { get => _profile; }
 
+        #endregion
+
+        #region -- Private methods --
         private User SearchUserByEmail(string email)
         {
             User result = null;
@@ -44,6 +49,9 @@ namespace MapNotepad.Services.Authorization
             return result;
         }
 
+        #endregion
+
+        #region -- Public methods --
         public bool CheckEmailForUse(string email)
         {
             bool result = false;
@@ -145,5 +153,7 @@ namespace MapNotepad.Services.Authorization
             _status = false;
             _profile = null;
         }
+
+        #endregion
     }
 }

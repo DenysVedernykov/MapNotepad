@@ -6,32 +6,58 @@
                       xmlns:controls="clr-namespace:MapNotepad.Controls">
     <view:BaseContentPage.Content>
         <StackLayout>
-            <controls:CustomToolBar Title="Create an accounter"
-                                    FontFamily="Consolas"
-                                    SourceLeftImage="LeftArrow.png"
-                                    SourceRigthImage="LeftArrow.png"
-                                    LeftButtonCommand="{Binding GoToBack}"
-                                    RigthButtonCommand="{Binding GoToBack}" />
+            <controls:CustomToolBar Title="Create an account"
+                                    FontFamily="Montserrat-Medium"
+                                    SourceLeftImage="ic_left_blue.png"
+                                    LeftButtonCommand="{Binding GoToBackCommand}"/>
 
             <StackLayout Padding="20, 5, 30, 5">
                 <Label Text="Name"
-                       Margin="20, 0, 0, 0"
-                       TextColor="Black"/>
-                <controls:CustomEntry Placeholder="Entry your name"
+                       Margin="20, 1, 0, 2"
+                       TextColor="Black"
+                       FontFamily="Montserrat-Medium"/>
+                <controls:CustomEntry Placeholder="Enter your name"
+                                      PlaceholderColor="#858E9E"
                                       BorderColor="#D7DDE8"
                                       BackgroundColor="White"
-                                      Source="LeftArrow.png"
-                                      ButtonCommand="{Binding GoToBack}"/>
-                
-                <Label Text="Email"
-                       Margin="20, 10, 0, 0"
-                       TextColor="Black"/>
-                <controls:CustomEntry Placeholder="Entry email"
-                                      BorderColor="#D7DDE8"
-                                      BackgroundColor="White"
+                                      TextColor="Black"
+                                      FontFamily="Montserrat-Light"
                                       Source="ic_clear.png"
-                                      ButtonCommand="{Binding GoToBack}"
+                                      Text="{Binding Name}"/>
+
+                <Label Text="Email"
+                       Margin="20, 25, 0, 2"
+                       TextColor="Black"
+                       FontFamily="Montserrat-Medium"/>
+                <controls:CustomEntry Placeholder="Enter email"
+                                      BorderColor="#D7DDE8"
+                                      BackgroundColor="White"
+                                      FontFamily="Montserrat-Light"
+                                      Source="ic_clear.png"
                                       IsVisibleButton="False"/>
+
+                <Button BackgroundColor="#596EFB"
+                        BorderColor="#596EFB"
+                        BorderWidth="1"
+                        TextColor="White"
+                        FontFamily="Montserrat-Medium"
+                        FontSize="18"
+                        Text="Next"
+                        TextTransform="None"
+                        VerticalOptions="Center"
+                        Margin="0, 44, 0, 0"/>
+
+                <controls:CustomSeparator Text="or"
+                                          TextColor="Silver"
+                                          LineColor="Silver"
+                                          Margin="0, 16, 0, 10"/>
+                
+                <ImageButton Source="ic_google.png"
+                             BackgroundColor="White"
+                             Padding="12"
+                             BorderColor="Silver"
+                             BorderWidth="1"/>
+
             </StackLayout>
         </StackLayout>
     </view:BaseContentPage.Content>

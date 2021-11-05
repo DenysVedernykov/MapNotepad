@@ -18,8 +18,7 @@
                    FontFamily="{Binding FontFamily, Source={x:Reference customToolbar}}"
                    HorizontalOptions="Center"
                    FontSize="20"
-                   Margin="0, 15, 0, 15"
-                   FontAttributes="Bold"/>
+                   Margin="0, 15, 0, 15"/>
             <ImageButton Source="{Binding SourceRigthImage, Source={x:Reference customToolbar}}"
                          Command="{Binding RigthButtonCommand, Source={x:Reference customToolbar}}"
                          IsVisible="{Binding IsVisibleRigthButton, Source={x:Reference customToolbar}}"
