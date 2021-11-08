@@ -1,11 +1,13 @@
 ﻿using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
 using MapNotepad.Services.SettingsManager;
+using MapNotepad.Themes;
 using MapNotepad.ViewModels;
 using MapNotepad.Views;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -49,6 +51,21 @@ namespace MapNotepad
             InitializeComponent();
 
             Resource.Culture = new System.Globalization.CultureInfo("en-US");
+
+            ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
+            if (mergedDictionaries != null)
+            {
+                mergedDictionaries.Clear();
+
+                if (Container.Resolve<SettingsManager>().NightTheme)
+                {
+                    mergedDictionaries.Add(new DarkTheme());
+                }
+                else
+                {
+                    mergedDictionaries.Add(new LightTheme());
+                }
+            }
 
             NavigationService.NavigateAsync(nameof(StartView));
         }

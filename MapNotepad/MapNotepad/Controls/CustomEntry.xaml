@@ -5,8 +5,7 @@
        xmlns:controls="clr-namespace:MapNotepad.Controls"
        x:Name="customEntry"
        HasShadow="False"
-       BackgroundColor="{Binding BackColor, Source={x:Reference customEntry}}"
-       Padding="12">
+       BackgroundColor="{Binding BackColor, Source={x:Reference customEntry}}">
 
     <StackLayout Orientation="Horizontal">
         <controls:CustomNoBorderEntry Placeholder="{Binding Placeholder, Source={x:Reference customEntry}}" 

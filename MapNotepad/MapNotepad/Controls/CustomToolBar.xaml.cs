@@ -26,16 +26,16 @@ namespace MapNotepad.Controls
             get => (ICommand)GetValue(LeftButtonCommandProperty);
         }
 
-        public static readonly BindableProperty RigthButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(RigthButtonCommand),
+        public static readonly BindableProperty RightButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(RightButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomToolBar),
             defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
-        public ICommand RigthButtonCommand
+        public ICommand RightButtonCommand
         {
-            set => SetValue(RigthButtonCommandProperty, value);
-            get => (ICommand)GetValue(RigthButtonCommandProperty);
+            set => SetValue(RightButtonCommandProperty, value);
+            get => (ICommand)GetValue(RightButtonCommandProperty);
         }
 
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
@@ -98,30 +98,41 @@ namespace MapNotepad.Controls
             get => (string)GetValue(SourceLeftImageProperty);
         }
 
-        public static readonly BindableProperty SourceRigthImageProperty = BindableProperty.Create(
-            propertyName: nameof(SourceRigthImage),
+        public static readonly BindableProperty SourceRightImageProperty = BindableProperty.Create(
+            propertyName: nameof(SourceRightImage),
             returnType: typeof(string),
             declaringType: typeof(CustomToolBar),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
-        public string SourceRigthImage
+        public string SourceRightImage
         {
-            set => SetValue(SourceRigthImageProperty, value);
-            get => (string)GetValue(SourceRigthImageProperty);
+            set => SetValue(SourceRightImageProperty, value);
+            get => (string)GetValue(SourceRightImageProperty);
         }
 
-        public static readonly BindableProperty IsVisibleRigthButtonProperty = BindableProperty.Create(
-            propertyName: nameof(IsVisibleRigthButton),
+        public static readonly BindableProperty IsEnabledRightButtonProperty = BindableProperty.Create(
+            propertyName: nameof(IsEnabledRightButton),
             returnType: typeof(bool),
             declaringType: typeof(CustomToolBar),
             defaultValue: true,
             defaultBindingMode: BindingMode.TwoWay);
-        public bool IsVisibleRigthButton
+        public bool IsEnabledRightButton
         {
-            set => SetValue(IsVisibleRigthButtonProperty, value);
-            get => (bool)GetValue(IsVisibleRigthButtonProperty);
+            set => SetValue(IsEnabledRightButtonProperty, value);
+            get => (bool)GetValue(IsEnabledRightButtonProperty);
         }
 
+        public static readonly BindableProperty LineColorProperty = BindableProperty.Create(
+            propertyName: nameof(LineColor),
+            returnType: typeof(Color),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: Color.White,
+            defaultBindingMode: BindingMode.TwoWay);
+        public Color LineColor
+        {
+            set => SetValue(LineColorProperty, value);
+            get => (Color)GetValue(LineColorProperty);
+        }
         #endregion
 
         public CustomToolBar()

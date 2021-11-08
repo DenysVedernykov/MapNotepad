@@ -7,35 +7,29 @@
                       xmlns:Helper="clr-namespace:MapNotepad.Helpers">
     <view:BaseContentPage.Content>
         <StackLayout>
-            <controls:CustomToolBar Title="{Helper:TranslateExtension CreateAnAccount}"
-                                    FontFamily="Montserrat-Medium"
-                                    SourceLeftImage="ic_left_blue.png"
+            <controls:CustomToolBar Title="{Helper:TranslateExtension CreateAnAccount}" 
                                     LeftButtonCommand="{Binding GoToBackCommand}"/>
 
             <StackLayout Padding="20, 5, 30, 5">
                 <Label Text="{Helper:TranslateExtension Name}"
-                       Margin="20, 1, 0, 2"
-                       TextColor="Black"
-                       FontFamily="Montserrat-Medium"/>
+                       Margin="20, 1, 0, 2"/>
                 <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterYourName}"
                                       PlaceholderColor="#858E9E"
                                       BorderColor="#D7DDE8"
                                       BackgroundColor="White"
                                       TextColor="Black"
+                                      Padding="12"
                                       FontFamily="Montserrat-Light"
                                       Source="ic_clear.png"
                                       Text="{Binding Name}"/>
 
                 <Label Text="Email"
-                       Margin="20, 25, 0, 2"
-                       TextColor="Black"
-                       FontFamily="Montserrat-Medium"/>
+                       Margin="20, 25, 0, 2"/>
                 <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterEmail}"
-                                      BorderColor="#D7DDE8"
-                                      BackgroundColor="White"
-                                      FontFamily="Montserrat-Light"
+                                      
                                       Source="ic_clear.png"
-                                      IsVisibleButton="False"/>
+                                      IsVisibleButton="False"
+                                      Text="{Binding Email}"/>
 
                 <Button BackgroundColor="#596EFB"
                         BorderColor="#596EFB"
@@ -46,18 +40,20 @@
                         Text="{Helper:TranslateExtension Next}"
                         TextTransform="None"
                         VerticalOptions="Center"
-                        Margin="0, 44, 0, 0"/>
+                        Margin="0, 44, 0, 0"
+                        Command="{Binding GoToBackCommand}"/>
 
                 <controls:CustomSeparator Text="{Helper:TranslateExtension Or}"
                                           TextColor="Silver"
                                           LineColor="Silver"
                                           Margin="0, 16, 0, 10"/>
-                
+
                 <ImageButton Source="ic_google.png"
                              BackgroundColor="White"
                              Padding="12"
                              BorderColor="Silver"
-                             BorderWidth="1"/>
+                             BorderWidth="1"
+                             Command="{Binding GoToBackCommand}"/>
 
             </StackLayout>
         </StackLayout>

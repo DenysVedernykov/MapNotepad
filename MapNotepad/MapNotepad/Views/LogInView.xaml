@@ -8,30 +8,26 @@
     <view:BaseContentPage.Content>
         <StackLayout>
             <controls:CustomToolBar Title="{Helper:TranslateExtension LogIn}"
-                                    FontFamily="Montserrat-Medium"
-                                    SourceLeftImage="ic_left_blue.png"
                                     LeftButtonCommand="{Binding GoToBackCommand}"/>
 
             <StackLayout Padding="20, 5, 30, 5">
                 <Label Text="{Helper:TranslateExtension Email}"
-                       Margin="20, 1, 0, 2"
-                       TextColor="Black"
-                       FontFamily="Montserrat-Medium"/>
+                       Margin="20, 1, 0, 2"/>
                 <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterEmail}"
                                       PlaceholderColor="#858E9E"
                                       BorderColor="#D7DDE8"
                                       BackgroundColor="White"
                                       TextColor="Black"
+                                      Padding="12"
                                       FontFamily="Montserrat-Light"
                                       Source="ic_clear.png"/>
 
                 <Label Text="{Helper:TranslateExtension Password}"
-                       Margin="20, 25, 0, 2"
-                       TextColor="Black"
-                       FontFamily="Montserrat-Medium"/>
+                       Margin="20, 25, 0, 2"/>
                 <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterPassword}"
                                       BorderColor="#D7DDE8"
                                       BackgroundColor="White"
+                                      Padding="12"
                                       FontFamily="Montserrat-Light"
                                       Source="ic_clear.png"
                                       IsVisibleButton="False"/>
