@@ -1,0 +1,159 @@
+﻿using MapNotepad.Helpers.ProcessHelpers;
+using MapNotepad.Models;
+using MapNotepad.Services.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace MapNotepad.Services.Authorization
+{
+    public class Authorization : IAuthorization
+    {
+        private IRepository _repository;
+        public Authorization(IRepository repository)
+        {
+            _repository = repository;
+        }
+
+        #region -- Public properties --
+
+        private bool _status;
+        public bool Status { get => _status; }
+
+        private User _profile;
+        public User Profile { get => _profile; }
+
+        #endregion
+
+        #region -- Private methods --
+        private User SearchUserByEmail(string email)
+        {
+            User result = null;
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                Task<List<User>> response = _repository.GetAllRowsAsync<User>();
+
+                if (response != null)
+                {
+                    if (response.Result != null)
+                    {
+                        result = response.Result.Where(row => row.Email == email).FirstOrDefault();
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region -- Public methods --
+        public bool CheckEmailForUse(string email)
+        {
+            bool result = false;
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                User user = SearchUserByEmail(email);
+                if (user == null)
+                {
+                    result = true;
+                }
+            } 
+
+            return result;
+        }
+
+        public bool EmailMatching(string email)
+        {
+            bool result = false;
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                if (email.Length <= 129)
+                {
+                    //[^@\s] - Match one or more occurrences of any character other than the @ character or whitespace.
+                    if (Regex.IsMatch(email.Trim(), @"^[^@\s]{1,64}@[^@\s]+\.[^@\s]+"))
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public bool PasswordMatching(string password)
+        {
+            bool result = false;
+
+            if (!string.IsNullOrWhiteSpace(password))
+            {
+                if (password.Length >= 6)
+                {
+                    if (Regex.IsMatch(password.Trim(), @"[0-9]")
+                        && Regex.IsMatch(password.Trim(), @"[A-Z]"))
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public bool Registration(string email, string password)
+        {
+            bool result = false;
+
+            User user = SearchUserByEmail(email);
+            if (user == null)
+            {
+                var newUser = new User()
+                {
+                    Email = email,
+                    Password = password,
+                    TimeCreating = DateTime.Now
+                };
+
+                Task<int> response = _repository.InsertAsync(newUser);
+                if (response != null)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        public bool Login(string email, string password)
+        {
+            _status = false;
+            _profile = null;
+
+            User user = SearchUserByEmail(email);
+            if (user != null)
+            {
+                if (user.Password == password)
+                {
+                    _status = true;
+                    _profile = user;
+                }
+            }
+
+            return _status;
+        }
+
+        public void LogOut()
+        {
+            _status = false;
+            _profile = null;
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="MapNotepad.Controls.CustomEntry"
+       xmlns:controls="clr-namespace:MapNotepad.Controls"
+       x:Name="customEntry"
+       HasShadow="False"
+       BackgroundColor="{Binding BackColor, Source={x:Reference customEntry}}"
+       Padding="12">
+
+    <StackLayout Orientation="Horizontal">
+        <controls:CustomNoBorderEntry Placeholder="{Binding Placeholder, Source={x:Reference customEntry}}" 
+                                      PlaceholderColor="{Binding PlaceholderColor, Source={x:Reference customEntry}}" 
+                                      BackgroundColor="{Binding BackColor, Source={x:Reference customEntry}}"
+                                      Text="{Binding Text, Source={x:Reference customEntry}}"
+                                      TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
+                                      FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}"/>
+        <ImageButton Source="{Binding Source, Source={x:Reference customEntry}}"
+                     Command="{Binding ButtonCommand, Source={x:Reference customEntry}}"
+                     IsVisible="{Binding IsVisibleButton, Source={x:Reference customEntry}}"
+                     HeightRequest="24"
+                     WidthRequest="24"
+                     Aspect="Fill"
+                     HorizontalOptions="EndAndExpand"
+                     BackgroundColor="Transparent"/>
+    </StackLayout>
+</Frame>
