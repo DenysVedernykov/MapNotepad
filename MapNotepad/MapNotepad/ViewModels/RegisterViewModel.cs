@@ -15,7 +15,7 @@ namespace MapNotepad.ViewModels
     {
         public RegisterViewModel(INavigationService navigationService) : base(navigationService)
         {
-
+            Name = Resource.ResourceManager.GetString("CreateAnAccount", Resource.Culture);
         }
 
         #region -- Overrides --

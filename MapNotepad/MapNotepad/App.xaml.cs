@@ -47,7 +47,9 @@ namespace MapNotepad
         protected override void OnInitialized()
         {
             InitializeComponent();
-            
+
+            Resource.Culture = new System.Globalization.CultureInfo("en-US");
+
             NavigationService.NavigateAsync(nameof(StartView));
         }
 

@@ -63,7 +63,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Themes\" />
+    <Folder Include="Resources\Languages\" />
+    <Folder Include="Resources\Styles\" />
+    <Folder Include="Resources\Themes\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +75,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resource.en.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.en.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\AddEventsView.xaml.cs">
       <DependentUpon>AddEventsView.xaml</DependentUpon>
     </Compile>
@@ -123,6 +130,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\CustomToolBar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resource.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AddEventsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

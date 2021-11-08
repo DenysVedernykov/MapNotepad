@@ -2,7 +2,8 @@
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       x:Class="MapNotepad.Views.StartView"
-                      xmlns:view="clr-namespace:MapNotepad.Views">
+                      xmlns:view="clr-namespace:MapNotepad.Views" 
+                      xmlns:Helper="clr-namespace:MapNotepad.Helpers">
     <view:BaseContentPage.Content>
         <StackLayout>
             <StackLayout VerticalOptions="EndAndExpand"
@@ -10,7 +11,7 @@
                 <Image Source="pic_enter_page.png"
                        HeightRequest="185"
                        WidthRequest="190"/>
-                <Label Text="MapNotepad"
+                <Label Text="{Helper:TranslateExtension MapNotepad}"
                        FontFamily="Montserrat-Bold"
                        FontSize="22"
                        TextColor="#596EFB"
@@ -22,7 +23,7 @@
                         TextColor="White"
                         FontFamily="Montserrat-Medium"
                         FontSize="18"
-                        Text="Log in"
+                        Text="{Helper:TranslateExtension LogIn}"
                         TextTransform="None"
                         VerticalOptions="Center"
                         Command="{Binding ShowLogInViewCommand}"/>
@@ -33,7 +34,7 @@
                         BorderWidth="1"
                         BackgroundColor="White"
                         Margin="0, 14, 0, 0"
-                        Text="Create account"
+                        Text="{Helper:TranslateExtension CreateAccount}"
                         TextTransform="None"
                         VerticalOptions="Center"
                         Command="{Binding ShowRegisterViewCommand}"/>
