@@ -8,9 +8,10 @@ namespace MapNotepad.ViewModels
 {
     class MainPageViewModel : BaseViewModel
     {
-        public MainPageViewModel(INavigationService navigationService) : base(navigationService)
+        public MainPageViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
 
         }
-}
+    }
 }

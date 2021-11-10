@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using MapNotepad.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,32 +11,36 @@ using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Controls
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CustomEntry : Frame
     {
-        #region -- Public properties --
-        public static readonly BindableProperty ButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(ButtonCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(CustomToolBar),
-            defaultValue: null,
-            defaultBindingMode: BindingMode.TwoWay);
-        public ICommand ButtonCommand
+        public CustomEntry()
         {
-            set => SetValue(ButtonCommandProperty, value);
-            get => (ICommand)GetValue(ButtonCommandProperty);
+            InitializeComponent();
+
+            ButtonCommand ??= SingleExecutionCommand.FromFunc(OnClearEntryCommandAsync);
+            FocusedCommand ??= SingleExecutionCommand.FromFunc(OnClearEntryCommandAsync);
+            UnfocusedCommand ??= SingleExecutionCommand.FromFunc(OnClearEntryCommandAsync);
         }
 
-        public static readonly BindableProperty IsVisibleButtonProperty = BindableProperty.Create(
-            propertyName: nameof(IsVisibleButton),
+        #region -- Public properties --
+
+        public ICommand ButtonCommand { get; }
+
+        public ICommand FocusedCommand { get; }
+
+        public ICommand UnfocusedCommand { get; }
+
+        public static readonly BindableProperty IsButtonVisibleProperty = BindableProperty.Create(
+            propertyName: nameof(IsButtonVisible),
             returnType: typeof(bool),
             declaringType: typeof(CustomToolBar),
             defaultValue: true,
             defaultBindingMode: BindingMode.TwoWay);
-        public bool IsVisibleButton
+
+        public bool IsButtonVisible
         {
-            set => SetValue(IsVisibleButtonProperty, value);
-            get => (bool)GetValue(IsVisibleButtonProperty);
+            set => SetValue(IsButtonVisibleProperty, value);
+            get => (bool)GetValue(IsButtonVisibleProperty);
         }
 
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
@@ -43,6 +49,7 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
+
         public string Placeholder
         {
             set => SetValue(PlaceholderProperty, value);
@@ -55,22 +62,11 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
+
         public Color PlaceholderColor
         {
             set => SetValue(PlaceholderColorProperty, value);
             get => (Color)GetValue(PlaceholderColorProperty);
-        }
-
-        public static readonly BindableProperty BackColorProperty = BindableProperty.Create(
-            propertyName: nameof(BackColor),
-            returnType: typeof(Color),
-            declaringType: typeof(CustomToolBar),
-            defaultValue: Color.White,
-            defaultBindingMode: BindingMode.TwoWay);
-        public Color BackColor
-        {
-            set => SetValue(BackColorProperty, value);
-            get => (Color)GetValue(BackColorProperty);
         }
 
         public static readonly BindableProperty SourceProperty = BindableProperty.Create(
@@ -79,6 +75,7 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
+
         public string Source
         {
             set => SetValue(SourceProperty, value);
@@ -91,6 +88,7 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
+
         public string Text
         {
             set => SetValue(TextProperty, value);
@@ -103,6 +101,7 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
+
         public Color TextColor
         {
             set => SetValue(TextColorProperty, value);
@@ -115,6 +114,7 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
+
         public string FontFamily
         {
             set => SetValue(FontFamilyProperty, value);
@@ -123,9 +123,15 @@ namespace MapNotepad.Controls
 
         #endregion
 
-        public CustomEntry()
+        #region -- Private methods --
+
+        private Task OnClearEntryCommandAsync()
         {
-            InitializeComponent();
+            Text = string.Empty;
+            return Task.CompletedTask;
         }
+
+        #endregion
+
     }
 }

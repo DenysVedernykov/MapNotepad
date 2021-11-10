@@ -7,24 +7,25 @@
     <ContentView.Content>
         <StackLayout Spacing="0">
             <StackLayout Orientation="Horizontal"
-                     Padding="5, 0, 5, 0">
-                <ImageButton Source="{Binding SourceLeftImage, Source={x:Reference customToolbar}}" 
-                         Command="{Binding LeftButtonCommand, Source={x:Reference customToolbar}}"
-                         HorizontalOptions="StartAndExpand"
-                         WidthRequest="30"
-                         HeightRequest="30"
-                         BackgroundColor="Transparent"/>
+                         Padding="5, 0, 5, 0">
+                <ImageButton Source="{Binding LeftImageSource, Source={x:Reference customToolbar}}" 
+                             Command="{Binding LeftButtonCommand, Source={x:Reference customToolbar}}"
+                             HorizontalOptions="StartAndExpand"
+                             WidthRequest="30"
+                             HeightRequest="30"
+                             BackgroundColor="Transparent"/>
                 <Label Text="{Binding Title, Source={x:Reference customToolbar}}" 
-                   TextColor="{Binding TitleColor, Source={x:Reference customToolbar}}"
-                   FontFamily="{Binding FontFamily, Source={x:Reference customToolbar}}"
-                   HorizontalOptions="CenterAndExpand"
-                   FontSize="20"
-                   Margin="0, 15, 0, 15"/>
-                <ImageButton Source="{Binding SourceRightImage, Source={x:Reference customToolbar}}"
-                         Command="{Binding RightButtonCommand, Source={x:Reference customToolbar}}"
-                         HorizontalOptions="EndAndExpand"
-                         WidthRequest="30"
-                         HeightRequest="30">
+                       TextColor="{Binding TitleColor, Source={x:Reference customToolbar}}"
+                       FontFamily="{Binding FontFamily, Source={x:Reference customToolbar}}"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="20"
+                       Margin="0, 15, 0, 15"/>
+                <ImageButton Source="{Binding RightImageSource, Source={x:Reference customToolbar}}"
+                             Command="{Binding RightButtonCommand, Source={x:Reference customToolbar}}"
+                             HorizontalOptions="EndAndExpand"
+                             WidthRequest="30"
+                             HeightRequest="30"
+                             BackgroundColor="Transparent">
 
                     <ImageButton.Triggers>
                         <DataTrigger Binding="{Binding IsEnabledRightButton, Source={x:Reference customToolbar}}"
@@ -34,7 +35,7 @@
                                     Value="True" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsEnabledRightButton, Source={x:Reference customToolbar}}"
-                                     Value="False" 
+                                     Value="False"
                                      TargetType="ImageButton">
                             <Setter Property="IsEnabled" 
                                     Value="False" />

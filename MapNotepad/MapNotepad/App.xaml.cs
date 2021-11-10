@@ -20,30 +20,31 @@ namespace MapNotepad
         }
 
         #region --- Ovverides ---
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //Services
-            containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
-            containerRegistry.RegisterInstance<ISettings>(Container.Resolve<Settings>());
-            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
+            containerRegistry.RegisterInstance<ISettingsService>(Container.Resolve<SettingsService>());
+            containerRegistry.RegisterInstance<ISettingsManagerService>(Container.Resolve<SettingsManagerService>());
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
-            containerRegistry.RegisterForNavigation<StartView, StartViewModel>();
-            containerRegistry.RegisterForNavigation<LogInView, LogInViewModel>();
-            containerRegistry.RegisterForNavigation<RegisterView, RegisterViewModel>();
-            containerRegistry.RegisterForNavigation<RegisterPasswordView, RegisterPasswordViewModel>();
-            containerRegistry.RegisterForNavigation<MainPageView, MainPageViewModel>();
-            containerRegistry.RegisterForNavigation<PinsView, PinsViewModel>();
-            containerRegistry.RegisterForNavigation<AddPinsView, AddPinsViewModel>();
-            containerRegistry.RegisterForNavigation<EditPinsView, EditPinsViewModel>();
-            containerRegistry.RegisterForNavigation<EventsView, EventsViewModel>();
-            containerRegistry.RegisterForNavigation<AddEventsView, AddEventsViewModel>();
-            containerRegistry.RegisterForNavigation<EditEventsView, EditEventsViewModel>();
-            containerRegistry.RegisterForNavigation<ShowPhotosView, ShowPhotosViewModel>();
-            containerRegistry.RegisterForNavigation<ShowClockView, ShowClockViewModel>();
-            containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
+            containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
+            containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPasswordPage, RegisterPasswordPageViewModel>();
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<PinsPage, PinsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddPinsPage, AddPinsPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditPinsPage, EditPinsPageViewModel>();
+            containerRegistry.RegisterForNavigation<EventsPage, EventsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddEventsPage, AddEventsPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditEventsPage, EditEventsPageViewModel>();
+            containerRegistry.RegisterForNavigation<ShowPhotosPage, ShowPhotosPageViewModel>();
+            containerRegistry.RegisterForNavigation<ShowClockPage, ShowClockPageViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
         }
 
         protected override void OnInitialized()
@@ -57,7 +58,7 @@ namespace MapNotepad
             {
                 mergedDictionaries.Clear();
 
-                if (Container.Resolve<SettingsManager>().NightTheme)
+                if (Container.Resolve<SettingsManagerService>().NightTheme)
                 {
                     mergedDictionaries.Add(new DarkTheme());
                 }
@@ -67,7 +68,7 @@ namespace MapNotepad
                 }
             }
 
-            NavigationService.NavigateAsync(nameof(StartView));
+            NavigationService.NavigateAsync(nameof(StartPage));
         }
 
         protected override void OnStart()
@@ -83,5 +84,6 @@ namespace MapNotepad
         }
 
         #endregion
+
     }
 }

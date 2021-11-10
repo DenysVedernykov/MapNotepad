@@ -150,6 +150,7 @@ namespace MapNotepad.Helpers.ProcessHelpers
         }
 
         #endregion
+
     }
 
     public class AOResult<T> : AOResult
@@ -192,10 +193,12 @@ namespace MapNotepad.Helpers.ProcessHelpers
         }
 
         #endregion
+
     }
 
     public class AOResult<TResult, TStatus> : AOResult<TResult>
     {
+
         #region -- Public properties --
 
         public TStatus Status { get; private set; }
@@ -217,5 +220,6 @@ namespace MapNotepad.Helpers.ProcessHelpers
         }
 
         #endregion
+
     }
 }

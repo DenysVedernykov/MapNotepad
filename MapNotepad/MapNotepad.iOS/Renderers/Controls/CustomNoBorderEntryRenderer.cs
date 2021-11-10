@@ -14,14 +14,20 @@ namespace MapNotepad.iOS.Renderers.Controls
 {
     class CustomNoBorderEntryRenderer : EntryRenderer
     {
+
+        #region --- Ovverides ---
+
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
 
             if (Control != null)
             {
-               Control.BorderStyle = UITextBorderStyle.None;
+                Control.BorderStyle = UITextBorderStyle.None;
             }
         }
+
+        #endregion
+
     }
 }

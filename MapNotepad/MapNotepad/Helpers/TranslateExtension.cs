@@ -13,17 +13,19 @@ namespace MapNotepad.Helpers
     public class TranslateExtension : IMarkupExtension
     {
         readonly CultureInfo _CultureInfo;
+
         public TranslateExtension()
         {
             _CultureInfo = new CultureInfo("en-US");
         }
 
         public string Text { get; set; }
+
         public string Content { get; set; }
 
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            string result = "";
+            string result = string.Empty;
 
             if (Text != null)
             {
