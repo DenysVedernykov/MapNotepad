@@ -8,36 +8,18 @@
         <StackLayout>
             <StackLayout VerticalOptions="EndAndExpand"
                          Padding="16, 0, 16, 40" >
-                <Image Source="pic_enter_page.png"
-                       HeightRequest="185"
-                       WidthRequest="190"/>
-                <Label Text="{Helper:TranslateExtension MapNotepad}"
-                       FontFamily="Montserrat-Bold"
-                       FontSize="22"
-                       TextColor="#596EFB"
-                       HorizontalTextAlignment="Center"/>
+                <Image Style="{DynamicResource Logo}"/>
+                <Label Style="{DynamicResource TextBrend}"/>
             </StackLayout>
             <StackLayout Padding="18, 0, 18, 18" 
                          VerticalOptions="EndAndExpand">
-                <Button BackgroundColor="#596EFB"
-                        TextColor="White"
-                        FontFamily="Montserrat-Medium"
-                        FontSize="18"
-                        Text="{Helper:TranslateExtension LogIn}"
-                        TextTransform="None"
-                        VerticalOptions="Center"
-                        Command="{Binding ShowLogInViewCommand}"/>
-                <Button BorderColor="#596EFB"
-                        FontFamily="Montserrat-Medium"
-                        FontSize="18"
-                        TextColor="#596EFB"
-                        BorderWidth="1"
-                        BackgroundColor="White"
-                        Margin="0, 14, 0, 0"
-                        Text="{Helper:TranslateExtension CreateAccount}"
-                        TextTransform="None"
-                        VerticalOptions="Center"
-                        Command="{Binding ShowRegisterViewCommand}"/>
+                <Button Text="{Helper:TranslateExtension LogIn}"
+                        Command="{Binding ShowLogInViewCommand}"
+                        Style="{DynamicResource BlueButton}"/>
+                <Button Text="{Helper:TranslateExtension CreateAccount}"
+                        Command="{Binding ShowRegisterViewCommand}"
+                        Style="{DynamicResource WhiteButton}"
+                        Margin="0, 14, 0, 0"/>
             </StackLayout>
         </StackLayout>
     </view:BaseContentPage.Content>

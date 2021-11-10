@@ -4,30 +4,31 @@
        x:Class="MapNotepad.Controls.CustomEntry"
        xmlns:local="clr-namespace:MapNotepad.Controls"
        xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
-       x:Name="customEntry"
-       HasShadow="False">
+       x:Name="customEntry">
 
     <StackLayout Orientation="Horizontal">
-        <local:CustomNoBorderEntry Placeholder="{Binding Placeholder, Source={x:Reference customEntry}}" 
+        <local:CustomNoBorderEntry Text="{Binding Text, Source={x:Reference customEntry}}"
+                                   TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
+                                   FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}"
+                                   Placeholder="{Binding Placeholder, Source={x:Reference customEntry}}" 
                                    PlaceholderColor="{Binding PlaceholderColor, Source={x:Reference customEntry}}" 
                                    BackgroundColor="{Binding BackgroundColor, Source={x:Reference customEntry}}"
-                                   Text="{Binding Text, Source={x:Reference customEntry}}"
-                                   TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
-                                   FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}">
+                                   IsPassword="{Binding IsPasswordHide, Source={x:Reference customEntry}}"
+                                   HorizontalOptions="FillAndExpand">
             <local:CustomNoBorderEntry.Behaviors>
                 <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}" 
                                                   EventName="Focused"/>
-                <Behaviors:EventToCommandBehavior Command="{Binding UnfocusedCommand, Source={x:Reference customEntry}}" 
+                <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}" 
                                                   EventName="Unfocused"/>
             </local:CustomNoBorderEntry.Behaviors>
         </local:CustomNoBorderEntry>
-        <ImageButton Source="{Binding Source, Source={x:Reference customEntry}}"
+        <ImageButton Source="{Binding ImageSource, Source={x:Reference customEntry}}"
                      Command="{Binding ButtonCommand, Source={x:Reference customEntry}}"
                      IsVisible="{Binding IsButtonVisible, Source={x:Reference customEntry}}"
                      HeightRequest="24"
                      WidthRequest="24"
                      Aspect="Fill"
-                     HorizontalOptions="EndAndExpand"
+                     HorizontalOptions="End"
                      BackgroundColor="Transparent"/>
     </StackLayout>
 </Frame>

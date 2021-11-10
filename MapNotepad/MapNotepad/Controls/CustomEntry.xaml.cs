@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using MapNotepad.Helpers;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,71 +17,9 @@ namespace MapNotepad.Controls
         public CustomEntry()
         {
             InitializeComponent();
-
-            ButtonCommand ??= SingleExecutionCommand.FromFunc(OnClearEntryCommandAsync);
-            FocusedCommand ??= SingleExecutionCommand.FromFunc(OnClearEntryCommandAsync);
-            UnfocusedCommand ??= SingleExecutionCommand.FromFunc(OnClearEntryCommandAsync);
         }
 
         #region -- Public properties --
-
-        public ICommand ButtonCommand { get; }
-
-        public ICommand FocusedCommand { get; }
-
-        public ICommand UnfocusedCommand { get; }
-
-        public static readonly BindableProperty IsButtonVisibleProperty = BindableProperty.Create(
-            propertyName: nameof(IsButtonVisible),
-            returnType: typeof(bool),
-            declaringType: typeof(CustomToolBar),
-            defaultValue: true,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public bool IsButtonVisible
-        {
-            set => SetValue(IsButtonVisibleProperty, value);
-            get => (bool)GetValue(IsButtonVisibleProperty);
-        }
-
-        public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
-            propertyName: nameof(Placeholder),
-            returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
-            defaultValue: string.Empty,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public string Placeholder
-        {
-            set => SetValue(PlaceholderProperty, value);
-            get => (string)GetValue(PlaceholderProperty);
-        }
-
-        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
-            propertyName: nameof(PlaceholderColor),
-            returnType: typeof(Color),
-            declaringType: typeof(CustomToolBar),
-            defaultValue: Color.Silver,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public Color PlaceholderColor
-        {
-            set => SetValue(PlaceholderColorProperty, value);
-            get => (Color)GetValue(PlaceholderColorProperty);
-        }
-
-        public static readonly BindableProperty SourceProperty = BindableProperty.Create(
-            propertyName: nameof(Source),
-            returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
-            defaultValue: string.Empty,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public string Source
-        {
-            set => SetValue(SourceProperty, value);
-            get => (string)GetValue(SourceProperty);
-        }
 
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
@@ -121,13 +60,205 @@ namespace MapNotepad.Controls
             get => (string)GetValue(FontFamilyProperty);
         }
 
+        public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
+            propertyName: nameof(Placeholder),
+            returnType: typeof(string),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: string.Empty,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public string Placeholder
+        {
+            set => SetValue(PlaceholderProperty, value);
+            get => (string)GetValue(PlaceholderProperty);
+        }
+
+        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
+            propertyName: nameof(PlaceholderColor),
+            returnType: typeof(Color),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: Color.Silver,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public Color PlaceholderColor
+        {
+            set => SetValue(PlaceholderColorProperty, value);
+            get => (Color)GetValue(PlaceholderColorProperty);
+        }
+
+        public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
+            propertyName: nameof(IsPassword),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsPassword
+        {
+            set => SetValue(IsPasswordProperty, value);
+            get => (bool)GetValue(IsPasswordProperty);
+        }
+
+        public static readonly BindableProperty IsPasswordHideProperty = BindableProperty.Create(
+            propertyName: nameof(IsPasswordHide),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsPasswordHide
+        {
+            set => SetValue(IsPasswordHideProperty, value);
+            get => (bool)GetValue(IsPasswordHideProperty);
+        }
+
+        public static readonly BindableProperty IsButtonVisibleProperty = BindableProperty.Create(
+            propertyName: nameof(IsButtonVisible),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsButtonVisible
+        {
+            set => SetValue(IsButtonVisibleProperty, value);
+            get => (bool)GetValue(IsButtonVisibleProperty);
+        }
+
+        public static readonly BindableProperty ClearImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(ClearImageSource),
+            returnType: typeof(string),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: string.Empty,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public string ClearImageSource
+        {
+            set => SetValue(ClearImageSourceProperty, value);
+            get => (string)GetValue(ClearImageSourceProperty);
+        }
+
+        public static readonly BindableProperty EyeOnImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(EyeOnImageSource),
+            returnType: typeof(string),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: string.Empty,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public string EyeOnImageSource
+        {
+            set => SetValue(EyeOnImageSourceProperty, value);
+            get => (string)GetValue(EyeOnImageSourceProperty);
+        }
+
+        public static readonly BindableProperty EyeOffImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(EyeOffImageSource),
+            returnType: typeof(string),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: string.Empty,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public string EyeOffImageSource
+        {
+            set => SetValue(EyeOffImageSourceProperty, value);
+            get => (string)GetValue(EyeOffImageSourceProperty);
+        }
+
+        public static readonly BindableProperty ImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(ImageSource),
+            returnType: typeof(string),
+            declaringType: typeof(CustomToolBar),
+            defaultValue: string.Empty,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public string ImageSource
+        {
+            set => SetValue(ImageSourceProperty, value);
+            get => (string)GetValue(ImageSourceProperty);
+        }
+
+        private ICommand _buttonCommand;
+        public ICommand ButtonCommand => _buttonCommand ??= SingleExecutionCommand.FromFunc(OnButtonCommandAsync);
+
+        private ICommand _focusedCommand;
+        public ICommand FocusedCommand => _focusedCommand ??= SingleExecutionCommand.FromFunc(OnFocusedCommandAsync);
+
+        private ICommand _unfocusedCommand;
+        public ICommand UnFocusedCommand=> _unfocusedCommand ??= SingleExecutionCommand.FromFunc(OnUnfocusedCommandAsync);
+
+        #endregion
+
+        #region -- Overrides --
+
+        protected override void OnPropertyChanged(string propertyName)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            switch (propertyName)
+            {
+                case nameof(IsPassword):
+                case nameof(ClearImageSource):
+                case nameof(EyeOnImageSource):
+                case nameof(EyeOffImageSource):
+                    if (IsPassword)
+                    {
+                        ImageSource = EyeOnImageSource;
+                        IsPasswordHide = IsPassword;
+                        IsButtonVisible = true;
+                    }
+                    else
+                    {
+                        ImageSource = ClearImageSource;
+                    }
+
+                    break;
+            }
+        }
+        
         #endregion
 
         #region -- Private methods --
 
-        private Task OnClearEntryCommandAsync()
+        private Task OnButtonCommandAsync()
         {
-            Text = string.Empty;
+            if (IsPassword)
+            {
+                if (ImageSource == EyeOnImageSource)
+                {
+                    IsPasswordHide = false;
+                    ImageSource = EyeOffImageSource;
+                }
+                else
+                {
+                    IsPasswordHide = true;
+                    ImageSource = EyeOnImageSource;
+                }
+            }
+            else
+            {
+                Text = string.Empty;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnFocusedCommandAsync()
+        {
+            if (!IsPassword)
+            {
+                IsButtonVisible = true;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnUnfocusedCommandAsync()
+        {
+            if (!IsPassword)
+            {
+                IsButtonVisible = false;
+            }
+
             return Task.CompletedTask;
         }
 

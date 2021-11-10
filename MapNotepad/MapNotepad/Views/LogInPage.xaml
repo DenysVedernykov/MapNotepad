@@ -13,46 +13,20 @@
             <StackLayout Padding="20, 5, 30, 5">
                 <Label Text="{Helper:TranslateExtension Email}"
                        Margin="20, 1, 0, 2"/>
-                <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterEmail}"
-                                      PlaceholderColor="#858E9E"
-                                      BorderColor="#D7DDE8"
-                                      BackgroundColor="White"
-                                      TextColor="Black"
-                                      Padding="12"
-                                      FontFamily="Montserrat-Light"
-                                      Source="ic_clear.png"/>
+                <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterEmail}"/>
 
                 <Label Text="{Helper:TranslateExtension Password}"
                        Margin="20, 25, 0, 2"/>
                 <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterPassword}"
-                                      BorderColor="#D7DDE8"
-                                      BackgroundColor="White"
-                                      Padding="12"
-                                      FontFamily="Montserrat-Light"
-                                      Source="ic_clear.png"
-                                      IsButtonVisible="False"/>
+                                      IsPassword="True"/>
 
-                <Button BackgroundColor="#596EFB"
-                        BorderColor="#596EFB"
-                        BorderWidth="1"
-                        TextColor="White"
-                        FontFamily="Montserrat-Medium"
-                        FontSize="18"
-                        Text="{Helper:TranslateExtension LogIn}"
-                        TextTransform="None"
-                        VerticalOptions="Center"
+                <Button Text="{Helper:TranslateExtension LogIn}"
+                        Style="{DynamicResource BlueButton}"
                         Margin="0, 44, 0, 0"/>
 
-                <controls:CustomSeparator Text="{Helper:TranslateExtension Or}"
-                                          TextColor="Silver"
-                                          LineColor="Silver"
-                                          Margin="0, 16, 0, 10"/>
+                <controls:CustomSeparator />
 
-                <ImageButton Source="ic_google.png"
-                             BackgroundColor="White"
-                             Padding="12"
-                             BorderColor="Silver"
-                             BorderWidth="1"/>
+                <ImageButton Style="{DynamicResource GoogleButton}"/>
 
             </StackLayout>
         </StackLayout>
