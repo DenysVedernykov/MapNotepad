@@ -91,19 +91,14 @@ namespace MapNotepad.Services.Authorization
             return result;
         }
 
-        public bool Registration(string email, string password)
+        public bool Registration(User newUser)
         {
             bool result = false;
 
-            User user = SearchUserByEmail(email);
+            User user = SearchUserByEmail(newUser.Email);
             if (user == null)
             {
-                var newUser = new User()
-                {
-                    Email = email,
-                    Password = password,
-                    CreationDate = DateTime.Now
-                };
+                newUser.CreationDate = DateTime.Now;
 
                 Task<int> response = _repository.InsertAsync(newUser);
                 if (response != null)

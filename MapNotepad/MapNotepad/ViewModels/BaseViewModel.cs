@@ -20,7 +20,6 @@ namespace MapNotepad.ViewModels
 
         public async virtual Task InitializeAsync(INavigationParameters parameters)
         {
-
         }
 
         #endregion
@@ -28,13 +27,11 @@ namespace MapNotepad.ViewModels
         #region -- INavigationAware implementation --
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            
+        { 
         }
 
         public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
-            
         }
 
         #endregion

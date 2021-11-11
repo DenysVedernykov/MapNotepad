@@ -10,26 +10,39 @@
             <controls:CustomToolBar Title="{Helper:TranslateExtension CreateAnAccount}" 
                                     LeftButtonCommand="{Binding GoBackCommand}"/>
 
-            <StackLayout Padding="20, 5, 30, 5">
+            <StackLayout Padding="20, 5, 30, 5"
+                         Spacing="0">
                 <Label Text="{Helper:TranslateExtension Name}"
-                       Margin="20, 1, 0, 2"/>
+                       Margin="20, 1, 0, 4"/>
                 <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterYourName}" 
+                                      BorderColor="{Binding BorderColorName}"
                                       Text="{Binding Name}"/>
+                <Label Text="{Binding ErrorMessageName}"
+                       Margin="20, 1, 0, 0"
+                       TextColor="Red"
+                       FontSize="12"/>
 
                 <Label Text="{Helper:TranslateExtension Email}"
-                       Margin="20, 25, 0, 2"/>
+                       Margin="30, 23, 0, 4"/>
                 <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterEmail}" 
+                                      BorderColor="{Binding BorderColorEmail}"
                                       Text="{Binding Email}"/>
+                <Label Text="{Binding ErrorMessageEmail}"
+                       Margin="20, 1, 0, 0"
+                       TextColor="Red"
+                       FontSize="12"/>
 
                 <Button Text="{Helper:TranslateExtension Next}"
-                        Command="{Binding GoBackCommand}"
+                        Command="{Binding GoNextCommand}"
                         Style="{DynamicResource BlueButton}"
-                        Margin="0, 44, 0, 0"/>
+                        IsEnabled="{Binding IsEnabledNextButton}"
+                        Margin="0, 33, 0, 0">
+                </Button>
 
                 <controls:CustomSeparator />
 
-                <ImageButton Command="{Binding GoBackCommand}"
-                             Style="{DynamicResource GoogleButton}"/>
+                <ImageButton Style="{DynamicResource GoogleButton}"
+                             Margin="0, 12, 0, 0"/>
 
             </StackLayout>
         </StackLayout>

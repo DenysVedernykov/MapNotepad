@@ -17,7 +17,7 @@ namespace MapNotepad.Services.Authorization
 
         bool PasswordMatching(string password);
 
-        bool Registration(string login, string password);
+        bool Registration(User newUser);
 
         bool Login(string login, string password);
 

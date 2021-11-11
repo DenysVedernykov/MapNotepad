@@ -8,7 +8,7 @@ namespace MapNotepad.Services.Settings
     {
         string Session { get; set; }
 
-        string Login { get; set; }
+        string Email { get; set; }
 
         string Password { get; set; }
 

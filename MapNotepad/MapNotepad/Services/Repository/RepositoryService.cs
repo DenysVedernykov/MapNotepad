@@ -26,7 +26,7 @@ namespace MapNotepad.Services.Repository
                 var database = new SQLiteAsyncConnection(path);
 
                 database.CreateTableAsync<User>().Wait();
-                database.CreateTableAsync<Pin>().Wait();
+                database.CreateTableAsync<UserPin>().Wait();
                 database.CreateTableAsync<PhotoPin>().Wait();
                 database.CreateTableAsync<Event>().Wait();
 

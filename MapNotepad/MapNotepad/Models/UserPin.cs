@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MapNotepad.Models
 {
-    public class Pin : IEntityBase
+    public class UserPin : IEntityBase
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

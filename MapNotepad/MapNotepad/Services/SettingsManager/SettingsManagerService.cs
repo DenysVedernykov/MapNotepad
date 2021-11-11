@@ -28,10 +28,10 @@ namespace MapNotepad.Services.SettingsManager
             set => _settings.Session = value;
         }
 
-        public string Login
+        public string Email
         {
-            get => _settings.Login;
-            set => _settings.Login = value;
+            get => _settings.Email;
+            set => _settings.Email = value;
         }
 
         public string Password

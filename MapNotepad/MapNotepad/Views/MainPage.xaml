@@ -5,7 +5,7 @@
                       xmlns:view="clr-namespace:MapNotepad.Views">
     <view:BaseContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label Text="MAPS"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

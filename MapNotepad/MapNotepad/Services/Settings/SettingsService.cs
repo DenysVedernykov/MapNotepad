@@ -16,10 +16,10 @@ namespace MapNotepad.Services.Settings
             set => Preferences.Set(nameof(Session), value);
         }
 
-        public string Login
+        public string Email
         {
-            get => Preferences.Get(nameof(Login), string.Empty);
-            set => Preferences.Set(nameof(Login), value);
+            get => Preferences.Get(nameof(Email), string.Empty);
+            set => Preferences.Set(nameof(Email), value);
         }
 
         public string Password

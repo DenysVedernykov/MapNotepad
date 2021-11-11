@@ -1,4 +1,5 @@
-﻿using MapNotepad.Services.Repository;
+﻿using MapNotepad.Services.Authorization;
+using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Themes;
@@ -25,6 +26,7 @@ namespace MapNotepad
         {
             //Services
             containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
+            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<ISettingsService>(Container.Resolve<SettingsService>());
             containerRegistry.RegisterInstance<ISettingsManagerService>(Container.Resolve<SettingsManagerService>());
 
@@ -53,7 +55,7 @@ namespace MapNotepad
 
             Resource.Culture = new System.Globalization.CultureInfo("en-US");
 
-            ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
+            ICollection<ResourceDictionary> mergedDictionaries = Resources.MergedDictionaries;
             if (mergedDictionaries != null)
             {
                 mergedDictionaries.Clear();
@@ -68,7 +70,25 @@ namespace MapNotepad
                 }
             }
 
-            NavigationService.NavigateAsync(nameof(StartPage));
+            var authorization = Container.Resolve<IAuthorizationService>();
+            var settingsManager = Container.Resolve<ISettingsManagerService>();
+
+            if (settingsManager.Session == "local")
+            {
+                if (authorization.Login(settingsManager.Email, settingsManager.Password))
+                {
+                    NavigationService.NavigateAsync(nameof(MainPage));
+                }
+                else
+                {
+                    NavigationService.NavigateAsync(nameof(StartPage));
+                }
+            }
+            else
+            {
+                NavigationService.NavigateAsync(nameof(StartPage));
+            }
+            
         }
 
         protected override void OnStart()

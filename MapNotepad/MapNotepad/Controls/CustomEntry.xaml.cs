@@ -197,14 +197,32 @@ namespace MapNotepad.Controls
             switch (propertyName)
             {
                 case nameof(IsPassword):
+                    IsPasswordHide = IsPassword;
+                    break;
+                case nameof(Text):
                 case nameof(ClearImageSource):
                 case nameof(EyeOnImageSource):
                 case nameof(EyeOffImageSource):
+                    
                     if (IsPassword)
                     {
-                        ImageSource = EyeOnImageSource;
-                        IsPasswordHide = IsPassword;
-                        IsButtonVisible = true;
+                        if (IsPasswordHide)
+                        {
+                            ImageSource = EyeOnImageSource;
+                        }
+                        else
+                        {
+                            ImageSource = EyeOffImageSource;
+                        }
+
+                        if (string.IsNullOrEmpty(Text))
+                        {
+                            IsButtonVisible = false;
+                        }
+                        else
+                        {
+                            IsButtonVisible = true;
+                        }
                     }
                     else
                     {

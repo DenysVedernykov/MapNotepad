@@ -117,14 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
   <data name="CreateAccount" xml:space="preserve">
     <value>Create account</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
     <value>Create an account</value>
   </data>
+  <data name="CreatePassword" xml:space="preserve">
+    <value>Create password</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="EmailIncorrect" xml:space="preserve">
+    <value>The email is incorrect</value>
+  </data>
+  <data name="EmailNotUsed" xml:space="preserve">
+    <value>This email is not used</value>
+  </data>
+  <data name="EmailTaken" xml:space="preserve">
+    <value>This email is already taken</value>
   </data>
   <data name="EnterEmail" xml:space="preserve">
     <value>Enter email</value>
@@ -134,6 +149,21 @@
   </data>
   <data name="EnterYourName" xml:space="preserve">
     <value>Enter your name</value>
+  </data>
+  <data name="ErrorMessageEmptyEmail" xml:space="preserve">
+    <value>Empty Email</value>
+  </data>
+  <data name="ErrorMessageEmptyName" xml:space="preserve">
+    <value>Empty name</value>
+  </data>
+  <data name="ErrorMessageEmptyPassword" xml:space="preserve">
+    <value>Empty password</value>
+  </data>
+  <data name="FailedRegister" xml:space="preserve">
+    <value>Failed to register</value>
+  </data>
+  <data name="InvalidLoginOrPass" xml:space="preserve">
+    <value>Invalid login or password!</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log in</value>
@@ -147,10 +177,28 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="Or" xml:space="preserve">
     <value>or</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="PasswordIncorrect" xml:space="preserve">
+    <value>The password is incorrect</value>
+  </data>
+  <data name="PasswordMismatch" xml:space="preserve">
+    <value>Password mismatch</value>
+  </data>
+  <data name="RepeatPassword" xml:space="preserve">
+    <value>Repeat password</value>
+  </data>
+  <data name="ShortName" xml:space="preserve">
+    <value>Short name</value>
+  </data>
+  <data name="WrongEmail" xml:space="preserve">
+    <value>Wrong Email</value>
   </data>
 </root>
