@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
                       x:Class="MapNotepad.Views.MainPage"
                       xmlns:view="clr-namespace:MapNotepad.Views">
     <view:BaseContentPage.Content>
         <StackLayout>
-            <Label Text="MAPS"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <maps:Map x:Name="map"
+                      VerticalOptions="FillAndExpand"/>
         </StackLayout>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

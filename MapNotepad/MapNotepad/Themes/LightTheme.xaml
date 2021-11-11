@@ -96,7 +96,7 @@
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="FontFamily" Value="Montserrat-Light" />
-        <Setter Property="TextColor" Value="{DynamicResource Gray}" />
+        <Setter Property="TextColor" Value="{DynamicResource Black}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
