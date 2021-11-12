@@ -18,11 +18,10 @@ namespace MapNotepad.Views
 
             var pinTokyo = new Pin()
             {
-                Type = PinType.Place,
+                Type = PinType.Generic,
                 Label = "Tokyo SKYTREE",
                 Address = "Sumida-ku, Tokyo, Japan",
                 Position = new Position(35.71d, 139.81d),
-                Rotation = 33.3f,
                 Tag = "id_tokyo",
                 IsVisible = true
             };

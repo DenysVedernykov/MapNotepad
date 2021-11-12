@@ -1,8 +1,6 @@
 ﻿using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Support.V4.Content;
-using Android.Support.V4.View;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.BottomNavigation;
