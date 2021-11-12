@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <controls:CustomTabbedPage  xmlns:controls="clr-namespace:MapNotepad.Controls"
                             xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-            xmlns:local="clr-namespace:MapNotepad.Views"
-            x:Class="MapNotepad.Views.MainPage"
-            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-            android:TabbedPage.ToolbarPlacement="Bottom">
+                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                            xmlns:local="clr-namespace:MapNotepad.Views"
+                            x:Class="MapNotepad.Views.MainPage"
+                            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                            android:TabbedPage.ToolbarPlacement="Bottom"
+                            SelectedTabColor="{DynamicResource Primary}"
+                            UnselectedTabColor="{DynamicResource Primary}">
 
     <controls:CustomTabbedPage.Children>
-        <local:PinsPage Title="Pin"/>
-        <local:MapPage />
+        <local:MapPage Title="Map" IconImageSource="ic_map.png"/>
+        <local:PinsPage Title="Pins" IconImageSource="ic_pin.png"/>
     </controls:CustomTabbedPage.Children>
 </controls:CustomTabbedPage>

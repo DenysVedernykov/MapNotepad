@@ -17,8 +17,7 @@
 
                 <controls:CustomSearchBar Grid.Row="0"
                                           Title="{Helper:TranslateExtension LogIn}"
-                                          LeftImageSource="ic_left_blue.png"
-                                          BackgroundColor="red"/>
+                                          LeftImageSource="ic_left_blue.png"/>
                 <maps:Map x:Name="map"
                           Grid.Row="1"/>
 

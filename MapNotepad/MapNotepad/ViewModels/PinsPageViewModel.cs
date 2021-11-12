@@ -12,7 +12,18 @@ namespace MapNotepad.ViewModels
         public PinsPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            
+            IsEmpty = true;
         }
+
+        #region -- Public properties --
+
+        private bool _isEmpty;
+        public bool IsEmpty
+        {
+            get => _isEmpty;
+            set => SetProperty(ref _isEmpty, value);
+        }
+
+        #endregion
     }
 }

@@ -12,13 +12,6 @@ namespace MapNotepad.Helpers
     [ContentProperty("Text")]
     public class TranslateExtension : IMarkupExtension
     {
-        readonly CultureInfo _CultureInfo;
-
-        public TranslateExtension()
-        {
-            _CultureInfo = new CultureInfo("en-US");
-        }
-
         public string Text { get; set; }
 
         public string Content { get; set; }
@@ -31,7 +24,7 @@ namespace MapNotepad.Helpers
             {
                 ResourceManager resmgr = new ResourceManager("MapNotepad.Resource", typeof(TranslateExtension).GetTypeInfo().Assembly);
 
-                result = resmgr.GetString(Text, _CultureInfo);
+                result = resmgr.GetString(Text, Resource.Culture);
 
                 if (result == null)
                 {
