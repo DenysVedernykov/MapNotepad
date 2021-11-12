@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace MapNotepad.ViewModels
@@ -11,7 +12,7 @@ namespace MapNotepad.ViewModels
         public PinsPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-
+            
         }
     }
 }

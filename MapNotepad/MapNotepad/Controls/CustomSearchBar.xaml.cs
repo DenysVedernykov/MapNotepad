@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +9,10 @@ using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Controls
 {
-    public partial class CustomToolBar : ContentView
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class CustomSearchBar : ContentView
     {
-        public CustomToolBar()
+        public CustomSearchBar()
         {
             InitializeComponent();
         }

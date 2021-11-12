@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-                      x:Class="MapNotepad.Views.MainPage"
-                      xmlns:view="clr-namespace:MapNotepad.Views">
-    <view:BaseContentPage.Content>
-        <StackLayout>
-            <maps:Map x:Name="map"
-                      VerticalOptions="FillAndExpand"/>
-        </StackLayout>
-    </view:BaseContentPage.Content>
-</view:BaseContentPage>
+<controls:CustomTabbedPage  xmlns:controls="clr-namespace:MapNotepad.Controls"
+                            xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+            xmlns:local="clr-namespace:MapNotepad.Views"
+            x:Class="MapNotepad.Views.MainPage"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom">
+
+    <controls:CustomTabbedPage.Children>
+        <local:PinsPage Title="Pin"/>
+        <local:MapPage />
+    </controls:CustomTabbedPage.Children>
+</controls:CustomTabbedPage>
