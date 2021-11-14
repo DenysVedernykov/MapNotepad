@@ -198,6 +198,9 @@
   <data name="RepeatPassword" xml:space="preserve">
     <value>Repeat password</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="ShortName" xml:space="preserve">
     <value>Short name</value>
   </data>

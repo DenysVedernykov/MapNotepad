@@ -33,7 +33,7 @@ namespace MapNotepad
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
-            containerRegistry.RegisterForNavigation<MapPage>();
+            containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
             containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();

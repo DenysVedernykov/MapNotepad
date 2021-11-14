@@ -101,5 +101,17 @@
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
     </Style>
+    <Style TargetType="controls:CustomSearchBar">
+        <Setter Property="Padding" Value="11" />
+        <Setter Property="LeftImageSource" Value="ic_settings.png" />
+        <Setter Property="RightImageSource" Value="ic_exid.png" />
+        <Setter Property="GoBackImageSource" Value="ic_left_blue.png" />
+        <Setter Property="ClearImageSource" Value="ic_clear.png" />
+        <Setter Property="FontFamily" Value="Montserrat-Light" />
+        <Setter Property="TextColor" Value="{DynamicResource Black}" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
+        <Setter Property="EntryBackgroundColor" Value="{DynamicResource Variant}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+    </Style>
     
 </ResourceDictionary>
