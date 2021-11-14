@@ -1,70 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      x:Class="MapNotepad.Views.PinsPage"
-                      xmlns:view="clr-namespace:MapNotepad.Views" 
-                      xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
-                      xmlns:Behaviors="http://prismlibrary.com" 
-                      xmlns:controls="clr-namespace:MapNotepad.Controls">
+                      xmlns:controls="clr-namespace:MapNotepad.Controls"
+                      xmlns:Helpers="clr-namespace:MapNotepad.Helpers"
+                      xmlns:view="clr-namespace:MapNotepad.Views"
+                      x:Class="MapNotepad.Views.PinsPage">
+    <view:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <Helpers:Converter x:Key="Converter"/>
+        </ResourceDictionary>
+    </view:BaseContentPage.Resources>
     <view:BaseContentPage.Content>
-        <StackLayout>
-            <Grid>
+        <StackLayout Spacing="0"
+                     BackgroundColor="{DynamicResource White}">
+            <Grid RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="550"/>
                 </Grid.RowDefinitions>
 
                 <controls:CustomSearchBar Grid.Row="0"
                                           Text="{Binding Text}"
-                                          Placeholder="{Helper:TranslateExtension Search}"/>
+                                          Placeholder="{Helpers:TranslateExtension Search}"
+                                          LineColor="{DynamicResource Variant}"/>
                 
                 <Label Grid.Row="1" 
-                   IsVisible="{Binding IsEmpty}" 
-                   Text="{Helper:TranslateExtension NoPinsAdded}" 
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center"/>
+                       IsVisible="{Binding IsEmpty}" 
+                       Text="{Helpers:TranslateExtension NoPinsAdded}" 
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Center"/>
                 
                 <ListView Grid.Row="1"
-                      HasUnevenRows="True"
-                      IsPullToRefreshEnabled="true">
+                          HasUnevenRows="True"
+                          ItemsSource="{Binding All}"
+                          IsVisible="{Binding IsEmpty, Converter={StaticResource Converter}}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <StackLayout Padding="10" 
-                                             Orientation="Horizontal">
-                                        <Frame HeightRequest="80" 
-                                           WidthRequest="80" 
-                                           CornerRadius="40">
-                                            <Image Source="{Binding }" 
-                                               Aspect="AspectFill"/>
+                                    <StackLayout Padding="20" 
+                                                 Orientation="Horizontal">
+                                        <Frame Style="{DynamicResource imageFrame}">
+                                            <Image Aspect="AspectFill">
+                                                <Image.Triggers>
+                                                    <DataTrigger TargetType="Image" 
+                                                                 Binding="{Binding Favorites}" 
+                                                                 Value="True">
+                                                        <Setter Property="Source" 
+                                                                Value="ic_like_blue.png"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Image" 
+                                                                 Binding="{Binding Favorites}" 
+                                                                 Value="False">
+                                                        <Setter Property="Source" 
+                                                                Value="ic_like_gray.png"/>
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                            </Image>
                                         </Frame>
                                         <StackLayout Margin="10, 0, 0, 0">
-                                            <Label Text="{Binding}" 
-                                               FontSize="12"/>
-                                            <Label Text="{Binding }" 
-                                               FontSize="12"/>
+                                            <Label Text="{Binding Label}" 
+                                                   FontSize="16"
+                                                   TextColor="{DynamicResource Black}"
+                                                   FontFamily="Montserrat-Medium"/>
+                                            
+                                            <Label FontSize="13"
+                                                   TextColor="{DynamicResource DarkGray}"
+                                                   FontFamily="Montserrat-Regular">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <FormattedString.Spans>
+                                                            <Span Text="{Binding Longitude}" />
+                                                            <Span Text=", "/>
+                                                            <Span Text="{Binding Latitude}"/>
+                                                        </FormattedString.Spans>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
                                         </StackLayout>
+                                        <Image Source="ic_left_gray.png"
+                                               HorizontalOptions="EndAndExpand"
+                                               WidthRequest="30"/>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Grid.Row="1" 
-                    x:Name="ButtonFloating" 
-                    BorderColor="#093b7b" 
-                    BorderWidth="8" 
-                    FontAttributes="Bold" 
-                    BackgroundColor="#4294ff" 
-                    CornerRadius="35" 
-                    TextColor="White" 
-                    WidthRequest="70" 
-                    HeightRequest="70" 
-                    Margin="0, 0, 20, 22"  
-                    VerticalOptions="End" 
-                    HorizontalOptions="End"
-                    Text="+"/>
+
+                <ImageButton Grid.Row="1"
+                             Style="{DynamicResource floatingButton}">
+                    
+                </ImageButton>
             </Grid>
         </StackLayout>
     </view:BaseContentPage.Content>

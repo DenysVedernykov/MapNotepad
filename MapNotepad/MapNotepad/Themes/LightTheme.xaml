@@ -102,7 +102,6 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
     </Style>
     <Style TargetType="controls:CustomSearchBar">
-        <Setter Property="Padding" Value="11" />
         <Setter Property="LeftImageSource" Value="ic_settings.png" />
         <Setter Property="RightImageSource" Value="ic_exid.png" />
         <Setter Property="GoBackImageSource" Value="ic_left_blue.png" />
@@ -113,5 +112,26 @@
         <Setter Property="EntryBackgroundColor" Value="{DynamicResource Variant}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
     </Style>
-    
+    <Style x:Key="floatingButton" 
+           TargetType="ImageButton">
+        <Setter Property="BorderWidth" Value="8" />
+        <Setter Property="Source" Value="ic_plus.png" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="CornerRadius" Value="35" />
+        <Setter Property="WidthRequest" Value="55" />
+        <Setter Property="HeightRequest" Value="55" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="0, 0, 17, 17" />
+        <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="HorizontalOptions" Value="End" />
+    </Style>
+    <Style x:Key="imageFrame" 
+           TargetType="Frame">
+        <Setter Property="HeightRequest" Value="30" />
+        <Setter Property="WidthRequest" Value="30" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Variant}" />
+    </Style>
 </ResourceDictionary>

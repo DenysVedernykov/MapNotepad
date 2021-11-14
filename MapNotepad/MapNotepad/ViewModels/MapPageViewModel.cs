@@ -18,8 +18,21 @@ namespace MapNotepad.ViewModels
             {
                 new UserPin
                 {
-                    Label = "Chimpanzee",
-                    Description = "Hominidae"
+                    Label = "Chimpanzee 1",
+                    Description = "Hominidae 1",
+                    Favorites = true
+                },
+                new UserPin
+                {
+                    Label = "Chimpanzee 2",
+                    Description = "Hominidae 2",
+                    Favorites = false
+                },
+                new UserPin
+                {
+                    Label = "Chimpanzee 3",
+                    Description = "Hominidae 3",
+                    Favorites = true
                 }
             };
 
