@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddPin" xml:space="preserve">
+    <value>Add pin</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>
+  </data>
+  <data name="Coordinates" xml:space="preserve">
+    <value>Coordinates</value>
   </data>
   <data name="CreateAccount" xml:space="preserve">
     <value>Create account</value>
@@ -128,6 +134,9 @@
   </data>
   <data name="CreatePassword" xml:space="preserve">
     <value>Create password</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -143,6 +152,9 @@
   </data>
   <data name="EnterEmail" xml:space="preserve">
     <value>Enter email</value>
+  </data>
+  <data name="EnterLabel" xml:space="preserve">
+    <value>Enter the label</value>
   </data>
   <data name="EnterPassword" xml:space="preserve">
     <value>Enter password</value>
@@ -165,8 +177,17 @@
   <data name="InvalidLoginOrPass" xml:space="preserve">
     <value>Invalid login or password!</value>
   </data>
+  <data name="Label" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log in</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
   </data>
   <data name="MapNotepad" xml:space="preserve">
     <value>MapNotepad</value>
@@ -203,6 +224,9 @@
   </data>
   <data name="ShortName" xml:space="preserve">
     <value>Short name</value>
+  </data>
+  <data name="WriteDescription" xml:space="preserve">
+    <value>Write a description</value>
   </data>
   <data name="WrongEmail" xml:space="preserve">
     <value>Wrong Email</value>

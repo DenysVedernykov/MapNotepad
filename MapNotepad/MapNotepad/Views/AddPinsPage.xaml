@@ -2,12 +2,54 @@
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       x:Class="MapNotepad.Views.AddPinsPage"
-                      xmlns:view="clr-namespace:MapNotepad.Views">
+                      xmlns:view="clr-namespace:MapNotepad.Views" 
+                      xmlns:controls="clr-namespace:MapNotepad.Controls" 
+                      xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
+                      xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
     <view:BaseContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Spacing="0" 
+                         Grid.Row="0">
+                <controls:CustomToolBar Title="{Helper:TranslateExtension AddPin}" 
+                                        RightImageSource="ic_save.png"
+                                        LineColor="{DynamicResource Variant}"/>
+
+                <StackLayout Padding="20, 10, 20, 0"
+                             Spacing="0">
+                    <Label Text="{Helper:TranslateExtension Label}"
+                           Margin="20, 0, 0, 7"/>
+                    <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterLabel}" />
+
+                    <Label Text="{Helper:TranslateExtension Description}"
+                           Margin="19, 32, 0, 7"/>
+                    <controls:CustomEntry Placeholder="{Helper:TranslateExtension WriteDescription}"/>
+
+                    <Label Text="{Helper:TranslateExtension Coordinates}"
+                           Margin="20, 27, 0, 8"/>
+                    <StackLayout Orientation="Horizontal">
+                        <controls:CustomEntry Placeholder="{Helper:TranslateExtension Longitude}"
+                                              HorizontalOptions="FillAndExpand"/>
+                        <controls:CustomEntry Placeholder="{Helper:TranslateExtension Latitude}"
+                                              HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <maps:Map Margin="0, 25, 0, 0"
+                          HeightRequest="270"/>
+            </StackLayout>
+
+            <ImageButton Grid.Row="0"
+                         Source="ic_location.png"
+                         BackgroundColor="{DynamicResource White}" 
+                         CornerRadius="30"
+                         Padding="16"
+                         Margin="0, 0, 20, 20"
+                         VerticalOptions="End" 
+                         HorizontalOptions="End"/>
+        </Grid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

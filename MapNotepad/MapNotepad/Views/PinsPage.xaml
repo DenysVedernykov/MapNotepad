@@ -90,7 +90,8 @@
                 </ListView>
 
                 <ImageButton Grid.Row="1"
-                             Style="{DynamicResource floatingButton}">
+                             Style="{DynamicResource floatingButton}"
+                             Command="{Binding GoAddPinsPageCommand}">
                     
                 </ImageButton>
             </Grid>

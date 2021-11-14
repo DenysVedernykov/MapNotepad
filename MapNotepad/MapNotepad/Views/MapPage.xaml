@@ -56,7 +56,7 @@
                 
                 <ImageButton Grid.Row="1"
                              Source="ic_location.png"
-                             BackgroundColor="White" 
+                             BackgroundColor="{DynamicResource White}" 
                              CornerRadius="20"
                              Padding="10"
                              Margin="0, 0, 10, 115"

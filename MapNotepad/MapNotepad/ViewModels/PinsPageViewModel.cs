@@ -1,10 +1,14 @@
-﻿using MapNotepad.Models;
+﻿using MapNotepad.Helpers;
+using MapNotepad.Models;
+using MapNotepad.Views;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MapNotepad.ViewModels
 {
@@ -118,6 +122,21 @@ namespace MapNotepad.ViewModels
 
         public ObservableCollection<UserPin> All { get; set; }
 
+        private ICommand _goAddPinsPageCommand;
+        public ICommand GoAddPinsPageCommand => _goAddPinsPageCommand ??= SingleExecutionCommand.FromFunc(OnGoAddPinsPageCommandAsync);
+
         #endregion
+
+        #region -- Private methods --
+
+        private Task OnGoAddPinsPageCommandAsync()
+        {
+            _navigationService.NavigateAsync(nameof(AddPinsPage));
+
+            return Task.CompletedTask;
+        }
+
+        #endregion
+
     }
 }
