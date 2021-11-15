@@ -15,9 +15,12 @@ namespace MapNotepad.Droid.Renderers.Controls
 {
     class CustomNoBorderEntryRenderer : EntryRenderer
     {
-        public CustomNoBorderEntryRenderer(Context context) : base(context)
+        public CustomNoBorderEntryRenderer(Context context)
+            : base(context)
         {
         }
+
+        #region --- Ovverides ---
 
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
@@ -29,5 +32,8 @@ namespace MapNotepad.Droid.Renderers.Controls
                 Control.SetPadding(0, 0, 0, 0);
             }
         }
+
+        #endregion
+
     }
 }

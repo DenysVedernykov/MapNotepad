@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+                      x:Class="MapNotepad.Views.MapPage"
+                      xmlns:view="clr-namespace:MapNotepad.Views"
+                      xmlns:controls="clr-namespace:MapNotepad.Controls" 
+                      xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
+                      xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings" xmlns:Behaviors="http://prismlibrary.com">
+    <view:BaseContentPage.Content>
+        <StackLayout>
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <controls:CustomSearchBar Grid.Row="0"
+                                          Text="{Binding Text}"
+                                          Placeholder="{Helper:TranslateExtension Search}"
+                                          IsShowList="{Binding IsShowList}"
+                                          LeftButtonCommand="{Binding GoSettingsButtonCommand}"
+                                          RightButtonCommand="{Binding ExitButtonCommand}"/>
+                
+                <maps:Map Grid.Row="1"
+                          HeightRequest="550">
+                    <maps:Map.Behaviors>
+                        <bindings:BindingPinsBehavior Value="{Binding Pins}"/>
+                    </maps:Map.Behaviors>
+                </maps:Map>
+
+                <ListView x:Name="ListView"
+                          Grid.Row="1"
+                          VerticalOptions="Start"
+                          Opacity="0.8"
+                          ItemsSource="{Binding All}"
+                          IsVisible="{Binding IsShowList}">
+                    
+                    <ListView.Behaviors>
+                        <Behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 
+                                                      EventName="ItemTapped" 
+                                                      EventArgsConverterParameter="{Binding .}"/>
+                    </ListView.Behaviors>
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout BackgroundColor="Gold">
+                                    <Label Text="{Binding Label}"/>
+                                    <Label Text="{Binding Description}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
+                <ImageButton Grid.Row="1"
+                             Source="ic_location.png"
+                             BackgroundColor="{DynamicResource White}" 
+                             CornerRadius="20"
+                             Padding="10"
+                             Margin="0, 0, 10, 115"
+                             Command="{Binding AddCommand}"
+                             VerticalOptions="End" 
+                             HorizontalOptions="End"/>
+            </Grid>
+        </StackLayout>
+    </view:BaseContentPage.Content>
+</view:BaseContentPage>

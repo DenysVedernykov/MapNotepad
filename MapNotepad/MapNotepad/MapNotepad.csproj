@@ -56,14 +56,13 @@
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.2.0.534" />
+    <PackageReference Include="NGraphics" Version="0.5.0" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Themes\" />
+    <PackageReference Include="Xamarin.Forms.GoogleMaps.Bindings" Version="3.0.0" />
+    <PackageReference Include="Xamarin.Forms.GoogleMaps.v2" Version="3.4.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,49 +72,60 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\AddEventsView.xaml.cs">
+    <Compile Update="Resource.en.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.en.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddEventsPage.xaml.cs">
       <DependentUpon>AddEventsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\AddPinsView.xaml.cs">
+    <Compile Update="Views\AddPinsPage.xaml.cs">
       <DependentUpon>AddPinsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EditEventsView.xaml.cs">
+    <Compile Update="Views\EditEventsPage.xaml.cs">
       <DependentUpon>EditEventsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EditPinsView.xaml.cs">
+    <Compile Update="Views\EditPinsPage.xaml.cs">
       <DependentUpon>EditPinsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EventsView.xaml.cs">
+    <Compile Update="Views\EventsPage.xaml.cs">
       <DependentUpon>EventsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\LogInView.xaml.cs">
+    <Compile Update="Views\LogInPage.xaml.cs">
       <DependentUpon>LogInView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\MainPageView.xaml.cs">
-      <DependentUpon>MainPageView.xaml</DependentUpon>
+    <Compile Update="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\PinsView.xaml.cs">
+    <Compile Update="Views\PinsPage.xaml.cs">
       <DependentUpon>PinsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RegisterPasswordView.xaml.cs">
+    <Compile Update="Views\RegisterPasswordPage.xaml.cs">
       <DependentUpon>RegisterPasswordView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RegisterView.xaml.cs">
+    <Compile Update="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\SettingsView.xaml.cs">
+    <Compile Update="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ShowClockView.xaml.cs">
+    <Compile Update="Views\ShowClockPage.xaml.cs">
       <DependentUpon>ShowClockView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ShowPhotosView.xaml.cs">
+    <Compile Update="Views\ShowPhotosPage.xaml.cs">
       <DependentUpon>ShowPhotosView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Controls\CustomEntry.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\CustomSearchBar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\CustomSeparator.xaml">
@@ -124,46 +134,59 @@
     <EmbeddedResource Update="Controls\CustomToolBar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\AddEventsView.xaml">
+    <EmbeddedResource Update="Resource.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Themes\DarkTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\AddPinsView.xaml">
+    <EmbeddedResource Update="Themes\LightTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EditEventsView.xaml">
+    <EmbeddedResource Update="Views\AddEventsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EditPinsView.xaml">
+    <EmbeddedResource Update="Views\AddPinsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EventsView.xaml">
+    <EmbeddedResource Update="Views\EditEventsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LogInView.xaml">
+    <EmbeddedResource Update="Views\EditPinsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MainPageView.xaml">
+    <EmbeddedResource Update="Views\EventsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\PinsView.xaml">
+    <EmbeddedResource Update="Views\LogInPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RegisterView.xaml">
+    <EmbeddedResource Update="Views\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RegisterPasswordView.xaml">
+    <EmbeddedResource Update="Views\MapPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\SettingsView.xaml">
+    <EmbeddedResource Update="Views\PinsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ShowClockView.xaml">
+    <EmbeddedResource Update="Views\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ShowPhotosView.xaml">
+    <EmbeddedResource Update="Views\RegisterPasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\StartView.xaml">
+    <EmbeddedResource Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ShowClockPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ShowPhotosPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\StartPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

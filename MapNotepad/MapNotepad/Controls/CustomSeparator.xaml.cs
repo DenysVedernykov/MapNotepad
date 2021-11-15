@@ -9,16 +9,22 @@ using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Controls
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CustomSeparator : ContentView
     {
+        public CustomSeparator()
+        {
+            InitializeComponent();
+        }
+
         #region -- Public properties --
+
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
             propertyName: nameof(TextColor),
             returnType: typeof(Color),
             declaringType: typeof(CustomToolBar),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
+
         public Color TextColor
         {
             set => SetValue(TextColorProperty, value);
@@ -31,6 +37,7 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
+
         public Color LineColor
         {
             set => SetValue(LineColorProperty, value);
@@ -43,16 +50,14 @@ namespace MapNotepad.Controls
             declaringType: typeof(CustomToolBar),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
+
         public string Text
         {
             set => SetValue(TextProperty, value);
             get => (string)GetValue(TextProperty);
         }
+
         #endregion
 
-        public CustomSeparator()
-        {
-            InitializeComponent();
-        }
     }
 }

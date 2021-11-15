@@ -15,7 +15,6 @@ namespace MapNotepad.Views
     {
         public BaseContentPage()
         {
-            //BackgroundColor = Color.White;
             On<iOS>().SetUseSafeArea(true);
         }
     }

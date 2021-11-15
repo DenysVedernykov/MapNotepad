@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      x:Class="MapNotepad.Views.LogInPage"
+                      xmlns:view="clr-namespace:MapNotepad.Views" 
+                      xmlns:controls="clr-namespace:MapNotepad.Controls" 
+                      xmlns:Helper="clr-namespace:MapNotepad.Helpers">
+    <view:BaseContentPage.Content>
+        <StackLayout>
+            <controls:CustomToolBar Title="{Helper:TranslateExtension LogIn}"
+                                    LeftButtonCommand="{Binding GoBackCommand}"/>
+
+            <StackLayout Padding="20, 5, 30, 5"
+                         Spacing="0">
+                <Label Text="{Helper:TranslateExtension Email}"
+                       Margin="20, 1, 0, 4"/>
+                <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterEmail}"
+                                      BorderColor="{Binding BorderColorEmail}"
+                                      Text="{Binding Email}"/>
+                <Label Text="{Binding ErrorMessageEmail}"
+                       Margin="20, 1, 0, 0"
+                       TextColor="Red"
+                       FontSize="12"/>
+                
+                <Label Text="{Helper:TranslateExtension Password}"
+                       Margin="30, 23, 0, 4"/>
+                <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterPassword}"
+                                      BorderColor="{Binding BorderColorPassword}"
+                                      Text="{Binding Password}"
+                                      IsPassword="True"/>
+                <Label Text="{Binding ErrorMessagePassword}"
+                       Margin="20, 1, 0, 0"
+                       TextColor="Red"
+                       FontSize="12"/>
+                
+                <Button Text="{Helper:TranslateExtension LogIn}"
+                        Command="{Binding LogInCommand}"
+                        IsEnabled="{Binding IsEnabledLogInButton}"
+                        Style="{DynamicResource BlueButton}"
+                        Margin="0, 33, 0, 0"/>
+
+                <controls:CustomSeparator />
+
+                <ImageButton Style="{DynamicResource GoogleButton}"
+                             Margin="0, 12, 0, 0"/>
+
+            </StackLayout>
+        </StackLayout>
+    </view:BaseContentPage.Content>
+</view:BaseContentPage>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      x:Class="MapNotepad.Views.RegisterPage"
+                      xmlns:view="clr-namespace:MapNotepad.Views" 
+                      xmlns:controls="clr-namespace:MapNotepad.Controls"
+                      xmlns:Helper="clr-namespace:MapNotepad.Helpers">
+    <view:BaseContentPage.Content>
+        <StackLayout>
+            <controls:CustomToolBar Title="{Helper:TranslateExtension CreateAnAccount}" 
+                                    LeftButtonCommand="{Binding GoBackCommand}"/>
+
+            <StackLayout Padding="20, 5, 30, 5"
+                         Spacing="0">
+                <Label Text="{Helper:TranslateExtension Name}"
+                       Margin="20, 1, 0, 4"/>
+                <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterYourName}" 
+                                      BorderColor="{Binding BorderColorName}"
+                                      Text="{Binding Name}"/>
+                <Label Text="{Binding ErrorMessageName}"
+                       Margin="20, 1, 0, 0"
+                       TextColor="Red"
+                       FontSize="12"/>
+
+                <Label Text="{Helper:TranslateExtension Email}"
+                       Margin="30, 23, 0, 4"/>
+                <controls:CustomEntry Placeholder="{Helper:TranslateExtension EnterEmail}" 
+                                      BorderColor="{Binding BorderColorEmail}"
+                                      Text="{Binding Email}"/>
+                <Label Text="{Binding ErrorMessageEmail}"
+                       Margin="20, 1, 0, 0"
+                       TextColor="Red"
+                       FontSize="12"/>
+
+                <Button Text="{Helper:TranslateExtension Next}"
+                        Command="{Binding GoNextCommand}"
+                        Style="{DynamicResource BlueButton}"
+                        IsEnabled="{Binding IsEnabledNextButton}"
+                        Margin="0, 33, 0, 0">
+                </Button>
+
+                <controls:CustomSeparator />
+
+                <ImageButton Style="{DynamicResource GoogleButton}"
+                             Margin="0, 12, 0, 0"/>
+
+            </StackLayout>
+        </StackLayout>
+    </view:BaseContentPage.Content>
+</view:BaseContentPage>

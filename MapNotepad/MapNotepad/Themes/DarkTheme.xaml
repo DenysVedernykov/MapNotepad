@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="MapNotepad.Themes.DarkTheme">
+
+    <!--System-->
+    <Color x:Key="White">#FEFEFD</Color>
+    <Color x:Key="LightGray">#D7DDE8</Color>
+    <Color x:Key="Gray">#858E9E</Color>
+    <Color x:Key="DarkGray">#3D4E61</Color>
+    <Color x:Key="Black">#1E242B</Color>
+
+    <!--Indications-->
+    <Color x:Key="Error">#F24545</Color>
+    <Color x:Key="Confirm">#F6EA62</Color>
+    <Color x:Key="Success">#32D27F</Color>
+
+    <!--Dark-->
+    <Color x:Key="Primary">#7485FB</Color>
+    <Color x:Key="Disabled">#3D4475</Color>
+    <Color x:Key="HoveredFocused">#5F73FA</Color>
+    <Color x:Key="Pressed">#3953FE</Color>
+    <Color x:Key="Variant">#33374E</Color>
+
+    <Style x:Key="redLabel"
+           TargetType="Label">
+        <Setter Property="TextColor" Value="red" />
+    </Style>
+
+</ResourceDictionary>
