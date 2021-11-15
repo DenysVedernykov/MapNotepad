@@ -6,7 +6,8 @@
                       xmlns:view="clr-namespace:MapNotepad.Views"
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
-                      xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings" xmlns:Behaviors="http://prismlibrary.com">
+                      xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings" 
+                      xmlns:Behaviors="http://prismlibrary.com">
     <view:BaseContentPage.Content>
         <StackLayout>
             <Grid RowSpacing="0">

@@ -21,7 +21,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
             propertyName: nameof(TextColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomSeparator),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -34,7 +34,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty LineColorProperty = BindableProperty.Create(
             propertyName: nameof(LineColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomSeparator),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -47,7 +47,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomSeparator),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 

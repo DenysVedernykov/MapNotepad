@@ -19,11 +19,7 @@ namespace MapNotepad.ViewModels
 {
     class LogInPageViewModel : BaseViewModel
     {
-
-        #region -- Private properties --
-
         private bool _correctEmail;
-
         private bool _correctPassword;
 
         private ResourceDictionary _resourceDictionary;
@@ -32,7 +28,6 @@ namespace MapNotepad.ViewModels
 
         private ISettingsManagerService _settingsManagerService;
 
-        #endregion
 
         public LogInPageViewModel(
             INavigationService navigationService,

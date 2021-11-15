@@ -24,7 +24,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -37,7 +37,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
             propertyName: nameof(TextColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -50,7 +50,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
             propertyName: nameof(FontFamily),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -63,7 +63,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
             propertyName: nameof(Placeholder),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -76,7 +76,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
             propertyName: nameof(PlaceholderColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -89,7 +89,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
             propertyName: nameof(IsPassword),
             returnType: typeof(bool),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -102,7 +102,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty IsPasswordHideProperty = BindableProperty.Create(
             propertyName: nameof(IsPasswordHide),
             returnType: typeof(bool),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -115,7 +115,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty IsButtonVisibleProperty = BindableProperty.Create(
             propertyName: nameof(IsButtonVisible),
             returnType: typeof(bool),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -128,7 +128,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty ClearImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(ClearImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -141,7 +141,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty EyeOnImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(EyeOnImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -154,7 +154,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty EyeOffImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(EyeOffImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -167,7 +167,7 @@ namespace MapNotepad.Controls
         public static readonly BindableProperty ImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(ImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolBar),
+            declaringType: typeof(CustomEntry),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 

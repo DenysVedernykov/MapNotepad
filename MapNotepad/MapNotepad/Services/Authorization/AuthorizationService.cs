@@ -12,22 +12,15 @@ namespace MapNotepad.Services.Authorization
 {
     public class AuthorizationService : IAuthorizationService
     {
-
-        #region -- Private properties --
-
         private const string _patternNumbers = @"[0-9]";
-
         private const string _patternUppercaseLetter = @"[A-Z]";
-
         private const string _patternEmail = @"^[^@\s]{1,64}@[^@\s]+\.[^@\s]+";
 
-        private IRepositoryService _repository;
-
-        #endregion
+        private readonly IRepositoryService _repositoryService;
 
         public AuthorizationService(IRepositoryService repository)
         {
-            _repository = repository;
+            _repositoryService = repository;
         }
 
         #region -- IAuthorizationService implementation --
@@ -100,7 +93,7 @@ namespace MapNotepad.Services.Authorization
             {
                 newUser.CreationDate = DateTime.Now;
 
-                Task<int> response = _repository.InsertAsync(newUser);
+                Task<int> response = _repositoryService.InsertAsync(newUser);
                 if (response != null)
                 {
                     result = true;
@@ -144,7 +137,7 @@ namespace MapNotepad.Services.Authorization
 
             if (!string.IsNullOrWhiteSpace(email))
             {
-                Task<List<User>> response = _repository.GetAllRowsAsync<User>();
+                Task<List<User>> response = _repositoryService.GetAllRowsAsync<User>();
 
                 if (response != null)
                 {
