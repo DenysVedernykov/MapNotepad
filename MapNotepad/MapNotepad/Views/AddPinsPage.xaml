@@ -39,7 +39,8 @@
                 </StackLayout>
 
                 <maps:Map Margin="0, 25, 0, 0"
-                          HeightRequest="270"/>
+                          HeightRequest="270"
+                          MapClicked="Map_MapClicked"/>
             </StackLayout>
 
             <ImageButton Grid.Row="0"
