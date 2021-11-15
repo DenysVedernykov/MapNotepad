@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;
@@ -19,19 +18,32 @@ namespace MapNotepad.Views
 
         private void Map_MapClicked(object sender, Xamarin.Forms.GoogleMaps.MapClickedEventArgs e)
         {
-            var pinTokyo = new Pin()
+            var map = sender as Xamarin.Forms.GoogleMaps.Map;
+            var position = e.Point;
+
+            var pin = new Pin()
             {
+                Label = "Point",
                 Type = PinType.Place,
-                Label = "Tokyo SKYTREE",
-                Address = "Sumida-ku, Tokyo, Japan",
-                Position = new Position(35.71d, 139.81d),
-                Rotation = 33.3f,
-                Tag = "id_tokyo",
-                IsVisible = true
+                Position = position
             };
 
+            map.Pins.Add(pin);
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMeters(8000)));
+
+        }
+
+        private void Map_CameraMoveStarted(object sender, CameraMoveStartedEventArgs e)
+        {
             var map = sender as Xamarin.Forms.GoogleMaps.Map;
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(pinTokyo.Position, Distance.FromMeters(5000)));
+            var pin = new Pin()
+            {
+                Label = "Point 2",
+                Type = PinType.Place,
+                Position = new Position(35.71d, 139.83d)
+            };
+
+            map.Pins.Add(pin);
         }
     }
 }
