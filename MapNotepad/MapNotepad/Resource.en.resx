@@ -168,6 +168,9 @@
   <data name="EnterYourName" xml:space="preserve">
     <value>Enter your name</value>
   </data>
+  <data name="ErrorAddPin" xml:space="preserve">
+    <value>Error add pin</value>
+  </data>
   <data name="ErrorMessageEmptyEmail" xml:space="preserve">
     <value>Empty Email</value>
   </data>

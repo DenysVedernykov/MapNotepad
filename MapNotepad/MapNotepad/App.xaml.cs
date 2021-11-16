@@ -1,4 +1,5 @@
 ﻿using MapNotepad.Services.Authorization;
+using MapNotepad.Services.Pins;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
 using MapNotepad.Services.SettingsManager;
@@ -29,6 +30,7 @@ namespace MapNotepad
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<ISettingsService>(Container.Resolve<SettingsService>());
             containerRegistry.RegisterInstance<ISettingsManagerService>(Container.Resolve<SettingsManagerService>());
+            containerRegistry.RegisterInstance<IPinsService>(Container.Resolve<PinsService>());
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

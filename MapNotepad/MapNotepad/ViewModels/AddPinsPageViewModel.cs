@@ -1,4 +1,8 @@
-﻿using MapNotepad.Helpers;
+﻿using Acr.UserDialogs;
+using MapNotepad.Helpers;
+using MapNotepad.Models;
+using MapNotepad.Services.Authorization;
+using MapNotepad.Services.Pins;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
@@ -20,12 +24,22 @@ namespace MapNotepad.ViewModels
 
         private ResourceDictionary _resourceDictionary;
 
-        public AddPinsPageViewModel(INavigationService navigationService) 
+        private IPinsService _pinsService;
+
+        private IAuthorizationService _authorizationService;
+
+        public AddPinsPageViewModel(
+            INavigationService navigationService,
+            IPinsService pinsService,
+            IAuthorizationService authorizationService) 
             : base(navigationService)
         {
-            _currentPin = new Pin();
+            _pinsService = pinsService;
+            _authorizationService = authorizationService;
 
+            _currentPin = new Pin();
             _currentPin.Label = "Point";
+
             InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(new Position(35.71d, 139.81d), 12d);
 
             ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
@@ -52,11 +66,11 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _borderColorLongitude, value);
         }
 
-        private Color _orderColorLatitude;
+        private Color _borderColorLatitude;
         public Color BorderColorLatitude
         {
-            get => _orderColorLatitude;
-            set => SetProperty(ref _orderColorLatitude, value);
+            get => _borderColorLatitude;
+            set => SetProperty(ref _borderColorLatitude, value);
         }
 
         private string _label;
@@ -116,9 +130,15 @@ namespace MapNotepad.ViewModels
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
-            double simple;
+            double sample;
 
             base.OnPropertyChanged(args);
+
+            IsEnableSaveButton = !string.IsNullOrEmpty(Label);
+
+            bool updatePin = false;
+            bool truePosition = double.TryParse(Longitude, out sample)
+                && double.TryParse(Latitude, out sample);
 
             switch (args.PropertyName)
             {
@@ -134,7 +154,7 @@ namespace MapNotepad.ViewModels
 
                     break;
                 case nameof(Longitude):
-                    if (double.TryParse(Longitude, out simple))
+                    if (double.TryParse(Longitude, out sample))
                     {
                         BorderColorLongitude = (Color)_resourceDictionary["LightGray"];
                     }
@@ -143,9 +163,11 @@ namespace MapNotepad.ViewModels
                         BorderColorLongitude = (Color)_resourceDictionary["Error"];
                     }
 
+                    updatePin = true;
+
                     break;
                 case nameof(Latitude):
-                    if (double.TryParse(Latitude, out simple))
+                    if (double.TryParse(Latitude, out sample))
                     {
                         BorderColorLatitude = (Color)_resourceDictionary["LightGray"];
                     }
@@ -154,14 +176,19 @@ namespace MapNotepad.ViewModels
                         BorderColorLatitude = (Color)_resourceDictionary["Error"];
                     }
 
+                    updatePin = true;
+
                     break;
             }
 
-            IsEnableSaveButton =
-                !string.IsNullOrEmpty(Label)
-                && !string.IsNullOrEmpty(Description)
-                && double.TryParse(Longitude, out simple)
-                && double.TryParse(Latitude, out simple);
+            if (truePosition && updatePin)
+            {
+                MessagingCenter.Send<AddPinsPageViewModel, Pin>(this, "DeletePin", _currentPin);
+
+                _currentPin.Position = new Position(double.Parse(Latitude), double.Parse(Longitude));
+
+                MessagingCenter.Send<AddPinsPageViewModel, Pin>(this, "AddPin", _currentPin);
+            }
         }
 
         #endregion
@@ -170,26 +197,41 @@ namespace MapNotepad.ViewModels
 
         private Task OnGoBackCommandAsync()
         {
-            _navigationService.GoBackAsync();
-
-            return Task.CompletedTask;
+            return _navigationService.GoBackAsync();
         }
 
         private Task OnSaveCommandAsync()
         {
-            
+            var result = _pinsService.AddPin(new UserPin() 
+            { 
+                Autor = _authorizationService.Profile.Id, 
+                Label = Label,
+                Description = Description,
+                Latitude = double.Parse(Latitude),
+                Longitude = double.Parse(Longitude),
+                Favorites = false,
+                CreationDate = DateTime.Now
+            });
+
+            if (result.Result.IsSuccess)
+            {
+                _navigationService.GoBackAsync();
+            }
+            else
+            {
+                UserDialogs.Instance.Alert(new AlertConfig()
+                {
+                    OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                    Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
+                });
+            }
             return Task.CompletedTask;
         }
 
         private Task OnMapClickedCommandAsync(Position position)
         {
-            MessagingCenter.Send<AddPinsPageViewModel, Pin>(this, "DeletePin", _currentPin);
-
-            _currentPin.Position = position;
             Longitude = position.Longitude.ToString();
             Latitude = position.Latitude.ToString();
-
-            MessagingCenter.Send<AddPinsPageViewModel, Pin>(this, "AddPin", _currentPin);
 
             return Task.CompletedTask;
         }
