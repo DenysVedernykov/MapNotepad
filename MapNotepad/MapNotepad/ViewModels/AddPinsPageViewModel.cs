@@ -24,17 +24,17 @@ namespace MapNotepad.ViewModels
 
         private ResourceDictionary _resourceDictionary;
 
-        private IPinsService _pinsService;
+        private IPinService _pinService;
 
         private IAuthorizationService _authorizationService;
 
         public AddPinsPageViewModel(
             INavigationService navigationService,
-            IPinsService pinsService,
+            IPinService pinService,
             IAuthorizationService authorizationService) 
             : base(navigationService)
         {
-            _pinsService = pinsService;
+            _pinService = pinService;
             _authorizationService = authorizationService;
 
             _currentPin = new Pin();
@@ -202,19 +202,25 @@ namespace MapNotepad.ViewModels
 
         private Task OnSaveCommandAsync()
         {
-            var result = _pinsService.AddPin(new UserPin() 
-            { 
-                Autor = _authorizationService.Profile.Id, 
+            var userPin = new UserPin()
+            {
+                Autor = _authorizationService.Profile.Id,
                 Label = Label,
                 Description = Description,
                 Latitude = double.Parse(Latitude),
                 Longitude = double.Parse(Longitude),
-                Favorites = false,
+                Favorites = true,
                 CreationDate = DateTime.Now
-            });
+            };
+
+            var result = _pinService.AddPinAsync(userPin);
 
             if (result.Result.IsSuccess)
             {
+                userPin.Id = result.Result.Result;
+
+                MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
+
                 _navigationService.GoBackAsync();
             }
             else

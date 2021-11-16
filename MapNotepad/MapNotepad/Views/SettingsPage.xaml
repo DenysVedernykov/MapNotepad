@@ -8,7 +8,8 @@
     <view:BaseContentPage.Content>
         <StackLayout>
             <controls:CustomToolBar Title="{Helper:TranslateExtension Settings}"
-                                    LineColor="{DynamicResource Variant}"/>
+                                    LineColor="{DynamicResource Variant}"
+                                    LeftButtonCommand="{Binding GoBackCommand}"/>
 
             <StackLayout Spacing="0">
                 <StackLayout Orientation="Horizontal"

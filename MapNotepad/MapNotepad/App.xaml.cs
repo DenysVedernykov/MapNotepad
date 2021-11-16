@@ -30,7 +30,7 @@ namespace MapNotepad
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<ISettingsService>(Container.Resolve<SettingsService>());
             containerRegistry.RegisterInstance<ISettingsManagerService>(Container.Resolve<SettingsManagerService>());
-            containerRegistry.RegisterInstance<IPinsService>(Container.Resolve<PinsService>());
+            containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

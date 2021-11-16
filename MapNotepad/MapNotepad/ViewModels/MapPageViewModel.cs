@@ -3,6 +3,7 @@ using MapNotepad.Models;
 using MapNotepad.Views;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms.GoogleMaps;
@@ -95,6 +96,23 @@ namespace MapNotepad.ViewModels
                 Tag = "id_tokyo",
                 IsVisible = true
             });
+        }
+
+        #endregion
+
+        #region -- Overrides --
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            switch (args.PropertyName)
+            {
+                case nameof(Text):
+                   
+
+                    break;
+            }
         }
 
         #endregion
