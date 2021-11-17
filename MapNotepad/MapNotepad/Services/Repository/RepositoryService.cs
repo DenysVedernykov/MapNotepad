@@ -53,8 +53,7 @@ namespace MapNotepad.Services.Repository
 
         public Task<List<T>> GetAllRowsAsync<T>() where T : IEntityBase, new()
         {
-            Task<List<T>> result = _database.Value.Table<T>().ToListAsync();
-            return result;
+            return _database.Value.Table<T>().ToListAsync();
         }
 
         #endregion

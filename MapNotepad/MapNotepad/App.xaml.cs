@@ -44,11 +44,7 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<PinsPage, PinsPageViewModel>();
             containerRegistry.RegisterForNavigation<AddPinsPage, AddPinsPageViewModel>();
             containerRegistry.RegisterForNavigation<EditPinsPage, EditPinsPageViewModel>();
-            containerRegistry.RegisterForNavigation<EventsPage, EventsPageViewModel>();
-            containerRegistry.RegisterForNavigation<AddEventsPage, AddEventsPageViewModel>();
-            containerRegistry.RegisterForNavigation<EditEventsPage, EditEventsPageViewModel>();
             containerRegistry.RegisterForNavigation<ShowPhotosPage, ShowPhotosPageViewModel>();
-            containerRegistry.RegisterForNavigation<ShowClockPage, ShowClockPageViewModel>();
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
         }
 

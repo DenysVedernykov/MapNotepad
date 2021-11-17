@@ -14,6 +14,8 @@ namespace MapNotepad.Models
 
         public string Label { get; set; }
 
+        public string Address { get; set; }
+
         public string Description { get; set; }
 
         public double Latitude { get; set; }

@@ -25,9 +25,16 @@ namespace MapNotepad.Services.Pins
 
             try
             {
-                var id = await _repositoryService.InsertAsync(pin);
+                var response = _repositoryService.InsertAsync(pin);
 
-                result.SetSuccess(id);
+                if(response == null)
+                {
+                    result.SetFailure();
+                }
+                else
+                {
+                    result.SetSuccess(response.Result);
+                }
             }
             catch (Exception ex)
             {
@@ -43,9 +50,16 @@ namespace MapNotepad.Services.Pins
 
             try
             {
-                var id = await  _repositoryService.UpdateAsync(pin);
-                
-                result.SetSuccess(id);
+                var response = _repositoryService.UpdateAsync(pin);
+
+                if (response == null)
+                {
+                    result.SetFailure();
+                }
+                else
+                {
+                    result.SetSuccess(response.Result);
+                }
             }
             catch (Exception ex)
             {
@@ -61,9 +75,16 @@ namespace MapNotepad.Services.Pins
 
             try
             {
-                var id = await _repositoryService.DeleteAsync(pin);
-                
-                result.SetSuccess(id);
+                var response = _repositoryService.DeleteAsync(pin);
+
+                if (response == null)
+                {
+                    result.SetFailure();
+                }
+                else
+                {
+                    result.SetSuccess(response.Result);
+                }
             }
             catch (Exception ex)
             {
@@ -75,13 +96,45 @@ namespace MapNotepad.Services.Pins
 
         public async Task<AOResult<List<UserPin>>> AllPinsAsync()
         {
-            AOResult<List<UserPin>> result = new AOResult<List<UserPin>>();
+            var result = new AOResult<List<UserPin>>();
 
             try
             {
-                var response = await _repositoryService.GetAllRowsAsync<UserPin>();
-                
-                result.SetSuccess(response);
+                var response = _repositoryService.GetAllRowsAsync<UserPin>();
+
+                if (response == null)
+                {
+                    result.SetFailure();
+                }
+                else
+                {
+                    result.SetSuccess(response.Result);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError("0", "Exception PinsService AllPins", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<UserPin>> GetByIdAsync(int id)
+        {
+            var result = new AOResult<UserPin>();
+
+            try
+            {
+                var response = _repositoryService.GetAllRowsAsync<UserPin>();
+
+                if (response == null)
+                {
+                    result.SetFailure();
+                }
+                else
+                {
+                    result.SetSuccess(response.Result.Where(row => row.Id == id).FirstOrDefault());
+                }
             }
             catch (Exception ex)
             {
@@ -99,16 +152,40 @@ namespace MapNotepad.Services.Pins
 
             try
             {
-                var response = await _repositoryService.GetAllRowsAsync<UserPin>();
-                
-                result.SetSuccess(response.Where(
-                        row =>
-                        row.Label.ToLower().IndexOf(text) != -1
-                        | row.Description.ToLower().IndexOf(text) != -1
-                        | row.Longitude.ToString().ToLower().IndexOf(text) != -1
-                        | row.Latitude.ToString().ToLower().IndexOf(text) != -1
-                    ).ToList()
-                );
+                var response = _repositoryService.GetAllRowsAsync<UserPin>();
+
+                if (response == null)
+                {
+                    result.SetFailure();
+                }
+                else
+                {
+                    var list = response.Result.Where(
+                        (row) => {
+                            var result = row.Longitude.ToString().ToLower().IndexOf(text) != -1
+                            | row.Latitude.ToString().ToLower().IndexOf(text) != -1;
+
+                            if (!string.IsNullOrEmpty(row.Label))
+                            {
+                                result |= row.Label.ToLower().IndexOf(text) != -1;
+                            }
+
+                            if (!string.IsNullOrEmpty(row.Address))
+                            {
+                                result |= row.Address.ToLower().IndexOf(text) != -1;
+                            }
+
+                            if (!string.IsNullOrEmpty(row.Description))
+                            {
+                                result |= row.Description.ToLower().IndexOf(text) != -1;
+                            }
+
+                            return result;
+                        }
+                    ).ToList();
+
+                    result.SetSuccess(list);
+                }
             }
             catch (Exception ex)
             {

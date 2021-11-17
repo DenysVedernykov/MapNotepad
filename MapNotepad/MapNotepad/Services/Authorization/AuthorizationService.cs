@@ -42,7 +42,7 @@ namespace MapNotepad.Services.Authorization
                 {
                     result = true;
                 }
-            } 
+            }
 
             return result;
         }

@@ -19,6 +19,8 @@ namespace MapNotepad.Services.Pins
 
         Task<AOResult<List<UserPin>>> AllPinsAsync();
 
+        Task<AOResult<UserPin>> GetByIdAsync(int id);
+
         Task<AOResult<List<UserPin>>> SearchPinsAsync(string text);
     }
 }

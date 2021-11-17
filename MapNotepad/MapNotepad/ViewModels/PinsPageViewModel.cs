@@ -1,7 +1,10 @@
-﻿using MapNotepad.Helpers;
+﻿using Acr.UserDialogs;
+using MapNotepad.Helpers;
 using MapNotepad.Helpers.ProcessHelpers;
 using MapNotepad.Models;
+using MapNotepad.Services.Authorization;
 using MapNotepad.Services.Pins;
+using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -21,12 +24,20 @@ namespace MapNotepad.ViewModels
     {
         private IPinService _pinService;
 
+        private IAuthorizationService _authorizationService;
+
+        private ISettingsManagerService _settingsManagerService;
+
         public PinsPageViewModel(
             INavigationService navigationService,
-            IPinService pinService)
+            IPinService pinService,
+            IAuthorizationService authorizationService,
+            ISettingsManagerService settingsManagerService)
             : base(navigationService)
         {
             _pinService = pinService;
+            _authorizationService = authorizationService;
+            _settingsManagerService = settingsManagerService;
 
             _pins = new ObservableCollection<UserPin>();
         }
@@ -52,6 +63,13 @@ namespace MapNotepad.ViewModels
         {
             get => _isShowList;
             set => SetProperty(ref _isShowList, value);
+        }
+
+        private UserPin _selectedItem;
+        public UserPin SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty(ref _selectedItem, value);
         }
 
         private ObservableCollection<UserPin> _pins;
@@ -84,6 +102,8 @@ namespace MapNotepad.ViewModels
                 "AddPin",
                 (sender, pin) => {
                     Pins.Add(pin);
+
+                    IsEmpty = Pins.Count == 0;
                 });
 
             var allPins = await _pinService.AllPinsAsync();
@@ -146,15 +166,32 @@ namespace MapNotepad.ViewModels
             IsShowList = false;
             Text = "";
 
+            MessagingCenter.Send<PinsPageViewModel, Position>(this, "MoveToPosition", new Position(SelectedItem.Latitude, SelectedItem.Longitude));
+
             MessagingCenter.Send<PinsPageViewModel, int>(this, "SwitchTab", 0);
 
             return Task.CompletedTask;
         }
 
-        private Task OnExitButtonCommandAsync()
+        private async Task OnExitButtonCommandAsync()
         {
+            var confirm = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig()
+            {
+                OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                Message = Resource.ResourceManager.GetString("ConfirmExit", Resource.Culture),
+                CancelText = Resource.ResourceManager.GetString("Cancel", Resource.Culture)
+            });
 
-            return Task.CompletedTask;
+            if (confirm)
+            {
+                _authorizationService.LogOut();
+
+                _settingsManagerService.Email = string.Empty;
+                _settingsManagerService.Password = string.Empty;
+                _settingsManagerService.Session = string.Empty;
+
+                await _navigationService.NavigateAsync($"/{nameof(StartPage)}");
+            }
         }
 
         private Task OnGoSettingsButtonCommandAsync()

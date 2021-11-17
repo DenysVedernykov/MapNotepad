@@ -16,6 +16,20 @@ namespace MapNotepad.Views
     {
         public MapPage()
         {
+            MessagingCenter.Subscribe<PinsPageViewModel, Position>(
+                this,
+                "MoveToPosition",
+                (sender, position) => {
+                    map.MoveCamera(CameraUpdateFactory.NewPosition(position));
+                });
+
+            MessagingCenter.Subscribe<MapPageViewModel, Position>(
+                this,
+                "MoveToPosition",
+                (sender, position) => {
+                    map.MoveCamera(CameraUpdateFactory.NewPosition(position));
+                });
+
             InitializeComponent();
         }
     }

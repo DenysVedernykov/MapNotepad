@@ -1,46 +1,76 @@
-﻿using MapNotepad.Helpers;
+﻿using Acr.UserDialogs;
+using MapNotepad.Helpers;
+using MapNotepad.Helpers.ProcessHelpers;
 using MapNotepad.Models;
+using MapNotepad.Services.Authorization;
+using MapNotepad.Services.Pins;
+using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
 using Prism.Navigation;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
 namespace MapNotepad.ViewModels
 {
     class MapPageViewModel : BaseViewModel
     {
-        public MapPageViewModel(INavigationService navigationService)
+        private IPinService _pinService; 
+        
+        private IAuthorizationService _authorizationService;
+
+        private ISettingsManagerService _settingsManagerService;
+
+        public MapPageViewModel(
+            INavigationService navigationService,
+            IPinService pinService,
+            IAuthorizationService authorizationService,
+            ISettingsManagerService settingsManagerService)
             : base(navigationService)
         {
-            All = new ObservableCollection<UserPin>
-            {
-                new UserPin
-                {
-                    Label = "Chimpanzee 1",
-                    Description = "Hominidae 1",
-                    Favorites = true
-                },
-                new UserPin
-                {
-                    Label = "Chimpanzee 2",
-                    Description = "Hominidae 2",
-                    Favorites = false
-                },
-                new UserPin
-                {
-                    Label = "Chimpanzee 3",
-                    Description = "Hominidae 3",
-                    Favorites = true
-                }
-            };
+            _pinService = pinService; 
+            _authorizationService = authorizationService;
+            _settingsManagerService = settingsManagerService;
+
+            _pins = new ObservableCollection<Pin>();
+            _searchResult = new ObservableCollection<UserPin>();
 
             IsShowList = false;
         }
 
         #region -- Public properties --
+
+        private string _labelPinDescription;
+        public string LabelPinDescription
+        {
+            get => _labelPinDescription;
+            set => SetProperty(ref _labelPinDescription, value);
+        }
+
+        private string _latitudePinDescription;
+        public string LatitudePinDescription
+        {
+            get => _latitudePinDescription;
+            set => SetProperty(ref _latitudePinDescription, value);
+        }
+
+        private string _longitudePinDescription;
+        public string LongitudePinDescription
+        {
+            get => _longitudePinDescription;
+            set => SetProperty(ref _longitudePinDescription, value);
+        }
+
+        private string _pinDescription;
+        public string PinDescription
+        {
+            get => _pinDescription;
+            set => SetProperty(ref _pinDescription, value);
+        }
 
         private string _text;
         public string Text
@@ -56,12 +86,39 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _isShowList, value);
         }
 
-        public ObservableCollection<UserPin> All { get; }
+        private bool _isPinDescriptionVisible;
+        public bool IsPinDescriptionVisible
+        {
+            get => _isPinDescriptionVisible;
+            set => SetProperty(ref _isPinDescriptionVisible, value);
+        }
 
-        public ObservableCollection<Pin> Pins { get; set; }
+        private UserPin _selectedItem;
+        public UserPin SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty(ref _selectedItem, value);
+        }
+
+        private ObservableCollection<Pin> _pins;
+        public ObservableCollection<Pin> Pins
+        {
+            get => _pins;
+            set => SetProperty(ref _pins, value);
+        }
+
+        private ObservableCollection<UserPin> _searchResult;
+        public ObservableCollection<UserPin> SearchResult
+        {
+            get => _searchResult;
+            set => SetProperty(ref _searchResult, value);
+        }
 
         private ICommand _itemTappedCommand;
         public ICommand ItemTappedCommand => _itemTappedCommand ??= SingleExecutionCommand.FromFunc(OnItemTappedCommandAsync);
+
+        private ICommand _mapClickedCommand;
+        public ICommand MapClickedCommand => _mapClickedCommand ??= SingleExecutionCommand.FromFunc<Position>(OnMapClickedCommandAsync);
 
         private ICommand _exitButtonCommand;
         public ICommand ExitButtonCommand => _exitButtonCommand ??= SingleExecutionCommand.FromFunc(OnExitButtonCommandAsync);
@@ -75,27 +132,40 @@ namespace MapNotepad.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
-            Pins.Add(new Pin()
-            {
-                Label = "Tokyo SKYTREE 1",
-                Position = new Position(35.71d, 139.99d)
-            });
+            MessagingCenter.Subscribe<AddPinsPageViewModel, UserPin>(
+                this,
+                "AddPin",
+                (sender, userPin) => {
+                    var pin = new Pin()
+                    {
+                        Label = userPin.Label,
+                        Position = new Position(userPin.Latitude, userPin.Longitude),
+                        IsVisible = userPin.Favorites,
+                        Tag = userPin.Id
+                    };
+                    pin.Clicked += Pin_Clicked;
 
-            Pins.Add(new Pin()
-            {
-                Label = "Tokyo SKYTREE 2",
-                Position = new Position(35.71d, 139.91d)
-            });
+                    Pins.Add(pin);
+                });
 
-            Pins.Add(new Pin()
+            var allPins = await _pinService.AllPinsAsync();
+
+            if (allPins.IsSuccess)
             {
-                Type = PinType.Generic,
-                Label = "Tokyo SKYTREE 3",
-                Address = "Sumida-ku, Tokyo, Japan",
-                Position = new Position(35.71d, 139.81d),
-                Tag = "id_tokyo",
-                IsVisible = true
-            });
+                foreach (var userPin in allPins.Result)
+                {
+                    var pin = new Pin()
+                    {
+                        Label = userPin.Label,
+                        Position = new Position(userPin.Latitude, userPin.Longitude),
+                        IsVisible = userPin.Favorites,
+                        Tag = userPin.Id
+                    };
+                    pin.Clicked += Pin_Clicked;
+
+                    Pins.Add(pin);
+                }
+            }
         }
 
         #endregion
@@ -109,8 +179,29 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Text):
-                   
+                    if (!string.IsNullOrWhiteSpace(Text))
+                    {
+                        var allPins = _pinService.SearchPinsAsync(Text.Trim());
 
+                        if (allPins.Result.IsSuccess)
+                        {
+                            SearchResult.Clear();
+
+                            foreach (var pin in allPins.Result.Result)
+                            {
+                                SearchResult.Add(pin);
+                            }
+                        }
+
+                        IsShowList = SearchResult.Count > 0;
+                    }
+                    
+                    break;
+                case nameof(IsShowList):
+                    if (!IsShowList)
+                    {
+                        SearchResult.Clear();
+                    }
                     break;
             }
         }
@@ -119,26 +210,67 @@ namespace MapNotepad.ViewModels
 
         #region -- Private methods --
 
+        private void Pin_Clicked(object sender, System.EventArgs e)
+        {
+            var pin = sender as Pin;
+
+            var userPin = _pinService.GetByIdAsync((int)pin.Tag);
+
+            if (userPin != null)
+            {
+                if (userPin.Result.IsSuccess)
+                {
+                    LabelPinDescription = userPin.Result.Result.Label;
+                    LatitudePinDescription = userPin.Result.Result.Latitude.ToString();
+                    LongitudePinDescription = userPin.Result.Result.Longitude.ToString();
+                    PinDescription = userPin.Result.Result.Description;
+
+                    IsPinDescriptionVisible = true;
+                }
+            }
+        }
+
+        private Task OnMapClickedCommandAsync(Position position)
+        {
+            IsPinDescriptionVisible = false;
+
+            return Task.CompletedTask;
+        }
+
         private Task OnItemTappedCommandAsync()
         {
             IsShowList = false;
             Text = "";
 
+            MessagingCenter.Send<MapPageViewModel, Position>(this, "MoveToPosition", new Position(SelectedItem.Latitude, SelectedItem.Longitude));
+
             return Task.CompletedTask;
         }
 
-        private Task OnExitButtonCommandAsync()
+        private async Task OnExitButtonCommandAsync()
         {
-            
+            var confirm = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig()
+            {
+                OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                Message = Resource.ResourceManager.GetString("ConfirmExit", Resource.Culture),
+                CancelText = Resource.ResourceManager.GetString("Cancel", Resource.Culture)
+            });
 
-            return Task.CompletedTask;
+            if (confirm)
+            {
+                _authorizationService.LogOut();
+
+                _settingsManagerService.Email = string.Empty;
+                _settingsManagerService.Password = string.Empty;
+                _settingsManagerService.Session = string.Empty;
+
+                await _navigationService.NavigateAsync($"/{nameof(StartPage)}");
+            }
         }
 
         private Task OnGoSettingsButtonCommandAsync()
         {
-            _navigationService.NavigateAsync(nameof(SettingsPage));
-
-            return Task.CompletedTask;
+            return _navigationService.NavigateAsync(nameof(SettingsPage));
         }
 
         #endregion

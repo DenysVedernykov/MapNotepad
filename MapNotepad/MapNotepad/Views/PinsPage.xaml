@@ -37,7 +37,8 @@
                 <ListView Grid.Row="1"
                           HasUnevenRows="True"
                           ItemsSource="{Binding Pins}"
-                          IsVisible="{Binding IsEmpty, Converter={StaticResource Converter}}" >
+                          IsVisible="{Binding IsEmpty, Converter={StaticResource Converter}}"
+                          SelectedItem="{Binding SelectedItem}">
 
                     <ListView.Behaviors>
                         <Behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 

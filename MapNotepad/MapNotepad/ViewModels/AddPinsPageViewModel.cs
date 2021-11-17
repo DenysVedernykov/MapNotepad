@@ -200,12 +200,18 @@ namespace MapNotepad.ViewModels
             return _navigationService.GoBackAsync();
         }
 
-        private Task OnSaveCommandAsync()
+        private async Task OnSaveCommandAsync()
         {
+            var geoCoder = new Geocoder();
+
+            var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
+            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
+
             var userPin = new UserPin()
             {
                 Autor = _authorizationService.Profile.Id,
                 Label = Label,
+                Address = possibleAddresses.FirstOrDefault(),
                 Description = Description,
                 Latitude = double.Parse(Latitude),
                 Longitude = double.Parse(Longitude),
@@ -221,17 +227,16 @@ namespace MapNotepad.ViewModels
 
                 MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
 
-                _navigationService.GoBackAsync();
+                await _navigationService.GoBackAsync();
             }
             else
             {
-                UserDialogs.Instance.Alert(new AlertConfig()
+                await UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
                     OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
                     Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
                 });
             }
-            return Task.CompletedTask;
         }
 
         private Task OnMapClickedCommandAsync(Position position)
