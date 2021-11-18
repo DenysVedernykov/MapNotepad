@@ -39,7 +39,7 @@ namespace MapNotepad.ViewModels
             _authorizationService = authorizationService;
             _settingsManagerService = settingsManagerService;
 
-            _pins = new ObservableCollection<UserPin>();
+            _pins = new ObservableCollection<UserPinWithCommand>();
         }
 
         #region -- Public properties --
@@ -65,15 +65,8 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _isShowList, value);
         }
 
-        private UserPin _selectedItem;
-        public UserPin SelectedItem
-        {
-            get => _selectedItem;
-            set => SetProperty(ref _selectedItem, value);
-        }
-
-        private ObservableCollection<UserPin> _pins;
-        public ObservableCollection<UserPin> Pins
+        private ObservableCollection<UserPinWithCommand> _pins;
+        public ObservableCollection<UserPinWithCommand> Pins
         {
             get => _pins;
             set => SetProperty(ref _pins, value);
@@ -81,6 +74,12 @@ namespace MapNotepad.ViewModels
 
         private ICommand _itemTappedCommand;
         public ICommand ItemTappedCommand => _itemTappedCommand ??= SingleExecutionCommand.FromFunc(OnItemTappedCommandAsync);
+
+        private ICommand _itemDeleteCommand;
+        public ICommand ItemDeleteCommand => _itemDeleteCommand ??= SingleExecutionCommand.FromFunc(OnItemDeleteCommandAsync);
+
+        private ICommand _itemEditCommand;
+        public ICommand ItemEditCommand => _itemEditCommand ??= SingleExecutionCommand.FromFunc(OnItemEditCommandAsync);
 
         private ICommand _exitButtonCommand;
         public ICommand ExitButtonCommand => _exitButtonCommand ??= SingleExecutionCommand.FromFunc(OnExitButtonCommandAsync);
@@ -101,7 +100,12 @@ namespace MapNotepad.ViewModels
                 this,
                 "AddPin",
                 (sender, pin) => {
-                    Pins.Add(pin);
+                    Pins.Add(new UserPinWithCommand(pin)
+                    {
+                        TabCommand = ItemTappedCommand,
+                        DeleteCommand = ItemDeleteCommand,
+                        EditCommand = ItemEditCommand
+                    });
 
                     IsEmpty = Pins.Count == 0;
                 });
@@ -112,7 +116,12 @@ namespace MapNotepad.ViewModels
             {
                 foreach (var pin in allPins.Result)
                 {
-                    Pins.Add(pin);
+                    Pins.Add(new UserPinWithCommand(pin)
+                    {
+                        TabCommand = ItemTappedCommand,
+                        DeleteCommand = ItemDeleteCommand,
+                        EditCommand = ItemEditCommand
+                    });
                 }
             }
 
@@ -147,7 +156,11 @@ namespace MapNotepad.ViewModels
 
                         foreach (var pin in allPins.Result.Result)
                         {
-                            Pins.Add(pin);
+                            Pins.Add(new UserPinWithCommand(pin) {
+                                TabCommand = ItemTappedCommand,
+                                DeleteCommand = ItemDeleteCommand,
+                                EditCommand = ItemEditCommand
+                            });
                         }
                     }
 
@@ -161,16 +174,55 @@ namespace MapNotepad.ViewModels
 
         #region -- Private methods --
 
-        private Task OnItemTappedCommandAsync()
+        private Task OnItemTappedCommandAsync(object item)
         {
+            var pin = item as UserPinWithCommand;
+
             IsShowList = false;
             Text = "";
 
-            MessagingCenter.Send<PinsPageViewModel, Position>(this, "MoveToPosition", new Position(SelectedItem.Latitude, SelectedItem.Longitude));
+            MessagingCenter.Send<PinsPageViewModel, Position>(this, "MoveToPosition", new Position(pin.Latitude, pin.Longitude));
 
             MessagingCenter.Send<PinsPageViewModel, int>(this, "SwitchTab", 0);
 
             return Task.CompletedTask;
+        }
+
+        private async Task OnItemDeleteCommandAsync(object item)
+        {
+            var pin = item as UserPinWithCommand;
+
+            var confirm = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig()
+            {
+                OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                Message = Resource.ResourceManager.GetString("ConfirmDelete", Resource.Culture),
+                CancelText = Resource.ResourceManager.GetString("Cancel", Resource.Culture)
+            });
+
+            if (confirm)
+            {
+                var result = _pinService.DeletePinAsync(item as UserPin);
+
+                if (result != null)
+                {
+                    if (result.Result.IsSuccess)
+                    {
+                        Pins.Remove(pin);
+
+                        MessagingCenter.Send<PinsPageViewModel, UserPinWithCommand>(this, "DeletePin", pin);
+                    }
+                }
+            }
+        }
+
+        private Task OnItemEditCommandAsync(object item)
+        {
+            var pin = item as UserPinWithCommand;
+
+            INavigationParameters param = new NavigationParameters();
+            param.Add("Pin", pin);
+
+            return _navigationService.NavigateAsync($"{nameof(EditPinsPage)}", param);
         }
 
         private async Task OnExitButtonCommandAsync()

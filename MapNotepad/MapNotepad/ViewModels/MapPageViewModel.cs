@@ -147,6 +147,21 @@ namespace MapNotepad.ViewModels
 
                     Pins.Add(pin);
                 });
+            
+            MessagingCenter.Subscribe<PinsPageViewModel, UserPinWithCommand>(
+                this,
+                "DeletePin",
+                (sender, userPin) => {
+                    var pin = new Pin()
+                    {
+                        Label = userPin.Label,
+                        Position = new Position(userPin.Latitude, userPin.Longitude),
+                        IsVisible = userPin.Favorites,
+                        Tag = userPin.Id
+                    };
+
+                    Pins.Remove(pin);
+                });
 
             var allPins = await _pinService.AllPinsAsync();
 

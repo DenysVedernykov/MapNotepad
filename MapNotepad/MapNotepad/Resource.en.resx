@@ -126,6 +126,9 @@
   <data name="ColorClock" xml:space="preserve">
     <value>Color of the clock</value>
   </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
   <data name="ConfirmExit" xml:space="preserve">
     <value>Are you sure you want to log out?</value>
   </data>

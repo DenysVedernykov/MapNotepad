@@ -4,7 +4,8 @@
                       xmlns:controls="clr-namespace:MapNotepad.Controls"
                       xmlns:Helpers="clr-namespace:MapNotepad.Helpers"
                       xmlns:view="clr-namespace:MapNotepad.Views" 
-                      xmlns:Behaviors="http://prismlibrary.com"
+                      xmlns:Behaviors="http://prismlibrary.com" 
+                      xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu"
                       x:Class="MapNotepad.Views.PinsPage">
     <view:BaseContentPage.Resources>
         <ResourceDictionary>
@@ -33,78 +34,124 @@
                        Text="{Helpers:TranslateExtension NoPinsAdded}" 
                        VerticalOptions="Center" 
                        HorizontalOptions="Center"/>
-                
-                <ListView Grid.Row="1"
-                          HasUnevenRows="True"
-                          ItemsSource="{Binding Pins}"
-                          IsVisible="{Binding IsEmpty, Converter={StaticResource Converter}}"
-                          SelectedItem="{Binding SelectedItem}">
 
-                    <ListView.Behaviors>
-                        <Behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 
-                                                      EventName="ItemTapped" 
-                                                      EventArgsConverterParameter="{Binding .}"/>
-                    </ListView.Behaviors>
-                    
-                    <ListView.ItemTemplate>
+                <CollectionView Grid.Row="1"
+                                ItemsSource="{Binding Pins}"
+                                IsVisible="{Binding IsEmpty, Converter={StaticResource Converter}}">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <StackLayout Padding="20" 
-                                                 Orientation="Horizontal">
-                                        <Frame Style="{DynamicResource imageFrame}">
-                                            <Image Aspect="AspectFill">
-                                                <Image.Triggers>
-                                                    <DataTrigger TargetType="Image" 
-                                                                 Binding="{Binding Favorites}" 
-                                                                 Value="True">
-                                                        <Setter Property="Source" 
-                                                                Value="ic_like_blue.png"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Image" 
+                            
+                            <context:SideContextMenuView>
+
+                                <context:SideContextMenuView.View>
+
+                                    <controls:ClickableContentView Command="{Binding TabCommand}"
+                                                                   CommandParameter="{Binding .}"
+                                                                   WidthRequest="420">
+                                        <StackLayout Spacing="0">
+
+                                            <StackLayout Padding="20"
+                                                     Orientation="Horizontal">
+                                                <Frame Style="{DynamicResource imageFrame}">
+                                                    <Image Aspect="AspectFill">
+                                                        <Image.Triggers>
+                                                            <DataTrigger TargetType="Image" 
+                                                                     Binding="{Binding Favorites}" 
+                                                                     Value="True">
+                                                                <Setter Property="Source" 
+                                                                    Value="ic_like_blue.png"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" 
                                                                  Binding="{Binding Favorites}" 
                                                                  Value="False">
-                                                        <Setter Property="Source" 
+                                                                <Setter Property="Source" 
                                                                 Value="ic_like_gray.png"/>
-                                                    </DataTrigger>
-                                                </Image.Triggers>
-                                            </Image>
-                                        </Frame>
-                                        <StackLayout Margin="10, 0, 0, 0">
-                                            <Label Text="{Binding Label}" 
+                                                            </DataTrigger>
+                                                        </Image.Triggers>
+                                                    </Image>
+                                                </Frame>
+                                                <StackLayout Margin="10, 0, 0, 0">
+                                                    <Label Text="{Binding Label}" 
                                                    FontSize="16"
                                                    TextColor="{DynamicResource Black}"
                                                    FontFamily="Montserrat-Medium"/>
-                                            
-                                            <Label FontSize="13"
+
+                                                    <Label FontSize="13"
                                                    TextColor="{DynamicResource DarkGray}"
                                                    FontFamily="Montserrat-Regular">
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <FormattedString.Spans>
-                                                            <Span Text="{Binding Longitude}" />
-                                                            <Span Text=", "/>
-                                                            <Span Text="{Binding Latitude}"/>
-                                                        </FormattedString.Spans>
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <FormattedString.Spans>
+                                                                    <Span Text="{Binding Longitude}" />
+                                                                    <Span Text=", "/>
+                                                                    <Span Text="{Binding Latitude}"/>
+                                                                </FormattedString.Spans>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
 
-                                        </StackLayout>
-                                        <Image Source="ic_left_gray.png"
+                                                </StackLayout>
+                                                <Image Source="ic_left_gray.png"
                                                HorizontalOptions="EndAndExpand"
-                                               WidthRequest="30"/>
-                                    </StackLayout>
-                                </ViewCell.View>
-                            </ViewCell>
+                                               HeightRequest="30"/>
+                                            </StackLayout>
+                                            
+                                            <BoxView BackgroundColor="{DynamicResource Variant}"
+                                                     HeightRequest="1"/>
+                                        </StackLayout>
+
+                                    </controls:ClickableContentView>
+                                    
+                                </context:SideContextMenuView.View>
+
+                                <context:SideContextMenuView.ContextTemplate>
+                                    <DataTemplate>
+                                        <Frame Padding="0"
+                                               HasShadow="False">
+                                            <StackLayout Orientation="Horizontal"
+                                                         Spacing="0">
+                                                <Frame Padding="20, 33"
+                                                       HasShadow="False"
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="EndAndExpand"
+                                                       CornerRadius="0"
+                                                       BackgroundColor="{DynamicResource Error}">
+                                                       
+                                                    <ImageButton Source="ic_delete.png"
+                                                                 Command="{Binding DeleteCommand}"
+                                                                 CommandParameter="{Binding .}"
+                                                                 BackgroundColor="Transparent"/>
+                                                </Frame>
+                                                
+                                                <Frame Padding="20, 33"
+                                                       HasShadow="False"
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="EndAndExpand"
+                                                       CornerRadius="0"
+                                                       BackgroundColor="{DynamicResource Primary}">
+                                                    
+                                                    <ImageButton Source="ic_edit.png"
+                                                                 Command="{Binding EditCommand}"
+                                                                 CommandParameter="{Binding .}"
+                                                                 BackgroundColor="Transparent"/>
+                                                </Frame>
+                                                
+                                            </StackLayout>
+                                        </Frame>
+                                    </DataTemplate>
+                                </context:SideContextMenuView.ContextTemplate>
+
+                            </context:SideContextMenuView>
+                            
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
 
                 <ImageButton Grid.Row="1"
                              Style="{DynamicResource floatingButton}"
                              Command="{Binding GoAddPinsPageCommand}">
-                    
+
                 </ImageButton>
             </Grid>
         </StackLayout>
