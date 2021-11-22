@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using MapNotepad.iOS.Services.PermissionsService;
+using MapNotepad.Services.PermissionsService;
+using Prism;
+using Prism.Ioc;
+using Prism.Unity;
 using UIKit;
 
 namespace MapNotepad.iOS
@@ -26,9 +31,18 @@ namespace MapNotepad.iOS
 
             Xamarin.FormsGoogleMaps.Init("AIzaSyAcBsMCF3pIsxYwe7ebpG7FiYXPpfozXFc");
 
-            LoadApplication(new App());
+            LoadApplication(new App(new IOSInitializer()));
 
             return base.FinishedLaunching(app, options);
         }
+
+        public class IOSInitializer : IPlatformInitializer
+        {
+            public void RegisterTypes(IContainerRegistry containerRegistry)
+            {
+                containerRegistry.RegisterInstance<IPermissionsService>(PrismApplication.Current.Container.Resolve<PermissionsService>());
+            }
+        }
+
     }
 }

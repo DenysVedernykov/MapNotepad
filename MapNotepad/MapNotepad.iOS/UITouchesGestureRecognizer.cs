@@ -51,7 +51,7 @@ namespace MapNotepad.iOS
         {
             base.TouchesBegan(touches, evt);
 
-            if (this._element.TouchesBegan((IEnumerable<NGraphics.Point>)GetTouchPoints(touches)))
+            if (this._element.TouchesBegan(GetTouchPoints(touches)))
             {
                 this.State = UIGestureRecognizerState.Began;
             }
@@ -66,7 +66,7 @@ namespace MapNotepad.iOS
         {
             base.TouchesMoved(touches, evt);
 
-            var points = (IEnumerable<NGraphics.Point>)GetTouchPoints(touches);
+            var points = GetTouchPoints(touches);
 
             if (this._element.TouchesMoved(points))
             {
@@ -78,7 +78,7 @@ namespace MapNotepad.iOS
         {
             base.TouchesEnded(touches, evt);
 
-            if (this._element.TouchesEnded((IEnumerable<NGraphics.Point>)GetTouchPoints(touches)))
+            if (this._element.TouchesEnded(GetTouchPoints(touches)))
             {
                 this.State = UIGestureRecognizerState.Ended;
             }
@@ -89,7 +89,7 @@ namespace MapNotepad.iOS
         {
             base.TouchesCancelled(touches, evt);
 
-            this._element.TouchesCancelled((IEnumerable<NGraphics.Point>)GetTouchPoints(touches));
+            this._element.TouchesCancelled(GetTouchPoints(touches));
 
             this.State = UIGestureRecognizerState.Cancelled;
         }

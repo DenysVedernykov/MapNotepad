@@ -2,6 +2,7 @@
 using MapNotepad.Helpers;
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
+using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -31,14 +33,18 @@ namespace MapNotepad.ViewModels
 
         private IAuthorizationService _authorizationService;
 
+        private IPermissionsService _permissionsService;
+
         public EditPinsPageViewModel(
             INavigationService navigationService,
             IPinService pinService,
-            IAuthorizationService authorizationService)
+            IAuthorizationService authorizationService,
+            IPermissionsService permissionsService)
             : base(navigationService)
         {
             _pinService = pinService;
             _authorizationService = authorizationService;
+            _permissionsService = permissionsService;
 
             _currentPin = new Pin();
             _currentPin.Label = "Point";
@@ -109,6 +115,13 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _isEnableSaveButton, value);
         }
 
+        private bool _isShowingUser;
+        public bool IsShowingUser
+        {
+            get => _isShowingUser;
+            set => SetProperty(ref _isShowingUser, value);
+        }
+
         private CameraUpdate _initialCameraUpdate;
         public CameraUpdate InitialCameraUpdate
         {
@@ -122,6 +135,10 @@ namespace MapNotepad.ViewModels
         private ICommand _saveCommand;
         public ICommand SaveCommand => _saveCommand ??= SingleExecutionCommand.FromFunc(OnSaveCommandAsync);
 
+        private ICommand _moveToMyLocationCommand;
+        public ICommand MoveToMyLocationCommand => _moveToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnMoveToMyLocationCommandAsync);
+
+
         private ICommand _mapClickedCommand;
         public ICommand MapClickedCommand => _mapClickedCommand ??= SingleExecutionCommand.FromFunc<Position>(OnMapClickedCommandAsync);
 
@@ -131,6 +148,8 @@ namespace MapNotepad.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
+            CheckPermissions().Await();
+
             if (parameters.Count > 0)
             {
                 if (parameters["Pin"] != null)
@@ -234,6 +253,15 @@ namespace MapNotepad.ViewModels
 
         #endregion
 
+        #region -- Private helpers --
+
+        private async Task CheckPermissions()
+        {
+            IsShowingUser = await _permissionsService.RequestAsync<Permissions.LocationWhenInUse>() == PermissionStatus.Granted;
+        }
+
+        #endregion
+
         #region -- Private methods --
 
         private async Task OnGoBackCommandAsync()
@@ -256,23 +284,34 @@ namespace MapNotepad.ViewModels
             var geoCoder = new Geocoder();
 
             var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
-            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
+            var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
 
-            userPin.Label = Label;
-            userPin.Address = possibleAddresses.FirstOrDefault();
-            userPin.Description = Description;
-            userPin.Latitude = double.Parse(Latitude);
-            userPin.Longitude = double.Parse(Longitude);
-
-            var result = _pinService.UpdatePinAsync(userPin.ToUserPin());
-
-            if (result.Result.IsSuccess)
+            if (possibleAddresses != null)
             {
+                userPin.Label = Label;
+                userPin.Address = possibleAddresses.FirstOrDefault();
+                userPin.Description = Description;
+                userPin.Latitude = double.Parse(Latitude);
+                userPin.Longitude = double.Parse(Longitude);
 
-                MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "DeletePin", userOldPin);
-                MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "AddPin", userPin);
+                var result = _pinService.UpdatePinAsync(userPin.ToUserPin());
 
-                await _navigationService.GoBackAsync();
+                if (result.Result.IsSuccess)
+                {
+
+                    MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "DeletePin", userOldPin);
+                    MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "AddPin", userPin);
+
+                    await _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                    {
+                        OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                        Message = Resource.ResourceManager.GetString("ErrorEditPin", Resource.Culture)
+                    });
+                }
             }
             else
             {
@@ -282,6 +321,18 @@ namespace MapNotepad.ViewModels
                     Message = Resource.ResourceManager.GetString("ErrorEditPin", Resource.Culture)
                 });
             }
+        }
+
+        private Task OnMoveToMyLocationCommandAsync()
+        {
+            CheckPermissions().Await();
+
+            if (IsShowingUser)
+            {
+                MessagingCenter.Send<EditPinsPageViewModel>(this, "MoveToMyLocation");
+            }
+
+            return Task.CompletedTask;
         }
 
         private Task OnMapClickedCommandAsync(Position position)

@@ -2,6 +2,7 @@
 using MapNotepad.Helpers;
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
+using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -28,14 +30,18 @@ namespace MapNotepad.ViewModels
 
         private IAuthorizationService _authorizationService;
 
+        private IPermissionsService _permissionsService;
+
         public AddPinsPageViewModel(
             INavigationService navigationService,
             IPinService pinService,
-            IAuthorizationService authorizationService) 
+            IAuthorizationService authorizationService,
+            IPermissionsService permissionsService) 
             : base(navigationService)
         {
             _pinService = pinService;
             _authorizationService = authorizationService;
+            _permissionsService = permissionsService;
 
             _currentPin = new Pin();
             _currentPin.Label = "Point";
@@ -131,11 +137,17 @@ namespace MapNotepad.ViewModels
         private ICommand _moveToMyLocationCommand;
         public ICommand MoveToMyLocationCommand => _moveToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnMoveToMyLocationCommandAsync);
 
-        private ICommand _cameraMoveStartedCommand;
-        public ICommand CameraMoveStartedCommand => _cameraMoveStartedCommand ??= SingleExecutionCommand.FromFunc(OnCameraMoveStartedCommandAsync);
-
         private ICommand _mapClickedCommand;
         public ICommand MapClickedCommand => _mapClickedCommand ??= SingleExecutionCommand.FromFunc<Position>(OnMapClickedCommandAsync);
+
+        #endregion
+
+        #region -- IInitializeAsync implementation --
+
+        public async override Task InitializeAsync(INavigationParameters parameters)
+        {
+            CheckPermissions().Await();
+        }
 
         #endregion
 
@@ -206,6 +218,15 @@ namespace MapNotepad.ViewModels
 
         #endregion
 
+        #region -- Private helpers --
+
+        private async Task CheckPermissions()
+        {
+            IsShowingUser = await _permissionsService.RequestAsync<Permissions.LocationWhenInUse>() == PermissionStatus.Granted;
+        }
+
+        #endregion
+
         #region -- Private methods --
 
         private Task OnGoBackCommandAsync()
@@ -213,51 +234,40 @@ namespace MapNotepad.ViewModels
             return _navigationService.GoBackAsync();
         }
 
-        private Task OnSaveCommandAsync()
+        private async Task OnSaveCommandAsync()
         {
             var geoCoder = new Geocoder();
 
             var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
-            var possibleAddresses = geoCoder.GetAddressesForPositionAsync(position);
+            var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
 
             if (possibleAddresses != null)
             {
-                if (possibleAddresses.IsCompleted)
+                var userPin = new UserPin()
                 {
-                    var userPin = new UserPin()
-                    {
-                        Autor = _authorizationService.Profile.Id,
-                        Label = Label,
-                        Address = possibleAddresses.Result.FirstOrDefault(),
-                        Description = Description,
-                        Latitude = double.Parse(Latitude),
-                        Longitude = double.Parse(Longitude),
-                        Favorites = true,
-                        CreationDate = DateTime.Now
-                    };
+                    Autor = _authorizationService.Profile.Id,
+                    Label = Label,
+                    Address = possibleAddresses.FirstOrDefault(),
+                    Description = Description,
+                    Latitude = double.Parse(Latitude),
+                    Longitude = double.Parse(Longitude),
+                    Favorites = true,
+                    CreationDate = DateTime.Now
+                };
 
-                    var result = _pinService.AddPinAsync(userPin);
+                var result = _pinService.AddPinAsync(userPin);
 
-                    if (result.Result.IsSuccess)
-                    {
-                        userPin.Id = result.Result.Result;
+                if (result.Result.IsSuccess)
+                {
+                    userPin.Id = result.Result.Result;
 
-                        MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
+                    MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
 
-                        _navigationService.GoBackAsync();
-                    }
-                    else
-                    {
-                        UserDialogs.Instance.AlertAsync(new AlertConfig()
-                        {
-                            OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
-                            Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
-                        });
-                    }
+                    await _navigationService.GoBackAsync();
                 }
                 else
                 {
-                    UserDialogs.Instance.AlertAsync(new AlertConfig()
+                    await UserDialogs.Instance.AlertAsync(new AlertConfig()
                     {
                         OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
                         Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
@@ -266,26 +276,22 @@ namespace MapNotepad.ViewModels
             }
             else
             {
-                UserDialogs.Instance.AlertAsync(new AlertConfig()
+                await UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
                     OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
                     Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
                 });
             }
-
-            return Task.CompletedTask;
-        }
-
-        private Task OnCameraMoveStartedCommandAsync()
-        {
-            IsShowingUser = true;
-
-            return Task.CompletedTask;
         }
 
         private Task OnMoveToMyLocationCommandAsync()
         {
-            MessagingCenter.Send<AddPinsPageViewModel>(this, "MoveToMyLocation");
+            CheckPermissions().Await();
+
+            if (IsShowingUser)
+            {
+                MessagingCenter.Send<AddPinsPageViewModel>(this, "MoveToMyLocation");
+            }
 
             return Task.CompletedTask;
         }

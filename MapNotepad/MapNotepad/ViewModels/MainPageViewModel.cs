@@ -14,7 +14,8 @@ namespace MapNotepad.ViewModels
 {
     class MainPageViewModel : BaseViewModel
     {
-        public MainPageViewModel(INavigationService navigationService)
+        public MainPageViewModel(
+            INavigationService navigationService)
             : base(navigationService)
         {
             

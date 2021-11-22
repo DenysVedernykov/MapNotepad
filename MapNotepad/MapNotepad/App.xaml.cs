@@ -1,4 +1,5 @@
 ﻿using MapNotepad.Services.Authorization;
+using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
@@ -6,6 +7,7 @@ using MapNotepad.Services.SettingsManager;
 using MapNotepad.Themes;
 using MapNotepad.ViewModels;
 using MapNotepad.Views;
+using Prism;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -18,6 +20,10 @@ namespace MapNotepad
     public partial class App : PrismApplication
     {
         public App()
+        {
+        }
+
+        public App(IPlatformInitializer platformInitializer) : base(platformInitializer)
         {
         }
 

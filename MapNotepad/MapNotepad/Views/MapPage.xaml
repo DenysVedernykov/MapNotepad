@@ -12,11 +12,8 @@
     
     <view:BaseContentPage.Content>
         <StackLayout>
-            <Grid RowSpacing="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <Grid RowSpacing="0" 
+                  RowDefinitions="auto">
 
                 <controls:CustomSearchBar Grid.Row="0"
                                           Text="{Binding Text}"
@@ -28,7 +25,6 @@
                 
                 <maps:Map x:Name="map" 
                           Grid.Row="1"
-                          HeightRequest="550"
                           MyLocationEnabled="{Binding IsShowingUser}">
                     
                     <maps:Map.Behaviors>
@@ -38,8 +34,6 @@
                                                           EventName="MapClicked"
                                                           EventArgsParameterPath="Point"/>
 
-                        <Behaviors:EventToCommandBehavior Command="{Binding CameraMoveStartedCommand}"
-                                                          EventName="CameraMoveStarted"/>
                         </maps:Map.Behaviors>
                 </maps:Map>
 

@@ -17,7 +17,7 @@
         <StackLayout Spacing="0"
                      BackgroundColor="{DynamicResource White}">
             
-            <Grid RowSpacing="0">
+            <!--<Grid RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="550"/>
@@ -47,7 +47,7 @@
 
                                 <context:SideContextMenuView.View>
 
-                                    <controls:ClickableContentView Command="{Binding TabCommand}"
+                                    --><!--<controls:ClickableContentView Command="{Binding TabCommand}"
                                                                    CommandParameter="{Binding .}"
                                                                    WidthRequest="420">
                                         <StackLayout Spacing="0">
@@ -106,8 +106,8 @@
                                                      HeightRequest="1"/>
                                         </StackLayout>
 
-                                    </controls:ClickableContentView>
-                                    
+                                    </controls:ClickableContentView>--><!--
+                                    <StackLayout></StackLayout>
                                 </context:SideContextMenuView.View>
 
                                 <context:SideContextMenuView.ContextTemplate>
@@ -159,7 +159,7 @@
                              Command="{Binding GoAddPinsPageCommand}">
 
                 </ImageButton>
-            </Grid>
+            </Grid>-->
         </StackLayout>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

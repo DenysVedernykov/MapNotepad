@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace MapNotepad.Controls
 {
-   public class ClickableContentView : ContentView
+    public class ClickableContentView : ContentView
     {
         public event System.EventHandler OnInvalidate;
 
@@ -32,7 +32,7 @@ namespace MapNotepad.Controls
         #region -- Public properties --
 
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ClickableContentView), default(ICommand),BindingMode.TwoWay);
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ClickableContentView), default(ICommand));
 
         public ICommand Command
         {
@@ -98,21 +98,21 @@ namespace MapNotepad.Controls
 
         #region -- Overrides --
 
-        public bool TouchesBegan(System.Collections.Generic.IEnumerable<NGraphics.Point> points)
+        public bool TouchesBegan(System.Collections.Generic.IEnumerable<Point> points)
         {
             if (CurrentState != State.Disabled)
                 CurrentState = State.Selected;
             return true;
         }
 
-        public bool TouchesCancelled(System.Collections.Generic.IEnumerable<NGraphics.Point> points)
+        public bool TouchesCancelled(System.Collections.Generic.IEnumerable<Point> points)
         {
             if (CurrentState != State.Disabled)
                 CurrentState = State.Default;
             return true;
         }
 
-        public bool TouchesEnded(System.Collections.Generic.IEnumerable<NGraphics.Point> points)
+        public bool TouchesEnded(System.Collections.Generic.IEnumerable<Point> points)
         {
             if (CurrentState != State.Disabled)
             {
@@ -132,7 +132,7 @@ namespace MapNotepad.Controls
             return true;
         }
 
-        public virtual bool TouchesMoved(IEnumerable<NGraphics.Point> points)
+        public virtual bool TouchesMoved(IEnumerable<Point> points)
         {
             return true;
         }

@@ -58,7 +58,8 @@
                 <maps:Map x:Name="map"
                           Margin="0, 25, 0, 0"
                           HeightRequest="270"
-                          InitialCameraUpdate="{Binding InitialCameraUpdate}">
+                          InitialCameraUpdate="{Binding InitialCameraUpdate}"
+                          MyLocationEnabled="{Binding IsShowingUser}">
 
                     <maps:Map.Behaviors>
                         <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
@@ -69,12 +70,12 @@
             </StackLayout>
 
             <ImageButton Grid.Row="0"
-                         IsVisible="False"
                          Source="ic_location.png"
                          BackgroundColor="{DynamicResource White}" 
-                         CornerRadius="30"
-                         Padding="16"
-                         Margin="0, 0, 20, 20"
+                         CornerRadius="20"
+                         Padding="10"
+                         Margin="0, 0, 7, 115"
+                         Command="{Binding MoveToMyLocationCommand}"
                          VerticalOptions="End" 
                          HorizontalOptions="End"/>
         </Grid>

@@ -65,9 +65,6 @@
                         <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
                                                           EventName="MapClicked"
                                                           EventArgsParameterPath="Point"/>
-
-                        <behaviors:EventToCommandBehavior Command="{Binding CameraMoveStartedCommand}"
-                                                          EventName="CameraMoveStarted"/>
                     </maps:Map.Behaviors>
                 </maps:Map>
             </StackLayout>

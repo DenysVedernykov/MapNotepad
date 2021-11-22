@@ -14,7 +14,8 @@ namespace MapNotepad.Droid.Renderers.Controls
     [Preserve(AllMembers = true)]
     public class ClickableContentViewRenderer : VisualElementRenderer<ClickableContentView>
     {
-        public ClickableContentViewRenderer(Android.Content.Context context) : base(context)
+        public ClickableContentViewRenderer(Android.Content.Context context) 
+            : base(context)
         {
         }
 
@@ -102,12 +103,12 @@ namespace MapNotepad.Droid.Renderers.Controls
         {
             var scale = Element.Width / Width;
 
-            var touchInfo = new List<NGraphics.Point>();
+            var touchInfo = new List<Point>();
             for (var i = 0; i < e.PointerCount; i++)
             {
                 var coord = new MotionEvent.PointerCoords();
                 e.GetPointerCoords(i, coord);
-                touchInfo.Add(new NGraphics.Point(coord.X * scale, coord.Y * scale));
+                touchInfo.Add(new Point(coord.X * scale, coord.Y * scale));
             }
 
             var result = false;

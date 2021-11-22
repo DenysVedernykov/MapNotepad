@@ -3,6 +3,7 @@ using MapNotepad.Helpers;
 using MapNotepad.Helpers.ProcessHelpers;
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
+using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
@@ -13,6 +14,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -26,16 +28,21 @@ namespace MapNotepad.ViewModels
 
         private ISettingsManagerService _settingsManagerService;
 
+        private IPermissionsService _permissionsService;
+
         public MapPageViewModel(
             INavigationService navigationService,
             IPinService pinService,
             IAuthorizationService authorizationService,
-            ISettingsManagerService settingsManagerService)
+            ISettingsManagerService settingsManagerService,
+            IPermissionsService permissionsService
+            )
             : base(navigationService)
         {
             _pinService = pinService; 
             _authorizationService = authorizationService;
             _settingsManagerService = settingsManagerService;
+            _permissionsService = permissionsService;
 
             _pins = new ObservableCollection<Pin>();
             _searchResult = new ObservableCollection<UserPin>();
@@ -132,9 +139,6 @@ namespace MapNotepad.ViewModels
 
         private ICommand _moveToMyLocationCommand;
         public ICommand MoveToMyLocationCommand => _moveToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnMoveToMyLocationCommandAsync);
-        
-        private ICommand _cameraMoveStartedCommand;
-        public ICommand CameraMoveStartedCommand => _cameraMoveStartedCommand ??= SingleExecutionCommand.FromFunc(OnCameraMoveStartedCommandAsync);
 
         private ICommand _mapClickedCommand;
         public ICommand MapClickedCommand => _mapClickedCommand ??= SingleExecutionCommand.FromFunc<Position>(OnMapClickedCommandAsync);
@@ -151,6 +155,8 @@ namespace MapNotepad.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
+            CheckPermissions().Await();
+
             MessagingCenter.Subscribe<AddPinsPageViewModel, UserPin>(
                 this,
                 "AddPin",
@@ -248,6 +254,15 @@ namespace MapNotepad.ViewModels
 
         #endregion
 
+        #region -- Private helpers --
+
+        private async Task CheckPermissions()
+        {
+            IsShowingUser = await _permissionsService.RequestAsync<Permissions.LocationWhenInUse>() == PermissionStatus.Granted;
+        }
+
+        #endregion
+
         #region -- Private methods --
 
         private void DeletePin(object sender, UserPinWithCommand userPin)
@@ -297,16 +312,14 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        private Task OnCameraMoveStartedCommandAsync()
-        {
-            IsShowingUser = true;
-
-            return Task.CompletedTask;
-        }
-
         private Task OnMoveToMyLocationCommandAsync()
         {
-            MessagingCenter.Send<MapPageViewModel>(this, "MoveToMyLocation");
+            CheckPermissions().Await();
+
+            if (IsShowingUser)
+            {
+                MessagingCenter.Send<MapPageViewModel>(this, "MoveToMyLocation");
+            }
 
             return Task.CompletedTask;
         }
