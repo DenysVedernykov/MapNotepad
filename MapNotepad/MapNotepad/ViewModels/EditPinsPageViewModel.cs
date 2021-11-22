@@ -1,17 +1,298 @@
-﻿using Prism.Mvvm;
+﻿using Acr.UserDialogs;
+using MapNotepad.Helpers;
+using MapNotepad.Models;
+using MapNotepad.Services.Authorization;
+using MapNotepad.Services.Pins;
+using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Unity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 
 namespace MapNotepad.ViewModels
 {
     class EditPinsPageViewModel : BaseViewModel
     {
-        public EditPinsPageViewModel(INavigationService navigationService)
+        private Pin _currentPin;
+
+        private UserPinWithCommand userPin;
+        private UserPinWithCommand userOldPin;
+
+        private ResourceDictionary _resourceDictionary;
+
+        private IPinService _pinService;
+
+        private IAuthorizationService _authorizationService;
+
+        public EditPinsPageViewModel(
+            INavigationService navigationService,
+            IPinService pinService,
+            IAuthorizationService authorizationService)
             : base(navigationService)
         {
+            _pinService = pinService;
+            _authorizationService = authorizationService;
 
+            _currentPin = new Pin();
+            _currentPin.Label = "Point";
+
+            ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
+            _resourceDictionary = mergedDictionaries.FirstOrDefault();
+
+            BorderColorLabel = (Color)_resourceDictionary["LightGray"];
+            BorderColorLongitude = (Color)_resourceDictionary["LightGray"];
+            BorderColorLatitude = (Color)_resourceDictionary["LightGray"];
         }
+
+        #region -- Public properties --
+
+        private Color _borderColorLabel;
+        public Color BorderColorLabel
+        {
+            get => _borderColorLabel;
+            set => SetProperty(ref _borderColorLabel, value);
+        }
+
+        private Color _borderColorLongitude;
+        public Color BorderColorLongitude
+        {
+            get => _borderColorLongitude;
+            set => SetProperty(ref _borderColorLongitude, value);
+        }
+
+        private Color _borderColorLatitude;
+        public Color BorderColorLatitude
+        {
+            get => _borderColorLatitude;
+            set => SetProperty(ref _borderColorLatitude, value);
+        }
+
+        private string _label;
+        public string Label
+        {
+            get => _label;
+            set => SetProperty(ref _label, value);
+        }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        private string _latitude;
+        public string Latitude
+        {
+            get => _latitude;
+            set => SetProperty(ref _latitude, value);
+        }
+
+        private string _longitude;
+        public string Longitude
+        {
+            get => _longitude;
+            set => SetProperty(ref _longitude, value);
+        }
+
+        private bool _isEnableSaveButton;
+        public bool IsEnableSaveButton
+        {
+            get => _isEnableSaveButton;
+            set => SetProperty(ref _isEnableSaveButton, value);
+        }
+
+        private CameraUpdate _initialCameraUpdate;
+        public CameraUpdate InitialCameraUpdate
+        {
+            get => _initialCameraUpdate;
+            set => SetProperty(ref _initialCameraUpdate, value);
+        }
+
+        private ICommand _goBackCommand;
+        public ICommand GoBackCommand => _goBackCommand ??= SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
+
+        private ICommand _saveCommand;
+        public ICommand SaveCommand => _saveCommand ??= SingleExecutionCommand.FromFunc(OnSaveCommandAsync);
+
+        private ICommand _mapClickedCommand;
+        public ICommand MapClickedCommand => _mapClickedCommand ??= SingleExecutionCommand.FromFunc<Position>(OnMapClickedCommandAsync);
+
+        #endregion
+
+        #region -- IInitializeAsync implementation --
+
+        public async override Task InitializeAsync(INavigationParameters parameters)
+        {
+            if (parameters.Count > 0)
+            {
+                if (parameters["Pin"] != null)
+                {
+                    userOldPin = parameters["Pin"] as UserPinWithCommand;
+
+                    userPin = new UserPinWithCommand();
+
+                    userPin.Id = userOldPin.Id;
+                    userPin.Address = userOldPin.Address;
+                    userPin.Autor = userOldPin.Autor;
+                    userPin.CreationDate = userOldPin.CreationDate;
+                    userPin.Description = userOldPin.Description;
+                    userPin.Favorites = userOldPin.Favorites;
+                    userPin.Label = userOldPin.Label;
+                    userPin.Latitude = userOldPin.Latitude;
+                    userPin.Longitude = userOldPin.Longitude;
+                    userPin.TabCommand = userOldPin.TabCommand;
+                    userPin.EditCommand = userOldPin.EditCommand;
+                    userPin.DeleteCommand = userOldPin.DeleteCommand;
+                    userPin.SwitchFavoritesCommand = userOldPin.SwitchFavoritesCommand;
+
+                    Label = userPin.Label;
+                    Description = userPin.Description;
+                    Latitude = userPin.Latitude.ToString();
+                    Longitude = userPin.Longitude.ToString();
+
+                    _currentPin.Position = new Position(userOldPin.Latitude, userOldPin.Longitude);
+
+                    InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(_currentPin.Position, 12d);
+                }
+            }
+        }
+
+        #endregion
+
+        #region -- Overrides --
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            double sample;
+
+            base.OnPropertyChanged(args);
+
+            IsEnableSaveButton = !string.IsNullOrEmpty(Label);
+
+            bool updatePin = false;
+            bool truePosition = double.TryParse(Longitude, out sample)
+                && double.TryParse(Latitude, out sample);
+
+            switch (args.PropertyName)
+            {
+                case nameof(Label):
+                    if (string.IsNullOrEmpty(Label))
+                    {
+                        BorderColorLabel = (Color)_resourceDictionary["Error"];
+                    }
+                    else
+                    {
+                        BorderColorLabel = (Color)_resourceDictionary["LightGray"];
+                    }
+
+                    break;
+                case nameof(Longitude):
+                    if (double.TryParse(Longitude, out sample))
+                    {
+                        BorderColorLongitude = (Color)_resourceDictionary["LightGray"];
+                    }
+                    else
+                    {
+                        BorderColorLongitude = (Color)_resourceDictionary["Error"];
+                    }
+
+                    updatePin = true;
+
+                    break;
+                case nameof(Latitude):
+                    if (double.TryParse(Latitude, out sample))
+                    {
+                        BorderColorLatitude = (Color)_resourceDictionary["LightGray"];
+                    }
+                    else
+                    {
+                        BorderColorLatitude = (Color)_resourceDictionary["Error"];
+                    }
+
+                    updatePin = true;
+
+                    break;
+            }
+
+            if (truePosition && updatePin)
+            {
+                MessagingCenter.Send<EditPinsPageViewModel, Pin>(this, "DeletePin", _currentPin);
+
+                _currentPin.Position = new Position(double.Parse(Latitude), double.Parse(Longitude));
+
+                MessagingCenter.Send<EditPinsPageViewModel, Pin>(this, "AddPin", _currentPin);
+            }
+        }
+
+        #endregion
+
+        #region -- Private methods --
+
+        private async Task OnGoBackCommandAsync()
+        {
+            var confirm = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig()
+            {
+                OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                Message = Resource.ResourceManager.GetString("AlertNotSaved", Resource.Culture),
+                CancelText = Resource.ResourceManager.GetString("Cancel", Resource.Culture)
+            });
+
+            if (confirm)
+            {
+                await _navigationService.GoBackAsync();
+            }
+        }
+
+        private async Task OnSaveCommandAsync()
+        {
+            var geoCoder = new Geocoder();
+
+            var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
+            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
+
+            userPin.Label = Label;
+            userPin.Address = possibleAddresses.FirstOrDefault();
+            userPin.Description = Description;
+            userPin.Latitude = double.Parse(Latitude);
+            userPin.Longitude = double.Parse(Longitude);
+
+            var result = _pinService.UpdatePinAsync(userPin.ToUserPin());
+
+            if (result.Result.IsSuccess)
+            {
+
+                MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "DeletePin", userOldPin);
+                MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "AddPin", userPin);
+
+                await _navigationService.GoBackAsync();
+            }
+            else
+            {
+                await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                {
+                    OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                    Message = Resource.ResourceManager.GetString("ErrorEditPin", Resource.Culture)
+                });
+            }
+        }
+
+        private Task OnMapClickedCommandAsync(Position position)
+        {
+            Longitude = position.Longitude.ToString();
+            Latitude = position.Latitude.ToString();
+
+            return Task.CompletedTask;
+        }
+
+        #endregion
+
     }
 }

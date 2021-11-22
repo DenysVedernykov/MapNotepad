@@ -120,6 +120,9 @@
   <data name="AddPin" xml:space="preserve">
     <value>Add pin</value>
   </data>
+  <data name="AlertNotSaved" xml:space="preserve">
+    <value>Want to go back without saving?</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -153,6 +156,9 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="EditPin" xml:space="preserve">
+    <value>Edit pin</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -179,6 +185,9 @@
   </data>
   <data name="ErrorAddPin" xml:space="preserve">
     <value>Error add pin</value>
+  </data>
+  <data name="ErrorEditPin" xml:space="preserve">
+    <value>Error edit pin</value>
   </data>
   <data name="ErrorMessageEmptyEmail" xml:space="preserve">
     <value>Empty Email</value>
@@ -218,6 +227,9 @@
   </data>
   <data name="NoPinsAdded" xml:space="preserve">
     <value>No pins added</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Not found </value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>

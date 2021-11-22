@@ -108,6 +108,13 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _isEnableSaveButton, value);
         }
 
+        private bool _isShowingUser;
+        public bool IsShowingUser
+        {
+            get => _isShowingUser;
+            set => SetProperty(ref _isShowingUser, value);
+        }
+
         private CameraUpdate _initialCameraUpdate;
         public CameraUpdate InitialCameraUpdate
         {
@@ -120,6 +127,12 @@ namespace MapNotepad.ViewModels
 
         private ICommand _saveCommand;
         public ICommand SaveCommand => _saveCommand ??= SingleExecutionCommand.FromFunc(OnSaveCommandAsync);
+
+        private ICommand _moveToMyLocationCommand;
+        public ICommand MoveToMyLocationCommand => _moveToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnMoveToMyLocationCommandAsync);
+
+        private ICommand _cameraMoveStartedCommand;
+        public ICommand CameraMoveStartedCommand => _cameraMoveStartedCommand ??= SingleExecutionCommand.FromFunc(OnCameraMoveStartedCommandAsync);
 
         private ICommand _mapClickedCommand;
         public ICommand MapClickedCommand => _mapClickedCommand ??= SingleExecutionCommand.FromFunc<Position>(OnMapClickedCommandAsync);
@@ -200,43 +213,81 @@ namespace MapNotepad.ViewModels
             return _navigationService.GoBackAsync();
         }
 
-        private async Task OnSaveCommandAsync()
+        private Task OnSaveCommandAsync()
         {
             var geoCoder = new Geocoder();
 
             var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
-            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
+            var possibleAddresses = geoCoder.GetAddressesForPositionAsync(position);
 
-            var userPin = new UserPin()
+            if (possibleAddresses != null)
             {
-                Autor = _authorizationService.Profile.Id,
-                Label = Label,
-                Address = possibleAddresses.FirstOrDefault(),
-                Description = Description,
-                Latitude = double.Parse(Latitude),
-                Longitude = double.Parse(Longitude),
-                Favorites = true,
-                CreationDate = DateTime.Now
-            };
+                if (possibleAddresses.IsCompleted)
+                {
+                    var userPin = new UserPin()
+                    {
+                        Autor = _authorizationService.Profile.Id,
+                        Label = Label,
+                        Address = possibleAddresses.Result.FirstOrDefault(),
+                        Description = Description,
+                        Latitude = double.Parse(Latitude),
+                        Longitude = double.Parse(Longitude),
+                        Favorites = true,
+                        CreationDate = DateTime.Now
+                    };
 
-            var result = _pinService.AddPinAsync(userPin);
+                    var result = _pinService.AddPinAsync(userPin);
 
-            if (result.Result.IsSuccess)
-            {
-                userPin.Id = result.Result.Result;
+                    if (result.Result.IsSuccess)
+                    {
+                        userPin.Id = result.Result.Result;
 
-                MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
+                        MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
 
-                await _navigationService.GoBackAsync();
+                        _navigationService.GoBackAsync();
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.AlertAsync(new AlertConfig()
+                        {
+                            OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                            Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
+                        });
+                    }
+                }
+                else
+                {
+                    UserDialogs.Instance.AlertAsync(new AlertConfig()
+                    {
+                        OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                        Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
+                    });
+                }
             }
             else
             {
-                await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
                     OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
                     Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
                 });
             }
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnCameraMoveStartedCommandAsync()
+        {
+            IsShowingUser = true;
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnMoveToMyLocationCommandAsync()
+        {
+            MessagingCenter.Send<AddPinsPageViewModel>(this, "MoveToMyLocation");
+
+            return Task.CompletedTask;
         }
 
         private Task OnMapClickedCommandAsync(Position position)

@@ -9,9 +9,10 @@ using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Views
 {
-    public partial class ShowPhotosPage : BaseContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ScanCodePage : BaseContentPage
     {
-        public ShowPhotosPage()
+        public ScanCodePage()
         {
             InitializeComponent();
         }

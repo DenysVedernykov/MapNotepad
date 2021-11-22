@@ -7,7 +7,9 @@
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
                       xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings" 
-                      xmlns:Behaviors="http://prismlibrary.com">
+                      xmlns:Behaviors="http://prismlibrary.com"
+                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer">
+    
     <view:BaseContentPage.Content>
         <StackLayout>
             <Grid RowSpacing="0">
@@ -19,80 +21,103 @@
                 <controls:CustomSearchBar Grid.Row="0"
                                           Text="{Binding Text}"
                                           Placeholder="{Helper:TranslateExtension Search}"
+                                          LineColor="{DynamicResource Variant}"
                                           IsShowList="{Binding IsShowList}"
                                           LeftButtonCommand="{Binding GoSettingsButtonCommand}"
                                           RightButtonCommand="{Binding ExitButtonCommand}"/>
                 
                 <maps:Map x:Name="map" 
                           Grid.Row="1"
-                          HeightRequest="550">
+                          HeightRequest="550"
+                          MyLocationEnabled="{Binding IsShowingUser}">
+                    
                     <maps:Map.Behaviors>
                         <bindings:BindingPinsBehavior Value="{Binding Pins}"/>
                         
                         <Behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
                                                           EventName="MapClicked"
                                                           EventArgsParameterPath="Point"/>
+
+                        <Behaviors:EventToCommandBehavior Command="{Binding CameraMoveStartedCommand}"
+                                                          EventName="CameraMoveStarted"/>
                         </maps:Map.Behaviors>
                 </maps:Map>
 
-                <ListView x:Name="ListView"
-                          Grid.Row="1"
-                          VerticalOptions="Start"
-                          HasUnevenRows="True"
+                <statecontainer:StateContainer Grid.Row="1"
+                                               IsVisible="{Binding IsShowList}"
+                                               State="{Binding IsEmptySearchResult}"
+                                               VerticalOptions="Start">
+
+                    <statecontainer:StateCondition State="True">
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     BackgroundColor="{DynamicResource White}"
+                                     Padding="10">
+                            <Label Text="{Helper:TranslateExtension NotFound}"
+                                   FontFamily="Montserrat-Medium"
+                                   HorizontalOptions="Center"
+                                   TextColor="{DynamicResource Black}"/>
+                        </StackLayout>
+                    </statecontainer:StateCondition>
+
+                    <statecontainer:StateCondition State="False">
+                        <ListView HasUnevenRows="True"
                           ItemsSource="{Binding SearchResult}"
                           IsVisible="{Binding IsShowList}"
                           SelectedItem="{Binding SelectedItem}"
                           SeparatorColor="{DynamicResource Variant}">
-                    
-                    <ListView.Behaviors>
-                        <Behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 
+
+                            <ListView.Behaviors>
+                                <Behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 
                                                           EventName="ItemTapped" 
                                                           EventArgsConverterParameter="{Binding .}"/>
-                    </ListView.Behaviors>
-                    
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <StackLayout Orientation="Horizontal"
+                            </ListView.Behaviors>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <StackLayout Orientation="Horizontal"
                                                  BackgroundColor="{DynamicResource White}"
                                                  Spacing="0">
-                                        <Frame Padding="22, 22, 13, 22"
+                                                <Frame Padding="22, 22, 13, 22"
                                                HasShadow="False">
-                                            <Image Source="ic_pin_gray.png"
+                                                    <Image Source="ic_pin_gray.png"
                                                    HeightRequest="28"
                                                    Aspect="AspectFill"/>
-                                        </Frame>
-                                        <StackLayout Padding="0, 15, 0, 15"
+                                                </Frame>
+                                                <StackLayout Padding="0, 15, 0, 15"
                                                      Spacing="0">
-                                            <Label Text="{Binding Label}"
+                                                    <Label Text="{Binding Label}"
                                                    TextColor="{DynamicResource Black}"
                                                    FontSize="14"
                                                    FontFamily="Montserrat-Medium"
                                                    MaxLines="1"/>
-                                            <Label Text="{Binding Address}"
+                                                    <Label Text="{Binding Address}"
                                                    TextColor="{DynamicResource DarkGray}"
                                                    FontSize="14"
                                                    FontFamily="Montserrat-Regular"
                                                    MaxLines="1"/>
-                                        </StackLayout>
-                                    </StackLayout>
-                                </ViewCell.View>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </statecontainer:StateCondition>
+
+                </statecontainer:StateContainer>
+
                 <ImageButton Grid.Row="1"
                              Source="ic_location.png"
                              BackgroundColor="{DynamicResource White}" 
                              CornerRadius="20"
                              Padding="10"
-                             Margin="0, 0, 10, 115"
-                             Command="{Binding AddCommand}"
+                             Margin="0, 0, 7, 115"
+                             Command="{Binding MoveToMyLocationCommand}"
                              VerticalOptions="End" 
                              HorizontalOptions="End"/>
-
+                
                 <Frame Grid.Row="1"
                        HasShadow="False"
                        CornerRadius="5"

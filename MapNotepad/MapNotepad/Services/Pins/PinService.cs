@@ -1,5 +1,6 @@
 ﻿using MapNotepad.Helpers.ProcessHelpers;
 using MapNotepad.Models;
+using MapNotepad.Services.Authorization;
 using MapNotepad.Services.Repository;
 using System;
 using System.Collections;
@@ -14,9 +15,14 @@ namespace MapNotepad.Services.Pins
     {
         private IRepositoryService _repositoryService;
 
-        public PinService(IRepositoryService repositoryService)
+        private IAuthorizationService _authorizationService;
+
+        public PinService(
+            IRepositoryService repositoryService,
+            IAuthorizationService authorizationService)
         {
             _repositoryService = repositoryService;
+            _authorizationService = authorizationService;
         }
 
         public async Task<AOResult<int>> AddPinAsync(UserPin pin)
@@ -108,7 +114,9 @@ namespace MapNotepad.Services.Pins
                 }
                 else
                 {
-                    result.SetSuccess(response.Result);
+                    var pinsUser = response.Result.Where(row => row.Autor == _authorizationService.Profile.Id).ToList();
+
+                    result.SetSuccess(pinsUser);
                 }
             }
             catch (Exception ex)
@@ -160,7 +168,9 @@ namespace MapNotepad.Services.Pins
                 }
                 else
                 {
-                    var list = response.Result.Where(
+                    var pinsUser = response.Result.Where(row => row.Autor == _authorizationService.Profile.Id);
+
+                    var list = pinsUser.Where(
                         (row) => {
                             var result = row.Longitude.ToString().ToLower().IndexOf(text) != -1
                             | row.Latitude.ToString().ToLower().IndexOf(text) != -1;

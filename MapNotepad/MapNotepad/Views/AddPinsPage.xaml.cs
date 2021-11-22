@@ -1,4 +1,5 @@
 ﻿using MapNotepad.ViewModels;
+using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,16 @@ namespace MapNotepad.Views
                 "AddPin",
                 (sender, pin) => {
                     map.Pins.Add(pin);
+                });
+
+            MessagingCenter.Subscribe<AddPinsPageViewModel>(
+                this,
+                "MoveToMyLocation",
+                async (sender) => {
+                    var locator = CrossGeolocator.Current;
+                    var position = await locator.GetPositionAsync();
+
+                    await map.MoveCamera(CameraUpdateFactory.NewPosition(new Position(position.Latitude, position.Longitude)));
                 });
 
             InitializeComponent();

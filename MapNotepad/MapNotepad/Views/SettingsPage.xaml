@@ -4,7 +4,8 @@
                       x:Class="MapNotepad.Views.SettingsPage"
                       xmlns:view="clr-namespace:MapNotepad.Views" 
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
-                      xmlns:Helper="clr-namespace:MapNotepad.Helpers">
+                      xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
+                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer">
     <view:BaseContentPage.Content>
         <StackLayout>
             <controls:CustomToolBar Title="{Helper:TranslateExtension Settings}"
@@ -22,33 +23,39 @@
                 </StackLayout>
                 <BoxView HeightRequest="1"
                          Color="{DynamicResource Variant}"/>
-                
-                <StackLayout Orientation="Horizontal"
+
+                <controls:ClickableContentView>
+                    <StackLayout Orientation="Horizontal"
                              Padding="25, 20, 25, 20">
-                    <Label Text="{Helper:TranslateExtension ColorClock}" 
+                        <Label Text="{Helper:TranslateExtension ColorClock}" 
                            FontSize="16"
                            TextColor="{DynamicResource Black}"
                            FontFamily="Montserrat-Regular"/>
-                    <Image Source="ic_left_gray.png"
+                        <Image Source="ic_left_gray.png"
                            HorizontalOptions="EndAndExpand"
                            WidthRequest="30"/>
-                </StackLayout>
+                    </StackLayout>
+                </controls:ClickableContentView>
+                
                 <BoxView HeightRequest="1"
                          Color="{DynamicResource Variant}"/>
-                
-                <StackLayout Orientation="Horizontal"
+
+                <controls:ClickableContentView Command="{Binding GoScanCodeCommand}">
+                    <StackLayout Orientation="Horizontal"
                              Padding="25, 20, 25, 20">
-                    <Label Text="{Helper:TranslateExtension ScanCode}" 
+                        <Label Text="{Helper:TranslateExtension ScanCode}" 
                            FontSize="16"
                            TextColor="{DynamicResource Black}"
                            FontFamily="Montserrat-Regular"/>
-                    <Image Source="ic_left_gray.png"
+                        <Image Source="ic_left_gray.png"
                            HorizontalOptions="EndAndExpand"
                            WidthRequest="30"/>
-                </StackLayout>
+                    </StackLayout>
+                </controls:ClickableContentView>
+                
                 <BoxView HeightRequest="1"
                          Color="{DynamicResource Variant}"/>
-                
+
             </StackLayout>
         </StackLayout>
     </view:BaseContentPage.Content>

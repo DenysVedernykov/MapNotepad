@@ -10,6 +10,7 @@ using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -38,8 +39,6 @@ namespace MapNotepad.ViewModels
 
             _pins = new ObservableCollection<Pin>();
             _searchResult = new ObservableCollection<UserPin>();
-
-            IsShowList = false;
         }
 
         #region -- Public properties --
@@ -72,11 +71,25 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _pinDescription, value);
         }
 
+        private bool _isPinDescriptionVisible;
+        public bool IsPinDescriptionVisible
+        {
+            get => _isPinDescriptionVisible;
+            set => SetProperty(ref _isPinDescriptionVisible, value);
+        }
+
         private string _text;
         public string Text
         {
             get => _text;
             set => SetProperty(ref _text, value);
+        }
+
+        private bool _isEmptySearchResult;
+        public bool IsEmptySearchResult
+        {
+            get => _isEmptySearchResult;
+            set => SetProperty(ref _isEmptySearchResult, value);
         }
 
         private bool _isShowList;
@@ -86,11 +99,11 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _isShowList, value);
         }
 
-        private bool _isPinDescriptionVisible;
-        public bool IsPinDescriptionVisible
+        private bool _isShowingUser;
+        public bool IsShowingUser
         {
-            get => _isPinDescriptionVisible;
-            set => SetProperty(ref _isPinDescriptionVisible, value);
+            get => _isShowingUser;
+            set => SetProperty(ref _isShowingUser, value);
         }
 
         private UserPin _selectedItem;
@@ -117,6 +130,12 @@ namespace MapNotepad.ViewModels
         private ICommand _itemTappedCommand;
         public ICommand ItemTappedCommand => _itemTappedCommand ??= SingleExecutionCommand.FromFunc(OnItemTappedCommandAsync);
 
+        private ICommand _moveToMyLocationCommand;
+        public ICommand MoveToMyLocationCommand => _moveToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnMoveToMyLocationCommandAsync);
+        
+        private ICommand _cameraMoveStartedCommand;
+        public ICommand CameraMoveStartedCommand => _cameraMoveStartedCommand ??= SingleExecutionCommand.FromFunc(OnCameraMoveStartedCommandAsync);
+
         private ICommand _mapClickedCommand;
         public ICommand MapClickedCommand => _mapClickedCommand ??= SingleExecutionCommand.FromFunc<Position>(OnMapClickedCommandAsync);
 
@@ -136,38 +155,37 @@ namespace MapNotepad.ViewModels
                 this,
                 "AddPin",
                 (sender, userPin) => {
-                    var pin = new Pin()
-                    {
-                        Label = userPin.Label,
-                        Position = new Position(userPin.Latitude, userPin.Longitude),
-                        IsVisible = userPin.Favorites,
-                        Tag = userPin.Id
-                    };
-                    pin.Clicked += Pin_Clicked;
-
-                    Pins.Add(pin);
+                    AddPin(sender, userPin.ToUserPinWithCommand());
                 });
             
             MessagingCenter.Subscribe<PinsPageViewModel, UserPinWithCommand>(
                 this,
                 "DeletePin",
                 (sender, userPin) => {
-                    var pin = new Pin()
-                    {
-                        Label = userPin.Label,
-                        Position = new Position(userPin.Latitude, userPin.Longitude),
-                        IsVisible = userPin.Favorites,
-                        Tag = userPin.Id
-                    };
+                    DeletePin(sender, userPin);
+                });
 
-                    Pins.Remove(pin);
+            MessagingCenter.Subscribe<EditPinsPageViewModel, UserPinWithCommand>(
+                this,
+                "AddPin",
+                (sender, userPin) => {
+                    AddPin(sender, userPin);
+                });
+            
+            MessagingCenter.Subscribe<EditPinsPageViewModel, UserPinWithCommand>(
+                this,
+                "DeletePin",
+                (sender, userPin) => {
+                    DeletePin(sender, userPin);
                 });
 
             var allPins = await _pinService.AllPinsAsync();
 
             if (allPins.IsSuccess)
             {
-                foreach (var userPin in allPins.Result)
+                var favoritesPins = allPins.Result.Where(row => row.Favorites);
+
+                foreach (var userPin in favoritesPins)
                 {
                     var pin = new Pin()
                     {
@@ -194,21 +212,27 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Text):
-                    if (!string.IsNullOrWhiteSpace(Text))
+                    if (string.IsNullOrWhiteSpace(Text))
+                    {
+                        IsEmptySearchResult = false;
+                    }
+                    else
                     {
                         var allPins = _pinService.SearchPinsAsync(Text.Trim());
 
                         if (allPins.Result.IsSuccess)
                         {
+                            var favoritesPins = allPins.Result.Result.Where(row => row.Favorites);
+
                             SearchResult.Clear();
 
-                            foreach (var pin in allPins.Result.Result)
+                            foreach (var pin in favoritesPins)
                             {
                                 SearchResult.Add(pin);
                             }
                         }
 
-                        IsShowList = SearchResult.Count > 0;
+                        IsEmptySearchResult = SearchResult.Count == 0;
                     }
                     
                     break;
@@ -216,6 +240,7 @@ namespace MapNotepad.ViewModels
                     if (!IsShowList)
                     {
                         SearchResult.Clear();
+                        IsEmptySearchResult = false;
                     }
                     break;
             }
@@ -224,6 +249,33 @@ namespace MapNotepad.ViewModels
         #endregion
 
         #region -- Private methods --
+
+        private void DeletePin(object sender, UserPinWithCommand userPin)
+        {
+            var pin = new Pin()
+            {
+                Label = userPin.Label,
+                Position = new Position(userPin.Latitude, userPin.Longitude),
+                IsVisible = userPin.Favorites,
+                Tag = userPin.Id
+            };
+
+            Pins.Remove(pin);
+        }
+
+        private void AddPin(object sender, UserPinWithCommand userPin)
+        {
+            var pin = new Pin()
+            {
+                Label = userPin.Label,
+                Position = new Position(userPin.Latitude, userPin.Longitude),
+                IsVisible = userPin.Favorites,
+                Tag = userPin.Id
+            };
+            pin.Clicked += Pin_Clicked;
+
+            Pins.Add(pin);
+        }
 
         private void Pin_Clicked(object sender, System.EventArgs e)
         {
@@ -243,6 +295,20 @@ namespace MapNotepad.ViewModels
                     IsPinDescriptionVisible = true;
                 }
             }
+        }
+
+        private Task OnCameraMoveStartedCommandAsync()
+        {
+            IsShowingUser = true;
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnMoveToMyLocationCommandAsync()
+        {
+            MessagingCenter.Send<MapPageViewModel>(this, "MoveToMyLocation");
+
+            return Task.CompletedTask;
         }
 
         private Task OnMapClickedCommandAsync(Position position)

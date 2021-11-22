@@ -1,4 +1,5 @@
 ﻿using MapNotepad.ViewModels;
+using Plugin.Geolocator;
 using Prism.Unity;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,16 @@ namespace MapNotepad.Views
                 "MoveToPosition",
                 (sender, position) => {
                     map.MoveCamera(CameraUpdateFactory.NewPosition(position));
+                });
+
+            MessagingCenter.Subscribe<MapPageViewModel>(
+                this,
+                "MoveToMyLocation",
+                async (sender) => {
+                    var locator = CrossGeolocator.Current;
+                    var position = await locator.GetPositionAsync();
+
+                    await map.MoveCamera(CameraUpdateFactory.NewPosition(new Position(position.Latitude, position.Longitude)));
                 });
 
             InitializeComponent();

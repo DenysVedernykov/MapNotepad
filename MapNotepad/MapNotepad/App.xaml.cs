@@ -35,6 +35,7 @@ namespace MapNotepad
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
+            containerRegistry.RegisterForNavigation<ScanCodePage, ScanCodePageViewModel>();
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
             containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
@@ -44,7 +45,6 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<PinsPage, PinsPageViewModel>();
             containerRegistry.RegisterForNavigation<AddPinsPage, AddPinsPageViewModel>();
             containerRegistry.RegisterForNavigation<EditPinsPage, EditPinsPageViewModel>();
-            containerRegistry.RegisterForNavigation<ShowPhotosPage, ShowPhotosPageViewModel>();
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
         }
 

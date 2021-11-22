@@ -1,6 +1,4 @@
 ﻿using MapNotepad.Helpers;
-using MapNotepad.Views;
-using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -10,18 +8,15 @@ using System.Windows.Input;
 
 namespace MapNotepad.ViewModels
 {
-    class SettingsPageViewModel : BaseViewModel
+    public class ScanCodePageViewModel : BaseViewModel
     {
-        public SettingsPageViewModel(INavigationService navigationService)
-            : base(navigationService)
+        public ScanCodePageViewModel(INavigationService navigationService)
+               : base(navigationService)
         {
 
         }
 
         #region -- Public properties --
-
-        private ICommand _goScanCodeCommand;
-        public ICommand GoScanCodeCommand => _goScanCodeCommand ??= SingleExecutionCommand.FromFunc(OnGoScanCodeCommandAsync);
 
         private ICommand _goBackCommand;
         public ICommand GoBackCommand => _goBackCommand ??= SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
@@ -29,11 +24,6 @@ namespace MapNotepad.ViewModels
         #endregion
 
         #region -- Private methods --
-
-        private Task OnGoScanCodeCommandAsync()
-        {
-            return _navigationService.NavigateAsync(nameof(ScanCodePage));
-        }
 
         private Task OnGoBackCommandAsync()
         {

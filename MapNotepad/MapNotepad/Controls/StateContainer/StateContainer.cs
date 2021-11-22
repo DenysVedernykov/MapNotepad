@@ -11,7 +11,6 @@ namespace MapNotepad.Controls.StateContainer
     [ContentProperty("Conditions")]
     public class StateContainer : ContentView
     {
-
         #region -- Public properties --
 
         public List<StateCondition> Conditions { get; set; } = new List<StateCondition>();
