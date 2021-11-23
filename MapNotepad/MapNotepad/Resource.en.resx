@@ -120,6 +120,9 @@
   <data name="AddPin" xml:space="preserve">
     <value>Add pin</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="AlertNotSaved" xml:space="preserve">
     <value>Want to go back without saving?</value>
   </data>
@@ -200,6 +203,9 @@
   </data>
   <data name="FailedRegister" xml:space="preserve">
     <value>Failed to register</value>
+  </data>
+  <data name="Favorites" xml:space="preserve">
+    <value>Favorites</value>
   </data>
   <data name="InvalidLoginOrPass" xml:space="preserve">
     <value>Invalid login or password!</value>

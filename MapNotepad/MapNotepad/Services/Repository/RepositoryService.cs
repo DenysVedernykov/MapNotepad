@@ -54,6 +54,11 @@ namespace MapNotepad.Services.Repository
             return _database.Value.Table<T>().ToListAsync();
         }
 
+        public Task<int> ExecuteScalarAsync(string querty)
+        {
+            return _database.Value.ExecuteScalarAsync<int>(querty);
+        }
+
         #endregion
 
     }

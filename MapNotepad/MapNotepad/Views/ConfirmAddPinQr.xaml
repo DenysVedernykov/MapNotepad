@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="MapNotepad.Views.ConfirmAddPinQr"
+       xmlns:prism="http://prismlibrary.com" 
+       xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+       xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+       prism:ViewModelLocator.AutowireViewModel="True"
+       prism:DialogLayout.RelativeWidthRequest="{OnIdiom Default=0.75, Desktop=0.5}"
+       HasShadow="false"
+       BackgroundColor="{DynamicResource White}">
+
+    <Frame.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding CloseCommand}"/>
+    </Frame.GestureRecognizers>
+
+    <StackLayout BackgroundColor="{DynamicResource White}">
+        
+        <Label TextColor="{DynamicResource Black}"
+               FontFamily="Montserrat-Bold">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="{helpers:TranslateExtension Label}"/>
+                        <Span Text=": "/>
+                        <Span Text="{Binding Pin.Label}"
+                              FontFamily="Montserrat-Medium"/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label TextColor="{DynamicResource Black}"
+               FontFamily="Montserrat-Bold">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="{helpers:TranslateExtension Favorites}"/>
+                        <Span Text=": "/>
+                        <Span Text="{Binding Pin.Favorites}"
+                              FontFamily="Montserrat-Medium"/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label TextColor="{DynamicResource Black}"
+               FontFamily="Montserrat-Bold">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="{helpers:TranslateExtension Description}"/>
+                        <Span Text=": "/>
+                        <Span Text="{Binding Pin.Description}"
+                              FontFamily="Montserrat-Medium"/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label TextColor="{DynamicResource Black}"
+               FontFamily="Montserrat-Bold">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="{helpers:TranslateExtension Latitude}"/>
+                        <Span Text=": "/>
+                        <Span Text="{Binding Pin.Latitude}"
+                              FontFamily="Montserrat-Medium"/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label TextColor="{DynamicResource Black}"
+               FontFamily="Montserrat-Bold">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="{helpers:TranslateExtension Longitude}"/>
+                        <Span Text=": "/>
+                        <Span Text="{Binding Pin.Longitude}"
+                              FontFamily="Montserrat-Medium"/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label TextColor="{DynamicResource Black}"
+               FontFamily="Montserrat-Bold">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="{helpers:TranslateExtension Address}"/>
+                        <Span Text=": "/>
+                        <Span Text="{Binding Pin.Address}"
+                              FontFamily="Montserrat-Medium"/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <StackLayout Orientation="Horizontal"
+                     Margin="0, 20, 0, 0"
+                     Spacing="5">
+            
+            <Button Text="{helpers:TranslateExtension Cancel}"
+                    Style="{DynamicResource BlueButton}"
+                    HorizontalOptions="FillAndExpand"/>
+            
+            <Button Text="{helpers:TranslateExtension Ok}"
+                    Style="{DynamicResource BlueButton}"
+                    HorizontalOptions="FillAndExpand"/>
+            
+        </StackLayout>
+
+    </StackLayout>
+</Frame>

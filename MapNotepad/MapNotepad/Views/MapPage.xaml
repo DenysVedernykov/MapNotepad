@@ -133,15 +133,15 @@
                 
                     <StackLayout>
                         <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding LabelPinDescription}"
-                               FontSize="20"
-                               TextColor="{DynamicResource Black}"
-                               FontFamily="Montserrat-Medium"
-                               LineHeight="1.15"
-                               Margin="0, 0, 0, 5"/>
+                            <Label Text="{Binding LabelPinDescription}"
+                                   FontSize="20"
+                                   TextColor="{DynamicResource Black}"
+                                   FontFamily="Montserrat-Medium"
+                                   LineHeight="1.15"
+                                   Margin="0, 0, 0, 5"/>
 
-                            <ImageButton Source="ic_share.png"
-                                         VerticalOptions="End"
+                        <ImageButton Source="ic_share.png"
+                                         HorizontalOptions="EndAndExpand"
                                          BackgroundColor="Transparent"
                                          Command="{Binding ShowQrCodeCommand}"/>
                             

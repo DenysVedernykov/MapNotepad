@@ -33,13 +33,22 @@ namespace MapNotepad.Services.Pins
             {
                 var response = _repositoryService.InsertAsync(pin);
 
-                if(response == null)
+                if(response is null)
                 {
                     result.SetFailure();
                 }
                 else
                 {
-                    result.SetSuccess(response.Result);
+                    var lastId = _repositoryService.ExecuteScalarAsync("SELECT MAX(Id) FROM UserPin");
+
+                    if (lastId is not null)
+                    {
+                        result.SetSuccess(lastId.Result + 1);
+                    }
+                    else
+                    {
+                        result.SetFailure();
+                    }
                 }
             }
             catch (Exception ex)

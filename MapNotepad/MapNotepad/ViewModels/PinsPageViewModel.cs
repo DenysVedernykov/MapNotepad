@@ -217,6 +217,15 @@ namespace MapNotepad.ViewModels
 
             _pinService.UpdatePinAsync(Pins[idx].ToUserPin());
 
+            if (Pins[idx].Favorites)
+            {
+                MessagingCenter.Send<PinsPageViewModel, UserPinWithCommand>(this, "AddPin", pin);
+            }
+            else
+            {
+                MessagingCenter.Send<PinsPageViewModel, UserPinWithCommand>(this, "DeletePin", pin);
+            }
+
             return Task.CompletedTask;
         }
 

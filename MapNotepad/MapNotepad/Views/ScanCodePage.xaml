@@ -5,22 +5,24 @@
                       xmlns:view="clr-namespace:MapNotepad.Views" 
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
-                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer" 
-                      xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms">
+                      xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms" 
+                      xmlns:behaviors="http://prismlibrary.com">
     <view:BaseContentPage.Content>
         <StackLayout>
             <controls:CustomToolBar Title="{helpers:TranslateExtension ScanCode}" 
                                     LeftButtonCommand="{Binding GoBackCommand}"/>
-            
-            <forms:ZXingScannerView x:Name="zxing"
-                                    HorizontalOptions="FillAndExpand"
+
+            <forms:ZXingScannerView AutomationId="zxingScannerView"
                                     VerticalOptions="FillAndExpand"
-                                    AutomationId="zxingScannerView"
-                                    HeightRequest="300"
-                                    WidthRequest="300"
-                                    IsScanning="True"
-                                    IsAnalyzing="True"/>
-            
+                                    HorizontalOptions="FillAndExpand"
+                                    IsVisible="{Binding ShouldVisible}"
+                                    IsScanning="{Binding ShouldScanning}"
+                                    IsAnalyzing="{Binding ShouldAnalyzing}"
+                                    ScanResultCommand="{Binding ScanResultCommand}"
+                                    Result="{Binding Result, Mode=TwoWay}">
+
+            </forms:ZXingScannerView>
+
         </StackLayout>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

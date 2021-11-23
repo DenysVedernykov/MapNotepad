@@ -1,4 +1,6 @@
 ﻿using MapNotepad.Helpers;
+using MapNotepad.Models;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
@@ -13,13 +15,15 @@ namespace MapNotepad.ViewModels
 {
     class QrCodePageViewModel : BaseViewModel, IDialogAware
     {
+        private UserPin _pin;
+
         public QrCodePageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             _encodingOptions = new EncodingOptions()
             {
-                Width = 300,
-                Height = 300,
+                Width = 500,
+                Height = 500,
                 Margin = 10
             };
 
@@ -29,11 +33,11 @@ namespace MapNotepad.ViewModels
 
         #region -- Public properties --
 
-        private string _result;
-        public string Result
+        private string _dataGrCode;
+        public string DataGrCode
         {
-            get => _result;
-            set => SetProperty(ref _result, value);
+            get => _dataGrCode;
+            set => SetProperty(ref _dataGrCode, value);
         }
 
         private EncodingOptions _encodingOptions;
@@ -56,7 +60,15 @@ namespace MapNotepad.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            
+            if(parameters.Count > 0)
+            {
+                if(parameters["UserPin"] is not null)
+                {
+                    _pin = parameters["UserPin"] as UserPin;
+
+                    DataGrCode = JsonConvert.SerializeObject(_pin);
+                }
+            }
         }
 
         #endregion

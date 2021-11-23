@@ -16,5 +16,7 @@ namespace MapNotepad.Services.Repository
         Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new();
 
         Task<List<T>> GetAllRowsAsync<T>() where T : IEntityBase, new();
+
+        Task<int> ExecuteScalarAsync(string querty);
     }
 }

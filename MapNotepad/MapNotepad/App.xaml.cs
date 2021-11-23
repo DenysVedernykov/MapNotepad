@@ -54,6 +54,7 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
 
             containerRegistry.RegisterDialog<QrCodePage, QrCodePageViewModel>();
+            containerRegistry.RegisterDialog<ConfirmAddPinQr, ConfirmAddPinQrViewModel>();
         }
 
         protected override void OnInitialized()

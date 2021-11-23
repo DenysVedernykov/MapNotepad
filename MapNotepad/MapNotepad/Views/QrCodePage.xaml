@@ -15,10 +15,10 @@
     
     <StackLayout>
         <forms:ZXingBarcodeImageView BarcodeFormat="QR_CODE"
-                                             BarcodeValue="Denis"
-                                             BarcodeOptions="{Binding EncodingOptions}"
-                                             HeightRequest="300"
-                                             WidthRequest="300">
+                                     BarcodeValue="{Binding DataGrCode}"
+                                     BarcodeOptions="{Binding EncodingOptions}"
+                                     HeightRequest="350"
+                                     WidthRequest="350">
             
         </forms:ZXingBarcodeImageView>
     </StackLayout>
