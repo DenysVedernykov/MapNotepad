@@ -57,15 +57,15 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _labelPinDescription, value);
         }
 
-        private string _latitudePinDescription;
-        public string LatitudePinDescription
+        private double _latitudePinDescription;
+        public double LatitudePinDescription
         {
             get => _latitudePinDescription;
             set => SetProperty(ref _latitudePinDescription, value);
         }
 
-        private string _longitudePinDescription;
-        public string LongitudePinDescription
+        private double _longitudePinDescription;
+        public double LongitudePinDescription
         {
             get => _longitudePinDescription;
             set => SetProperty(ref _longitudePinDescription, value);
@@ -303,8 +303,8 @@ namespace MapNotepad.ViewModels
                 if (userPin.Result.IsSuccess)
                 {
                     LabelPinDescription = userPin.Result.Result.Label;
-                    LatitudePinDescription = userPin.Result.Result.Latitude.ToString();
-                    LongitudePinDescription = userPin.Result.Result.Longitude.ToString();
+                    LatitudePinDescription = userPin.Result.Result.Latitude;
+                    LongitudePinDescription = userPin.Result.Result.Longitude;
                     PinDescription = userPin.Result.Result.Description;
 
                     IsPinDescriptionVisible = true;
