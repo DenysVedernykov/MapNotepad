@@ -6,19 +6,24 @@
   <ContentView.Content>
       <StackLayout>
             <StackLayout Orientation="Horizontal">
+                
                 <BoxView BackgroundColor="{Binding LineColor, Source={x:Reference customSeparator}}"
                          HeightRequest="1"
                          VerticalOptions="Center"
                          HorizontalOptions="FillAndExpand"/>
+                
                 <Label Text="{Binding Text, Source={x:Reference customSeparator}}"
                        TextColor="{Binding TextColor, Source={x:Reference customSeparator}}"
                        FontFamily="Montserrat-Medium"
                        VerticalOptions="Center"/>
+                
                 <BoxView BackgroundColor="{Binding LineColor, Source={x:Reference customSeparator}}"
                          HeightRequest="1"
                          VerticalOptions="Center"
                          HorizontalOptions="FillAndExpand"/>
+                
             </StackLayout>
+          
         </StackLayout>
   </ContentView.Content>
 </ContentView>

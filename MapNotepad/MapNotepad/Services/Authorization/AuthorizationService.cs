@@ -152,6 +152,5 @@ namespace MapNotepad.Services.Authorization
         }
 
         #endregion
-
     }
 }

@@ -5,120 +5,132 @@
                       x:Class="MapNotepad.Views.MapPage"
                       xmlns:view="clr-namespace:MapNotepad.Views"
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
-                      xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
                       xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings" 
-                      xmlns:Behaviors="http://prismlibrary.com"
+                      xmlns:behaviors="http://prismlibrary.com"
                       xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer">
     
     <view:BaseContentPage.Content>
-        <StackLayout>
-            <Grid RowSpacing="0" 
-                  RowDefinitions="auto">
+        <Grid RowSpacing="0" 
+              RowDefinitions="auto">
 
-                <controls:CustomSearchBar Grid.Row="0"
-                                          Text="{Binding Text}"
-                                          Placeholder="{Helper:TranslateExtension Search}"
-                                          LineColor="{DynamicResource Variant}"
-                                          IsShowList="{Binding IsShowList}"
-                                          LeftButtonCommand="{Binding GoSettingsButtonCommand}"
-                                          RightButtonCommand="{Binding ExitButtonCommand}"/>
-                
-                <maps:Map x:Name="map" 
-                          Grid.Row="1"
-                          MyLocationEnabled="{Binding IsShowingUser}">
-                    
-                    <maps:Map.Behaviors>
-                        <bindings:BindingPinsBehavior Value="{Binding Pins}"/>
+            <controls:CustomSearchBar Grid.Row="0"
+                                      Text="{Binding Text}"
+                                      Placeholder="{helpers:TranslateExtension Search}"
+                                      LineColor="{DynamicResource Variant}"
+                                      ShouldShowList="{Binding ShouldShowList}"
+                                      LeftButtonCommand="{Binding GoSettingsButtonCommand}"
+                                      RightButtonCommand="{Binding ExitButtonCommand}"/>
+
+            <maps:Map x:Name="map" 
+                      Grid.Row="1"
+                      MyLocationEnabled="{Binding IsShowingUser}">
+
+                <maps:Map.Behaviors>
+                    <bindings:BindingPinsBehavior Value="{Binding Pins}"/>
+
+                    <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
+                                                      EventName="MapClicked"
+                                                      EventArgsParameterPath="Point"/>
+
+                </maps:Map.Behaviors>
+            </maps:Map>
+            
+            <statecontainer:StateContainer Grid.Row="1"
+                                           IsVisible="{Binding ShouldShowList}"
+                                           State="{Binding IsEmptySearchResult}"
+                                           VerticalOptions="Start">
+
+                <statecontainer:StateCondition State="True">
+                    <StackLayout HorizontalOptions="FillAndExpand"
+                                 BackgroundColor="{DynamicResource White}"
+                                 Padding="10">
+                            
+                        <Label Text="{helpers:TranslateExtension NotFound}"
+                               FontFamily="Montserrat-Medium"
+                               HorizontalOptions="Center"
+                               TextColor="{DynamicResource Black}"/>
+                            
+                    </StackLayout>
+                </statecontainer:StateCondition>
+
+                <statecontainer:StateCondition State="False">
                         
-                        <Behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
-                                                          EventName="MapClicked"
-                                                          EventArgsParameterPath="Point"/>
+                    <ListView HasUnevenRows="True"
+                              ItemsSource="{Binding SearchResult}"
+                              IsVisible="{Binding ShouldShowList}"
+                              SelectedItem="{Binding SelectedItem}"
+                              SeparatorColor="{DynamicResource Variant}">
 
-                        </maps:Map.Behaviors>
-                </maps:Map>
+                        <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 
+                                                              EventName="ItemTapped" 
+                                                              EventArgsConverterParameter="{Binding .}"/>
+                        </ListView.Behaviors>
 
-                <statecontainer:StateContainer Grid.Row="1"
-                                               IsVisible="{Binding IsShowList}"
-                                               State="{Binding IsEmptySearchResult}"
-                                               VerticalOptions="Start">
-
-                    <statecontainer:StateCondition State="True">
-                        <StackLayout HorizontalOptions="FillAndExpand"
-                                     BackgroundColor="{DynamicResource White}"
-                                     Padding="10">
-                            <Label Text="{Helper:TranslateExtension NotFound}"
-                                   FontFamily="Montserrat-Medium"
-                                   HorizontalOptions="Center"
-                                   TextColor="{DynamicResource Black}"/>
-                        </StackLayout>
-                    </statecontainer:StateCondition>
-
-                    <statecontainer:StateCondition State="False">
-                        <ListView HasUnevenRows="True"
-                          ItemsSource="{Binding SearchResult}"
-                          IsVisible="{Binding IsShowList}"
-                          SelectedItem="{Binding SelectedItem}"
-                          SeparatorColor="{DynamicResource Variant}">
-
-                            <ListView.Behaviors>
-                                <Behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 
-                                                          EventName="ItemTapped" 
-                                                          EventArgsConverterParameter="{Binding .}"/>
-                            </ListView.Behaviors>
-
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <ViewCell.View>
-                                            <StackLayout Orientation="Horizontal"
-                                                 BackgroundColor="{DynamicResource White}"
-                                                 Spacing="0">
-                                                <Frame Padding="22, 22, 13, 22"
-                                               HasShadow="False">
-                                                    <Image Source="ic_pin_gray.png"
-                                                   HeightRequest="28"
-                                                   Aspect="AspectFill"/>
-                                                </Frame>
-                                                <StackLayout Padding="0, 15, 0, 15"
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <StackLayout Orientation="Horizontal"
+                                                     BackgroundColor="{DynamicResource White}"
                                                      Spacing="0">
-                                                    <Label Text="{Binding Label}"
-                                                   TextColor="{DynamicResource Black}"
-                                                   FontSize="14"
-                                                   FontFamily="Montserrat-Medium"
-                                                   MaxLines="1"/>
-                                                    <Label Text="{Binding Address}"
-                                                   TextColor="{DynamicResource DarkGray}"
-                                                   FontSize="14"
-                                                   FontFamily="Montserrat-Regular"
-                                                   MaxLines="1"/>
-                                                </StackLayout>
+                                                
+                                            <Frame Padding="22, 22, 13, 22"
+                                                   HasShadow="False">
+                                                    
+                                                <Image Source="ic_pin_gray.png"
+                                                       HeightRequest="28"
+                                                       Aspect="AspectFill"/>
+                                                    
+                                            </Frame>
+                                                
+                                            <StackLayout Padding="0, 15, 0, 15"
+                                                            Spacing="0">
+                                                    
+                                                <Label Text="{Binding Label}"
+                                                       TextColor="{DynamicResource Black}"
+                                                       FontSize="14"
+                                                       FontFamily="Montserrat-Medium"
+                                                       MaxLines="1"/>
+                                                    
+                                                <Label Text="{Binding Address}"
+                                                       TextColor="{DynamicResource DarkGray}"
+                                                       FontSize="14"
+                                                       FontFamily="Montserrat-Regular"
+                                                       MaxLines="1"/>
+                                                    
                                             </StackLayout>
-                                        </ViewCell.View>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </statecontainer:StateCondition>
+                                                
+                                        </StackLayout>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                            
+                    </ListView>
+                </statecontainer:StateCondition>
 
-                </statecontainer:StateContainer>
+            </statecontainer:StateContainer>
 
-                <ImageButton Grid.Row="1"
-                             Source="ic_location.png"
-                             BackgroundColor="{DynamicResource White}" 
-                             CornerRadius="20"
-                             Padding="10"
-                             Margin="0, 0, 7, 115"
-                             Command="{Binding MoveToMyLocationCommand}"
-                             VerticalOptions="End" 
-                             HorizontalOptions="End"/>
+            <ImageButton Grid.Row="1"
+                         Source="ic_location.png"
+                         BackgroundColor="{DynamicResource White}" 
+                         CornerRadius="20"
+                         Padding="10"
+                         Margin="0, 0, 7, 115"
+                         Command="{Binding MoveToMyLocationCommand}"
+                         VerticalOptions="End" 
+                         HorizontalOptions="End"/>
+
+            <Frame Grid.Row="1"
+                   HasShadow="False"
+                   CornerRadius="5"
+                   Padding="15"
+                   BackgroundColor="{DynamicResource White}"
+                   VerticalOptions="End"
+                   IsVisible="{Binding IsPinDescriptionVisible}">
                 
-                <Frame Grid.Row="1"
-                       HasShadow="False"
-                       CornerRadius="5"
-                       Padding="15"
-                       BackgroundColor="{DynamicResource White}"
-                       VerticalOptions="End"
-                       IsVisible="{Binding IsPinDescriptionVisible}">
                     <StackLayout>
                         <Label Text="{Binding LabelPinDescription}"
                                FontSize="20"
@@ -126,23 +138,27 @@
                                FontFamily="Montserrat-Medium"
                                LineHeight="1.15"
                                Margin="0, 0, 0, 5"/>
+                        
                         <Label Text="41.39291018, 12.27313791"
                                FontSize="18"
                                TextColor="{DynamicResource DarkGray}"
                                FontFamily="Montserrat-Regular"
                                LineHeight="1.15"/>
+                        
                         <BoxView HeightRequest="1"
                                  Color="{DynamicResource Variant}"
                                  Margin="0, 10, 0, 7"/>
+                        
                         <Label Text="{Binding PinDescription}"
                                FontSize="18"
                                TextColor="{DynamicResource Black}"
                                FontFamily="Montserrat-Regular"
                                LineHeight="1.15"
                                Margin="0, 0, 0, 10"/>
+                        
                     </StackLayout>
                 </Frame>
-            </Grid>
-        </StackLayout>
+            
+        </Grid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

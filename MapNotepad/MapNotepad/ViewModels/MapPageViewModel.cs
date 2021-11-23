@@ -99,11 +99,11 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _isEmptySearchResult, value);
         }
 
-        private bool _isShowList;
-        public bool IsShowList
+        private bool _shouldShowList;
+        public bool ShouldShowList
         {
-            get => _isShowList;
-            set => SetProperty(ref _isShowList, value);
+            get => _shouldShowList;
+            set => SetProperty(ref _shouldShowList, value);
         }
 
         private bool _isShowingUser;
@@ -242,8 +242,8 @@ namespace MapNotepad.ViewModels
                     }
                     
                     break;
-                case nameof(IsShowList):
-                    if (!IsShowList)
+                case nameof(ShouldShowList):
+                    if (!ShouldShowList)
                     {
                         SearchResult.Clear();
                         IsEmptySearchResult = false;
@@ -333,7 +333,7 @@ namespace MapNotepad.ViewModels
 
         private Task OnItemTappedCommandAsync()
         {
-            IsShowList = false;
+            ShouldShowList = false;
             Text = "";
 
             MessagingCenter.Send<MapPageViewModel, Position>(this, "MoveToPosition", new Position(SelectedItem.Latitude, SelectedItem.Longitude));

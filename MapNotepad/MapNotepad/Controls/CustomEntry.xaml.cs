@@ -99,17 +99,17 @@ namespace MapNotepad.Controls
             get => (bool)GetValue(IsPasswordProperty);
         }
 
-        public static readonly BindableProperty IsPasswordHideProperty = BindableProperty.Create(
-            propertyName: nameof(IsPasswordHide),
+        public static readonly BindableProperty ShouldHidePasswordProperty = BindableProperty.Create(
+            propertyName: nameof(ShouldHidePassword),
             returnType: typeof(bool),
             declaringType: typeof(CustomEntry),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public bool IsPasswordHide
+        public bool ShouldHidePassword
         {
-            set => SetValue(IsPasswordHideProperty, value);
-            get => (bool)GetValue(IsPasswordHideProperty);
+            set => SetValue(ShouldHidePasswordProperty, value);
+            get => (bool)GetValue(ShouldHidePasswordProperty);
         }
 
         public static readonly BindableProperty IsButtonVisibleProperty = BindableProperty.Create(
@@ -183,8 +183,8 @@ namespace MapNotepad.Controls
         private ICommand _focusedCommand;
         public ICommand FocusedCommand => _focusedCommand ??= SingleExecutionCommand.FromFunc(OnFocusedCommandAsync);
 
-        private ICommand _unfocusedCommand;
-        public ICommand UnFocusedCommand=> _unfocusedCommand ??= SingleExecutionCommand.FromFunc(OnUnfocusedCommandAsync);
+        private ICommand _unFocusedCommand;
+        public ICommand UnFocusedCommand=> _unFocusedCommand ??= SingleExecutionCommand.FromFunc(OnUnFocusedCommandAsync);
 
         #endregion
 
@@ -197,32 +197,20 @@ namespace MapNotepad.Controls
             switch (propertyName)
             {
                 case nameof(IsPassword):
-                    IsPasswordHide = IsPassword;
+                    ShouldHidePassword = IsPassword;
                     break;
                 case nameof(Text):
                 case nameof(ClearImageSource):
                 case nameof(EyeOnImageSource):
                 case nameof(EyeOffImageSource):
-                    
+
                     if (IsPassword)
                     {
-                        if (IsPasswordHide)
-                        {
-                            ImageSource = EyeOnImageSource;
-                        }
-                        else
-                        {
-                            ImageSource = EyeOffImageSource;
-                        }
+                        ImageSource = ShouldHidePassword
+                            ? EyeOnImageSource
+                            : EyeOffImageSource;
 
-                        if (string.IsNullOrEmpty(Text))
-                        {
-                            IsButtonVisible = false;
-                        }
-                        else
-                        {
-                            IsButtonVisible = true;
-                        }
+                        IsButtonVisible = !string.IsNullOrEmpty(Text);
                     }
                     else
                     {
@@ -241,16 +229,13 @@ namespace MapNotepad.Controls
         {
             if (IsPassword)
             {
-                if (ImageSource == EyeOnImageSource)
-                {
-                    IsPasswordHide = false;
-                    ImageSource = EyeOffImageSource;
-                }
-                else
-                {
-                    IsPasswordHide = true;
-                    ImageSource = EyeOnImageSource;
-                }
+                var sourcesMatch = ImageSource == EyeOnImageSource;
+
+                ShouldHidePassword = !sourcesMatch;
+
+                ImageSource = sourcesMatch
+                    ? EyeOffImageSource
+                    : EyeOnImageSource;
             }
             else
             {
@@ -270,7 +255,7 @@ namespace MapNotepad.Controls
             return Task.CompletedTask;
         }
 
-        private Task OnUnfocusedCommandAsync()
+        private Task OnUnFocusedCommandAsync()
         {
             if (!IsPassword)
             {

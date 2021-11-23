@@ -11,7 +11,13 @@
                             SelectedTab="{Binding SelectedTab}">
 
     <controls:CustomTabbedPage.Children>
-        <local:MapPage Title="Map" IconImageSource="ic_map.png"/>
-        <local:PinsPage Title="Pins" IconImageSource="ic_pin.png"/>
+        
+        <local:MapPage Title="Map" 
+                       IconImageSource="ic_map.png"/>
+        
+        <local:PinsPage Title="Pins" 
+                        IconImageSource="ic_pin.png"/>
+        
     </controls:CustomTabbedPage.Children>
+    
 </controls:CustomTabbedPage>

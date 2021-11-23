@@ -27,8 +27,6 @@ namespace MapNotepad.Services.Repository
 
                 database.CreateTableAsync<User>().Wait();
                 database.CreateTableAsync<UserPin>().Wait();
-                database.CreateTableAsync<PhotoPin>().Wait();
-                database.CreateTableAsync<Event>().Wait();
 
                 return database;
             });

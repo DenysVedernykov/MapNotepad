@@ -4,19 +4,18 @@
                       x:Class="MapNotepad.Views.EditPinsPage"
                       xmlns:view="clr-namespace:MapNotepad.Views" 
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
-                      xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
                       xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
                       xmlns:behaviors="http://prismlibrary.com">
 
     <view:BaseContentPage.Content>
-        <Grid RowSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Grid RowSpacing="0"
+              RowDefinitions="*">
 
-            <StackLayout Spacing="0" 
+            <StackLayout Spacing="0"
                          Grid.Row="0">
-                <controls:CustomToolBar Title="{Helper:TranslateExtension EditPin}" 
+                
+                <controls:CustomToolBar Title="{helpers:TranslateExtension EditPin}" 
                                         RightImageSource="ic_save.png"
                                         LineColor="{DynamicResource Variant}"
                                         LeftButtonCommand="{Binding GoBackCommand}"
@@ -26,32 +25,33 @@
                 <StackLayout Padding="20, 10, 20, 0"
                              Spacing="0">
 
-                    <Label Text="{Helper:TranslateExtension Label}"
+                    <Label Text="{helpers:TranslateExtension Label}"
                            Margin="20, 0, 0, 7"/>
 
                     <controls:CustomEntry Text="{Binding Label}"
                                           BorderColor="{Binding BorderColorLabel}"
-                                          Placeholder="{Helper:TranslateExtension EnterLabel}" />
+                                          Placeholder="{helpers:TranslateExtension EnterLabel}" />
 
-                    <Label Text="{Helper:TranslateExtension Description}"
+                    <Label Text="{helpers:TranslateExtension Description}"
                            Margin="19, 32, 0, 7"/>
 
                     <controls:CustomEntry Text="{Binding Description}"
-                                          Placeholder="{Helper:TranslateExtension WriteDescription}"/>
+                                          Placeholder="{helpers:TranslateExtension WriteDescription}"/>
 
-                    <Label Text="{Helper:TranslateExtension Coordinates}"
+                    <Label Text="{helpers:TranslateExtension Coordinates}"
                            Margin="20, 27, 0, 8"/>
 
                     <StackLayout Orientation="Horizontal">
                         <controls:CustomEntry Text="{Binding Longitude}"
                                               BorderColor="{Binding BorderColorLongitude}"
-                                              Placeholder="{Helper:TranslateExtension Longitude}"
+                                              Placeholder="{helpers:TranslateExtension Longitude}"
                                               HorizontalOptions="FillAndExpand"/>
 
                         <controls:CustomEntry Text="{Binding Latitude}"
                                               BorderColor="{Binding BorderColorLatitude}"
-                                              Placeholder="{Helper:TranslateExtension Latitude}"
+                                              Placeholder="{helpers:TranslateExtension Latitude}"
                                               HorizontalOptions="FillAndExpand"/>
+                        
                     </StackLayout>
                 </StackLayout>
 
@@ -67,6 +67,7 @@
                                                           EventArgsParameterPath="Point"/>
                     </maps:Map.Behaviors>
                 </maps:Map>
+                
             </StackLayout>
 
             <ImageButton Grid.Row="0"
@@ -78,6 +79,7 @@
                          Command="{Binding MoveToMyLocationCommand}"
                          VerticalOptions="End" 
                          HorizontalOptions="End"/>
+            
         </Grid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

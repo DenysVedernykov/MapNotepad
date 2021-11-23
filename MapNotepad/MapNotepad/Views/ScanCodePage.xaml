@@ -4,22 +4,23 @@
                       x:Class="MapNotepad.Views.ScanCodePage"
                       xmlns:view="clr-namespace:MapNotepad.Views" 
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
-                      xmlns:Helper="clr-namespace:MapNotepad.Helpers" 
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
                       xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer" 
                       xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms">
     <view:BaseContentPage.Content>
         <StackLayout>
-            <controls:CustomToolBar Title="{Helper:TranslateExtension ScanCode}" 
+            <controls:CustomToolBar Title="{helpers:TranslateExtension ScanCode}" 
                                     LeftButtonCommand="{Binding GoBackCommand}"/>
             
             <forms:ZXingScannerView x:Name="zxing"
-                                        HorizontalOptions="FillAndExpand"
-                                        VerticalOptions="FillAndExpand"
-                                        AutomationId="zxingScannerView"
-                                        HeightRequest="300"
-                                        WidthRequest="300"
-                                        IsScanning="True"
-                                        IsAnalyzing="True"/>
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand"
+                                    AutomationId="zxingScannerView"
+                                    HeightRequest="300"
+                                    WidthRequest="300"
+                                    IsScanning="True"
+                                    IsAnalyzing="True"/>
+            
         </StackLayout>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

@@ -58,11 +58,11 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _isEmpty, value);
         }
 
-        private bool _isShowList;
-        public bool IsShowList
+        private bool _shouldShowList;
+        public bool ShouldShowList
         {
-            get => _isShowList;
-            set => SetProperty(ref _isShowList, value);
+            get => _shouldShowList;
+            set => SetProperty(ref _shouldShowList, value);
         }
 
         private ObservableCollection<UserPinWithCommand> _pins;
@@ -224,7 +224,7 @@ namespace MapNotepad.ViewModels
         {
             var pin = item as UserPinWithCommand;
 
-            IsShowList = false;
+            ShouldShowList = false;
             Text = "";
 
             MessagingCenter.Send<PinsPageViewModel, Position>(this, "MoveToPosition", new Position(pin.Latitude, pin.Longitude));

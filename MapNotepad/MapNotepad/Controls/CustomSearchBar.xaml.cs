@@ -185,17 +185,17 @@ namespace MapNotepad.Controls
             get => (string)GetValue(ClearImageSourceProperty);
         }
 
-        public static readonly BindableProperty IsShowListProperty = BindableProperty.Create(
-            propertyName: nameof(IsShowList),
+        public static readonly BindableProperty ShouldShowListProperty = BindableProperty.Create(
+            propertyName: nameof(ShouldShowList),
             returnType: typeof(bool),
             declaringType: typeof(CustomSearchBar),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public bool IsShowList
+        public bool ShouldShowList
         {
-            set => SetValue(IsShowListProperty, value);
-            get => (bool)GetValue(IsShowListProperty);
+            set => SetValue(ShouldShowListProperty, value);
+            get => (bool)GetValue(ShouldShowListProperty);
         }
 
         public static readonly BindableProperty LineColorProperty = BindableProperty.Create(
@@ -217,7 +217,7 @@ namespace MapNotepad.Controls
 
         private Task OnGoBackButtonCommandAsync()
         {
-            IsShowList = false;
+            ShouldShowList = false;
             Text = string.Empty;
 
             return Task.CompletedTask;
@@ -232,7 +232,7 @@ namespace MapNotepad.Controls
 
         private Task OnFocusedCommandAsync()
         {
-            IsShowList = true;
+            ShouldShowList = true;
 
             return Task.CompletedTask;
         }

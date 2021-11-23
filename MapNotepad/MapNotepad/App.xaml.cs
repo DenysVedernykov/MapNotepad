@@ -78,22 +78,17 @@ namespace MapNotepad
             var authorization = Container.Resolve<IAuthorizationService>();
             var settingsManager = Container.Resolve<ISettingsManagerService>();
 
+            var path = nameof(StartPage);
+
             if (settingsManager.Session == "local")
             {
                 if (authorization.Login(settingsManager.Email, settingsManager.Password))
                 {
-                    NavigationService.NavigateAsync(nameof(MainPage));
-                }
-                else
-                {
-                    NavigationService.NavigateAsync(nameof(StartPage));
+                    path = nameof(MainPage);
                 }
             }
-            else
-            {
-                NavigationService.NavigateAsync(nameof(StartPage));
-            }
-            
+
+            NavigationService.NavigateAsync(path);
         }
 
         protected override void OnStart()
