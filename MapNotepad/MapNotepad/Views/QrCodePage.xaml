@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="MapNotepad.Views.QrCodePage"
+       xmlns:prism="http://prismlibrary.com" 
+       xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+       prism:ViewModelLocator.AutowireViewModel="True"
+       prism:DialogLayout.RelativeWidthRequest="{OnIdiom Default=0.75, Desktop=0.5}"
+       HasShadow="false"
+       BackgroundColor="{DynamicResource White}">
+
+    <Frame.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding CloseCommand}"/>
+    </Frame.GestureRecognizers>
+    
+    <StackLayout>
+        <forms:ZXingBarcodeImageView BarcodeFormat="QR_CODE"
+                                             BarcodeValue="Denis"
+                                             BarcodeOptions="{Binding EncodingOptions}"
+                                             HeightRequest="300"
+                                             WidthRequest="300">
+            
+        </forms:ZXingBarcodeImageView>
+    </StackLayout>
+</Frame>

@@ -45,7 +45,7 @@
                     <StackLayout HorizontalOptions="FillAndExpand"
                                  BackgroundColor="{DynamicResource White}"
                                  Padding="10">
-                            
+                        
                         <Label Text="{helpers:TranslateExtension NotFound}"
                                FontFamily="Montserrat-Medium"
                                HorizontalOptions="Center"
@@ -132,6 +132,7 @@
                    IsVisible="{Binding IsPinDescriptionVisible}">
                 
                     <StackLayout>
+                        <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding LabelPinDescription}"
                                FontSize="20"
                                TextColor="{DynamicResource Black}"
@@ -139,6 +140,13 @@
                                LineHeight="1.15"
                                Margin="0, 0, 0, 5"/>
 
+                            <ImageButton Source="ic_share.png"
+                                         VerticalOptions="End"
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding ShowQrCodeCommand}"/>
+                            
+                        </StackLayout>
+                      
                         <Label FontSize="18"
                                TextColor="{DynamicResource DarkGray}"
                                FontFamily="Montserrat-Regular"

@@ -8,6 +8,7 @@ using MapNotepad.Services.Pins;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -22,8 +23,10 @@ namespace MapNotepad.ViewModels
 {
     class MapPageViewModel : BaseViewModel
     {
-        private IPinService _pinService; 
-        
+        private IPinService _pinService;
+
+        private IDialogService _dialogService;
+
         private IAuthorizationService _authorizationService;
 
         private ISettingsManagerService _settingsManagerService;
@@ -31,6 +34,7 @@ namespace MapNotepad.ViewModels
         private IPermissionsService _permissionsService;
 
         public MapPageViewModel(
+            IDialogService dialogService, 
             INavigationService navigationService,
             IPinService pinService,
             IAuthorizationService authorizationService,
@@ -39,6 +43,7 @@ namespace MapNotepad.ViewModels
             )
             : base(navigationService)
         {
+            _dialogService = dialogService; 
             _pinService = pinService; 
             _authorizationService = authorizationService;
             _settingsManagerService = settingsManagerService;
@@ -120,6 +125,13 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _selectedItem, value);
         }
 
+        private UserPin _clickedItem;
+        public UserPin ClickedItem
+        {
+            get => _clickedItem;
+            set => SetProperty(ref _clickedItem, value);
+        }
+
         private ObservableCollection<Pin> _pins;
         public ObservableCollection<Pin> Pins
         {
@@ -133,6 +145,10 @@ namespace MapNotepad.ViewModels
             get => _searchResult;
             set => SetProperty(ref _searchResult, value);
         }
+
+        private ICommand _showQrCodeCommand;
+        public ICommand ShowQrCodeCommand => _showQrCodeCommand ??= SingleExecutionCommand.FromFunc(OnShowQrCodeCommandAsync);
+        
 
         private ICommand _itemTappedCommand;
         public ICommand ItemTappedCommand => _itemTappedCommand ??= SingleExecutionCommand.FromFunc(OnItemTappedCommandAsync);
@@ -302,6 +318,8 @@ namespace MapNotepad.ViewModels
             {
                 if (userPin.Result.IsSuccess)
                 {
+                    ClickedItem = userPin.Result.Result;
+
                     LabelPinDescription = userPin.Result.Result.Label;
                     LatitudePinDescription = userPin.Result.Result.Latitude;
                     LongitudePinDescription = userPin.Result.Result.Longitude;
@@ -310,6 +328,16 @@ namespace MapNotepad.ViewModels
                     IsPinDescriptionVisible = true;
                 }
             }
+        }
+
+        private Task OnShowQrCodeCommandAsync()
+        {
+            var param = new DialogParameters();
+            param.Add("UserPin", ClickedItem);
+
+            _dialogService.ShowDialog("QrCodePage", param);
+
+            return Task.CompletedTask;
         }
 
         private Task OnMoveToMyLocationCommandAsync()
