@@ -24,6 +24,8 @@
     <Color x:Key="Pressed">#192680</Color>
     <Color x:Key="Variant">#F1F3FD</Color>
 
+    <Color x:Key="BackgroundColor">#FEFEFD</Color>
+    
     <!-- Base Style-->
     <Style x:Key="BaseButton" 
            TargetType="Button">

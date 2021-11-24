@@ -5,7 +5,8 @@
                       xmlns:view="clr-namespace:MapNotepad.Views" 
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
-                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer">
+                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
     <view:BaseContentPage.Content>
         <StackLayout>
             

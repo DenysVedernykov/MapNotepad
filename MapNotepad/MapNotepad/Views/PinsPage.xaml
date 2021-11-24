@@ -7,7 +7,8 @@
                       xmlns:behaviors="http://prismlibrary.com" 
                       xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu" 
                       xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer"
-                      x:Class="MapNotepad.Views.PinsPage">
+                      x:Class="MapNotepad.Views.PinsPage"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
     
     <view:BaseContentPage.Resources>
         <ResourceDictionary>
@@ -24,6 +25,7 @@
                                       Text="{Binding Text}"
                                       Placeholder="{helpers:TranslateExtension Search}"
                                       LineColor="{DynamicResource Variant}"
+                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       ShouldShowList="{Binding ShouldShowList}"
                                       LeftButtonCommand="{Binding GoSettingsButtonCommand}"
                                       RightButtonCommand="{Binding ExitButtonCommand}"/>
@@ -64,12 +66,14 @@
                                                                 <Image Aspect="AspectFill"
                                                                        Source="ic_like_blue.png"
                                                                        BackgroundColor="Transparent"/>
+                                                                
                                                             </statecontainer:StateCondition>
 
                                                             <statecontainer:StateCondition State="False">
                                                                 <Image Aspect="AspectFill"
                                                                        Source="ic_like_gray.png"
                                                                        BackgroundColor="Transparent"/>
+                                                                
                                                             </statecontainer:StateCondition>
                                                             
                                                         </statecontainer:StateContainer>

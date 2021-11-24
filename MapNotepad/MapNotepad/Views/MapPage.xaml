@@ -7,7 +7,8 @@
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers"                   
                       xmlns:behaviors="http://prismlibrary.com"
-                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer">
+                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
 
     <view:BaseContentPage.Content>
         <Grid RowSpacing="0" 
@@ -17,6 +18,7 @@
                                       Text="{Binding Text}"
                                       Placeholder="{helpers:TranslateExtension Search}"
                                       LineColor="{DynamicResource Variant}"
+                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       ShouldShowList="{Binding ShouldShowList}"
                                       LeftButtonCommand="{Binding GoSettingsButtonCommand}"
                                       RightButtonCommand="{Binding ExitButtonCommand}"/>

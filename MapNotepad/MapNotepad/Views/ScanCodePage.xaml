@@ -6,7 +6,8 @@
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
                       xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms" 
-                      xmlns:behaviors="http://prismlibrary.com">
+                      xmlns:behaviors="http://prismlibrary.com"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
     <view:BaseContentPage.Content>
         <StackLayout>
             <controls:CustomToolBar Title="{helpers:TranslateExtension ScanCode}" 

@@ -8,7 +8,8 @@
                             android:TabbedPage.ToolbarPlacement="Bottom"
                             SelectedTabColor="{DynamicResource Primary}"
                             UnselectedTabColor="{DynamicResource Primary}"
-                            SelectedTab="{Binding SelectedTab}">
+                            SelectedTab="{Binding SelectedTab}"
+                            BackgroundColor="{DynamicResource BackgroundColor}">
 
     <controls:CustomTabbedPage.Children>
         

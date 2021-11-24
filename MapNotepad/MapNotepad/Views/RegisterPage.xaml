@@ -4,11 +4,14 @@
                       x:Class="MapNotepad.Views.RegisterPage"
                       xmlns:view="clr-namespace:MapNotepad.Views" 
                       xmlns:controls="clr-namespace:MapNotepad.Controls"
-                      xmlns:helpers="clr-namespace:MapNotepad.Helpers">
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
+    
     <view:BaseContentPage.Content>
         <StackLayout>
             <controls:CustomToolBar Title="{helpers:TranslateExtension CreateAnAccount}" 
-                                    LeftButtonCommand="{Binding GoBackCommand}"/>
+                                    LeftButtonCommand="{Binding GoBackCommand}"
+                                    BackgroundColor="{DynamicResource BackgroundColor}"/>
 
             <StackLayout Padding="20, 5, 30, 5"
                          Spacing="0">
@@ -18,6 +21,7 @@
                 
                 <controls:CustomEntry Placeholder="{helpers:TranslateExtension EnterYourName}" 
                                       BorderColor="{Binding BorderColorName}"
+                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       Text="{Binding Name}"/>
                 
                 <Label Text="{Binding ErrorMessageName}"
@@ -30,6 +34,7 @@
                 
                 <controls:CustomEntry Placeholder="{helpers:TranslateExtension EnterEmail}" 
                                       BorderColor="{Binding BorderColorEmail}"
+                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       Text="{Binding Email}"/>
                 
                 <Label Text="{Binding ErrorMessageEmail}"
@@ -40,6 +45,7 @@
                 <Button Text="{helpers:TranslateExtension Next}"
                         Command="{Binding GoNextCommand}"
                         Style="{DynamicResource BlueButton}"
+                        BackgroundColor="{DynamicResource BackgroundColor}"
                         IsEnabled="{Binding IsEnabledNextButton}"
                         Margin="0, 33, 0, 0"/>
 

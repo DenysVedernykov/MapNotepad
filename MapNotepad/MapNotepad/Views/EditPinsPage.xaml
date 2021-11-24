@@ -6,7 +6,8 @@
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
                       xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-                      xmlns:behaviors="http://prismlibrary.com">
+                      xmlns:behaviors="http://prismlibrary.com"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
 
     <view:BaseContentPage.Content>
         <Grid RowSpacing="0"
@@ -20,7 +21,8 @@
                                         LineColor="{DynamicResource Variant}"
                                         LeftButtonCommand="{Binding GoBackCommand}"
                                         RightButtonCommand="{Binding SaveCommand}"
-                                        IsEnabledRightButton="{Binding IsEnableSaveButton}"/>
+                                        IsEnabledRightButton="{Binding IsEnableSaveButton}"
+                                        BackgroundColor="{DynamicResource BackgroundColor}"/>
 
                 <StackLayout Padding="20, 10, 20, 0"
                              Spacing="0">
@@ -30,7 +32,8 @@
 
                     <controls:CustomEntry Text="{Binding Label}"
                                           BorderColor="{Binding BorderColorLabel}"
-                                          Placeholder="{helpers:TranslateExtension EnterLabel}" />
+                                          Placeholder="{helpers:TranslateExtension EnterLabel}"
+                                          BackgroundColor="{DynamicResource BackgroundColor}"/>
 
                     <Label Text="{helpers:TranslateExtension Description}"
                            Margin="19, 32, 0, 7"/>
@@ -45,11 +48,13 @@
                         <controls:CustomEntry Text="{Binding Longitude}"
                                               BorderColor="{Binding BorderColorLongitude}"
                                               Placeholder="{helpers:TranslateExtension Longitude}"
+                                              BackgroundColor="{DynamicResource BackgroundColor}"
                                               HorizontalOptions="FillAndExpand"/>
 
                         <controls:CustomEntry Text="{Binding Latitude}"
                                               BorderColor="{Binding BorderColorLatitude}"
                                               Placeholder="{helpers:TranslateExtension Latitude}"
+                                              BackgroundColor="{DynamicResource BackgroundColor}"
                                               HorizontalOptions="FillAndExpand"/>
 
                     </StackLayout>

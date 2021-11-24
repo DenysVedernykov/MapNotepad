@@ -7,7 +7,7 @@
        prism:ViewModelLocator.AutowireViewModel="True"
        prism:DialogLayout.RelativeWidthRequest="{OnIdiom Default=0.75, Desktop=0.5}"
        HasShadow="false"
-       BackgroundColor="{DynamicResource White}">
+       BackgroundColor="{DynamicResource BackgroundColor}">
 
     <Frame.GestureRecognizers>
         <TapGestureRecognizer Command="{Binding CloseCommand}"/>

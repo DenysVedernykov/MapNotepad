@@ -6,7 +6,8 @@
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
                       xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-                      xmlns:behaviors="http://prismlibrary.com">
+                      xmlns:behaviors="http://prismlibrary.com"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
 
     <view:BaseContentPage.Content>
 

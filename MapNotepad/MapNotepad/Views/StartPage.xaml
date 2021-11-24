@@ -3,7 +3,8 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       x:Class="MapNotepad.Views.StartPage"
                       xmlns:view="clr-namespace:MapNotepad.Views" 
-                      xmlns:helpers="clr-namespace:MapNotepad.Helpers">
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+                      BackgroundColor="{DynamicResource BackgroundColor}">
     <view:BaseContentPage.Content>
         <StackLayout>
             <StackLayout VerticalOptions="EndAndExpand"
@@ -24,6 +25,7 @@
                 <Button Text="{helpers:TranslateExtension CreateAccount}"
                         Command="{Binding ShowRegisterViewCommand}"
                         Style="{DynamicResource WhiteButton}"
+                        BackgroundColor="{DynamicResource BackgroundColor}"
                         Margin="0, 14, 0, 0"/>
                 
             </StackLayout>
