@@ -32,6 +32,8 @@
     <None Remove="Fonts\Montserrat-Thin.ttf" />
     <None Remove="Fonts\Montserrat-ThinItalic.ttf" />
     <None Remove="Themes\DarkMapStyle.json" />
+    <None Remove="Themes\DarkMapTheme.txt" />
+    <None Remove="Themes\LightMapTheme.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +55,8 @@
     <EmbeddedResource Include="Fonts\Montserrat-SemiBoldItalic.ttf" />
     <EmbeddedResource Include="Fonts\Montserrat-Thin.ttf" />
     <EmbeddedResource Include="Fonts\Montserrat-ThinItalic.ttf" />
+    <EmbeddedResource Include="Themes\DarkMapTheme.txt" />
+    <EmbeddedResource Include="Themes\LightMapTheme.txt" />
     <Resource Include="Themes\DarkMapStyle.json" />
   </ItemGroup>
 

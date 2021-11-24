@@ -45,8 +45,6 @@
                 <Button Text="{helpers:TranslateExtension Next}"
                         Command="{Binding GoNextCommand}"
                         Style="{DynamicResource BlueButton}"
-                        TextColor="{DynamicResource TextColor}"
-                        BackgroundColor="{DynamicResource BackgroundColor}"
                         IsEnabled="{Binding IsEnabledNextButton}"
                         Margin="0, 33, 0, 0"/>
 

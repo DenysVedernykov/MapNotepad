@@ -3,16 +3,19 @@ using MapNotepad.Helpers;
 using MapNotepad.Helpers.ProcessHelpers;
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
+using MapNotepad.Services.GeolocationService;
 using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
+using Plugin.Geolocator;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -33,13 +36,16 @@ namespace MapNotepad.ViewModels
 
         private IPermissionsService _permissionsService;
 
+        private IGeolocationService _geolocationService;
+
         public MapPageViewModel(
             IDialogService dialogService, 
             INavigationService navigationService,
             IPinService pinService,
             IAuthorizationService authorizationService,
             ISettingsManagerService settingsManagerService,
-            IPermissionsService permissionsService
+            IPermissionsService permissionsService,
+            IGeolocationService  geolocationService
             )
             : base(navigationService)
         {
@@ -48,6 +54,7 @@ namespace MapNotepad.ViewModels
             _authorizationService = authorizationService;
             _settingsManagerService = settingsManagerService;
             _permissionsService = permissionsService;
+            _geolocationService = geolocationService;
 
             _pins = new ObservableCollection<Pin>();
             _searchResult = new ObservableCollection<UserPin>();
@@ -348,19 +355,27 @@ namespace MapNotepad.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnMoveToMyLocationCommandAsync()
+        private async Task OnMoveToMyLocationCommandAsync()
         {
             CheckPermissions().Await();
 
             if (IsShowingUser)
             {
-                MessagingCenter.Send<MapPageViewModel>(this, "MoveToMyLocation");
-            }
+                //var location = await _geolocationService.GetCurrentPosition();
 
-            return Task.CompletedTask;
+                //if (location.IsSuccess)
+                //{
+                //    MessagingCenter.Send<MapPageViewModel, Location>(this, "MoveToMyLocation", location.Result);
+                //}
+
+                Plugin.Geolocator.Abstractions.IGeolocator _locator = CrossGeolocator.Current;
+
+                var position = _locator.GetPositionAsync();
+
+            }
         }
 
-        private Task OnMapClickedCommandAsync(Position position)
+        private Task OnMapClickedCommandAsync(Xamarin.Forms.GoogleMaps.Position position)
         {
             IsPinDescriptionVisible = false;
 

@@ -12,18 +12,35 @@ namespace MapNotepad.iOS.Services.PermissionsService
 {
     public class PermissionsService : IPermissionsService
     {
-        public async Task<PermissionStatus> CheckStatusAsync<T>() where T : Permissions.BasePermission, new()
+        public Task<PermissionStatus> CheckStatusAsync<T>()
+            where T : Permissions.BasePermission, new()
         {
-            return await Permissions.CheckStatusAsync<T>();
+            return CheckStatusAsync<T>();
         }
 
-        public async Task<PermissionStatus> RequestAsync<T>() where T : Permissions.BasePermission, new()
+        public async Task<PermissionStatus> RequestAsync<T>()
+            where T : Permissions.BasePermission, new()
         {
-            var status = await CheckStatusAsync<T>();
+            var status = await Permissions.CheckStatusAsync<T>();
 
-            if (status != PermissionStatus.Granted)
+            if (status == PermissionStatus.Denied)
             {
-                return await Permissions.RequestAsync<T>();
+                var okCanselAlertController = UIAlertController.Create(
+                    "Permission denied", "Change permission settings", UIAlertControllerStyle.Alert);
+
+                okCanselAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, alert =>
+                    UIApplication.SharedApplication.OpenUrl(new NSUrl("app-settings:"))));
+
+                okCanselAlertController.AddAction(UIAlertAction.Create("Cansel", UIAlertActionStyle.Default, null));
+
+                var vc = UIApplication.SharedApplication.KeyWindow.RootViewController;
+
+                while (vc.PresentedViewController != null)
+                {
+                    vc = vc.PresentedViewController;
+                }
+
+                vc.PresentViewController(okCanselAlertController, true, null);
             }
 
             return status;

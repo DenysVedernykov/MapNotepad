@@ -134,7 +134,6 @@
         <Setter Property="WidthRequest" Value="55" />
         <Setter Property="HeightRequest" Value="55" />
         <Setter Property="Padding" Value="12" />
-        <Setter Property="Margin" Value="0, 0, 17, 17" />
         <Setter Property="VerticalOptions" Value="End" />
         <Setter Property="HorizontalOptions" Value="End" />
     </Style>
