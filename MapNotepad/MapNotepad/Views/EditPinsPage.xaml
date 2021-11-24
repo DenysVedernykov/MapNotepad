@@ -12,8 +12,8 @@
         <Grid RowSpacing="0"
               RowDefinitions="*">
 
-            <StackLayout Spacing="0"
-                         Grid.Row="0">
+            <StackLayout Grid.Row="0"
+                         Spacing="0">
                 
                 <controls:CustomToolBar Title="{helpers:TranslateExtension EditPin}" 
                                         RightImageSource="ic_save.png"
@@ -55,23 +55,24 @@
                     </StackLayout>
                 </StackLayout>
 
-                <controls:CustomMap x:Name="map"
-                                    Margin="0, 25, 0, 0"
-                                    HeightRequest="270"
-                                    MyLocationEnabled="{Binding IsShowingUser}"
-                                    InitialCameraUpdate="{Binding InitialCameraUpdate}">
-
-                    <controls:CustomMap.Behaviors>
-                        <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
-                                                          EventName="MapClicked"
-                                                          EventArgsParameterPath="Point"/>
-                    </controls:CustomMap.Behaviors>
-
-                </controls:CustomMap>
-
             </StackLayout>
 
-            <ImageButton Grid.Row="0"
+            <controls:CustomMap Grid.Row="1"
+                                x:Name="map"
+                                Margin="0, 25, 0, 0"
+                                HeightRequest="270"
+                                MyLocationEnabled="{Binding IsShowingUser}"
+                                InitialCameraUpdate="{Binding InitialCameraUpdate}">
+
+                <controls:CustomMap.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
+                                                      EventName="MapClicked"
+                                                      EventArgsParameterPath="Point"/>
+                </controls:CustomMap.Behaviors>
+
+            </controls:CustomMap>
+
+            <ImageButton Grid.Row="1"
                          Source="ic_location.png"
                          BackgroundColor="{DynamicResource White}" 
                          CornerRadius="20"

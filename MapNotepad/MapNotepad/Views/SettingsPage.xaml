@@ -21,7 +21,8 @@
                            TextColor="{DynamicResource Black}"
                            FontFamily="Montserrat-Regular"/>
                     
-                    <Switch HorizontalOptions="EndAndExpand"/>
+                    <Switch HorizontalOptions="EndAndExpand"
+                            IsToggled="{Binding IsToggled}" />
                     
                 </StackLayout>
                 
@@ -66,6 +67,10 @@
                 <BoxView HeightRequest="1"
                          Color="{DynamicResource Variant}"/>
 
+                <Button Text="{helpers:TranslateExtension Apply}"
+                        Style="{DynamicResource BlueButton}"
+                        Command="{Binding RefreshCommand}"/>
+                
             </StackLayout>
             
         </StackLayout>

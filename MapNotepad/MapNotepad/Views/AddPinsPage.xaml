@@ -56,23 +56,23 @@
                     </StackLayout>
                 </StackLayout>
 
-                <controls:CustomMap x:Name="map"
-                                    Margin="0, 25, 0, 0"
-                                    HeightRequest="270"
-                                    MyLocationEnabled="{Binding IsShowingUser}"
-                                    InitialCameraUpdate="{Binding InitialCameraUpdate}">
-
-                    <controls:CustomMap.Behaviors>
-                        <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
-                                                          EventName="MapClicked"
-                                                          EventArgsParameterPath="Point"/>
-                    </controls:CustomMap.Behaviors>
-                    
-                </controls:CustomMap>
-
             </StackLayout>
+            
+            <controls:CustomMap x:Name="map"
+                                Grid.Row="1"
+                                Margin="0, 25, 0, 0"
+                                MyLocationEnabled="{Binding IsShowingUser}"
+                                InitialCameraUpdate="{Binding InitialCameraUpdate}">
 
-            <ImageButton Grid.Row="0"
+                <controls:CustomMap.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
+                                                      EventName="MapClicked"
+                                                      EventArgsParameterPath="Point"/>
+                </controls:CustomMap.Behaviors>
+
+            </controls:CustomMap>
+
+            <ImageButton Grid.Row="1"
                          Source="ic_location.png"
                          BackgroundColor="{DynamicResource White}" 
                          CornerRadius="20"
