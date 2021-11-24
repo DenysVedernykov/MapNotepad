@@ -27,6 +27,8 @@ namespace MapNotepad.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
+
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState); 
 
             LoadApplication(new App(new AndroidInitializer()));

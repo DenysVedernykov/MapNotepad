@@ -31,6 +31,8 @@ namespace MapNotepad.iOS
 
             Xamarin.FormsGoogleMaps.Init("AIzaSyAcBsMCF3pIsxYwe7ebpG7FiYXPpfozXFc");
 
+            ZXing.Net.Mobile.Forms.iOS.Platform.Init();
+
             LoadApplication(new App(new IOSInitializer()));
 
             return base.FinishedLaunching(app, options);
