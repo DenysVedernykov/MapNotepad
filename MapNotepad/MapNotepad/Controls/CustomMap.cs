@@ -95,7 +95,7 @@ namespace MapNotepad.Controls
             foreach (object item in items)
             {
                 var pin = item as Pin;
-                Pins.Add(pin);
+                Pins.Remove(pin);
             }
         }
 
