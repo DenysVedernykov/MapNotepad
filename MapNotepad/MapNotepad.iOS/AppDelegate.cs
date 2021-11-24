@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using ContextMenu.iOS;
 using Foundation;
 using MapNotepad.iOS.Services.PermissionsService;
 using MapNotepad.Services.PermissionsService;
@@ -32,6 +32,8 @@ namespace MapNotepad.iOS
             Xamarin.FormsGoogleMaps.Init("AIzaSyAcBsMCF3pIsxYwe7ebpG7FiYXPpfozXFc");
 
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
+
+            ContextMenuViewRenderer.Preserve();
 
             LoadApplication(new App(new IOSInitializer()));
 
