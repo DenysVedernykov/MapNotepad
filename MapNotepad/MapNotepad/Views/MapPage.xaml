@@ -5,11 +5,10 @@
                       x:Class="MapNotepad.Views.MapPage"
                       xmlns:view="clr-namespace:MapNotepad.Views"
                       xmlns:controls="clr-namespace:MapNotepad.Controls" 
-                      xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
-                      
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers"                   
                       xmlns:behaviors="http://prismlibrary.com"
                       xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer">
-    
+
     <view:BaseContentPage.Content>
         <Grid RowSpacing="0" 
               RowDefinitions="auto">
@@ -22,27 +21,19 @@
                                       LeftButtonCommand="{Binding GoSettingsButtonCommand}"
                                       RightButtonCommand="{Binding ExitButtonCommand}"/>
 
-            <!--<maps:Map x:Name="map" 
-                      Grid.Row="1"
-                      MyLocationEnabled="{Binding IsShowingUser}">
-
+            <controls:CustomMap x:Name="map" 
+                                Grid.Row="1"
+                                ItemsSource="{Binding Pins}"
+                                MyLocationEnabled="{Binding IsShowingUser}">
+                
                 <maps:Map.Behaviors>
-                    --><!--<bindings:BindingPinsBehavior Value="{Binding Pins}"/>--><!--
-
                     <behaviors:EventToCommandBehavior Command="{Binding MapClickedCommand}"
                                                       EventName="MapClicked"
                                                       EventArgsParameterPath="Point"/>
 
                 </maps:Map.Behaviors>
-            </maps:Map>-->
-
-            <controls:CustomMap x:Name="map" 
-                                Grid.Row="1"
-                                PinsSource="{Binding Pins}"
-                                Text="dffd">
-                
             </controls:CustomMap>
-            
+
             <statecontainer:StateContainer Grid.Row="1"
                                            IsVisible="{Binding ShouldShowList}"
                                            State="{Binding IsEmptySearchResult}"
@@ -73,6 +64,7 @@
                             <behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 
                                                               EventName="ItemTapped" 
                                                               EventArgsConverterParameter="{Binding .}"/>
+                            
                         </ListView.Behaviors>
 
                         <ListView.ItemTemplate>
@@ -125,7 +117,7 @@
                          BackgroundColor="{DynamicResource White}" 
                          CornerRadius="20"
                          Padding="10"
-                         Margin="0, 0, 7, 115"
+                         Margin="0, 0, 15, 15"
                          Command="{Binding MoveToMyLocationCommand}"
                          VerticalOptions="End" 
                          HorizontalOptions="End"/>

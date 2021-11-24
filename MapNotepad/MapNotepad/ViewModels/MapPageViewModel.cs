@@ -233,36 +233,6 @@ namespace MapNotepad.ViewModels
 
         #endregion
 
-        #region -- INavigationAware implementation --
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            var allPins = _pinService.AllPinsAsync();
-
-            if (allPins.Result.IsSuccess)
-            {
-                var favoritesPins = allPins.Result.Result.Where(row => row.Favorites);
-
-                Pins = new ObservableCollection<Pin>();
-
-                foreach (var userPin in favoritesPins)
-                {
-                    var pin = new Pin()
-                    {
-                        Label = userPin.Label,
-                        Position = new Position(userPin.Latitude, userPin.Longitude),
-                        IsVisible = userPin.Favorites,
-                        Tag = userPin.Id
-                    };
-                    pin.Clicked += Pin_Clicked;
-
-                    Pins.Add(pin);
-                }
-            }
-        }
-
-        #endregion
-
         #region -- Overrides --
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
@@ -403,6 +373,13 @@ namespace MapNotepad.ViewModels
             Text = "";
 
             MessagingCenter.Send<MapPageViewModel, Position>(this, "MoveToPosition", new Position(SelectedItem.Latitude, SelectedItem.Longitude));
+
+            LabelPinDescription = SelectedItem.Label;
+            LatitudePinDescription = SelectedItem.Latitude;
+            LongitudePinDescription = SelectedItem.Longitude;
+            PinDescription = SelectedItem.Description;
+
+            IsPinDescriptionVisible = true;
 
             return Task.CompletedTask;
         }
