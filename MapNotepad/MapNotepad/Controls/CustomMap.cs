@@ -1,13 +1,6 @@
-﻿using MapNotepad.Models;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -64,27 +57,37 @@ namespace MapNotepad.Controls
             {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
+                    {
+                        Pins.Clear();
+                    }
 
                     CreatePinItems(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Move:
                     if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
+                    {
+                        Pins.Clear();
+                    }
 
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
+                    {
+                        Pins.Clear();
+                    }
 
                     RemovePinItems(e.OldItems);
+
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
+                    {
+                        Pins.Clear();
+                    }
 
                     RemovePinItems(e.OldItems);
                     CreatePinItems(e.NewItems);
+
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     Pins.Clear();

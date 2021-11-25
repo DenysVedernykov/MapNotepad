@@ -1,8 +1,4 @@
 ﻿using MapNotepad.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -10,7 +6,6 @@ using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Controls
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CustomSearchBar : ContentView
     {
         public CustomSearchBar()
@@ -24,7 +19,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(LeftButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomSearchBar),
-            defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
 
         public ICommand LeftButtonCommand
@@ -37,7 +31,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(RightButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomSearchBar),
-            defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
 
         public ICommand RightButtonCommand

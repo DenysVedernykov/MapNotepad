@@ -1,14 +1,6 @@
-﻿using Prism.Mvvm;
-using Prism.Navigation;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using Prism.Navigation;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.GoogleMaps;
-using Xamarin.Forms.Internals;
 
 namespace MapNotepad.ViewModels
 {

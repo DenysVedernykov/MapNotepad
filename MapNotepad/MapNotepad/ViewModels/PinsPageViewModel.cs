@@ -6,13 +6,10 @@ using MapNotepad.Services.Authorization;
 using MapNotepad.Services.Pins;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
-using Prism.Mvvm;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -103,14 +100,7 @@ namespace MapNotepad.ViewModels
                 this,
                 "AddPin",
                 (sender, pin) => {
-                    var userPin = pin.ToUserPinWithCommand();
-
-                    userPin.TabCommand = ItemTappedCommand;
-                    userPin.DeleteCommand = ItemDeleteCommand;
-                    userPin.EditCommand = ItemEditCommand;
-                    userPin.SwitchFavoritesCommand = SwitchFavoritesCommand;
-
-                    Pins.Add(userPin);
+                    AddPin(pin.ToUserPinWithCommand());
 
                     IsEmpty = Pins.Count == 0;
                 });
@@ -119,14 +109,7 @@ namespace MapNotepad.ViewModels
                 this,
                 "AddPin",
                 (sender, pin) => {
-                    var userPin = pin.ToUserPinWithCommand();
-
-                    userPin.TabCommand = ItemTappedCommand;
-                    userPin.DeleteCommand = ItemDeleteCommand;
-                    userPin.EditCommand = ItemEditCommand;
-                    userPin.SwitchFavoritesCommand = SwitchFavoritesCommand;
-
-                    Pins.Add(userPin);
+                    AddPin(pin.ToUserPinWithCommand());
 
                     IsEmpty = Pins.Count == 0;
                 });
@@ -135,12 +118,7 @@ namespace MapNotepad.ViewModels
                 this,
                 "AddPin",
                 (sender, pin) => {
-                    pin.TabCommand = ItemTappedCommand;
-                    pin.DeleteCommand = ItemDeleteCommand;
-                    pin.EditCommand = ItemEditCommand;
-                    pin.SwitchFavoritesCommand = SwitchFavoritesCommand;
-
-                    Pins.Add(pin);
+                    AddPin(pin);
 
                     IsEmpty = Pins.Count == 0;
                 });
@@ -160,14 +138,7 @@ namespace MapNotepad.ViewModels
             {
                 foreach (var pin in allPins.Result)
                 {
-                    var userPin = pin.ToUserPinWithCommand();
-
-                    userPin.TabCommand = ItemTappedCommand;
-                    userPin.DeleteCommand = ItemDeleteCommand;
-                    userPin.EditCommand = ItemEditCommand;
-                    userPin.SwitchFavoritesCommand = SwitchFavoritesCommand;
-
-                    Pins.Add(userPin);
+                    AddPin(pin.ToUserPinWithCommand());
                 }
             }
 
@@ -185,6 +156,7 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Text):
+
                     Task<AOResult<List<UserPin>>> allPins;
 
                     if (string.IsNullOrWhiteSpace(Text))
@@ -202,14 +174,7 @@ namespace MapNotepad.ViewModels
 
                         foreach (var pin in allPins.Result.Result)
                         {
-                            var userPin = pin.ToUserPinWithCommand();
-
-                            userPin.TabCommand = ItemTappedCommand;
-                            userPin.DeleteCommand = ItemDeleteCommand;
-                            userPin.EditCommand = ItemEditCommand;
-                            userPin.SwitchFavoritesCommand = SwitchFavoritesCommand;
-
-                            Pins.Add(userPin);
+                            AddPin(pin.ToUserPinWithCommand());
                         }
                     }
 
@@ -222,6 +187,16 @@ namespace MapNotepad.ViewModels
         #endregion
 
         #region -- Private methods --
+
+        private void AddPin(UserPinWithCommand pin)
+        {
+            pin.TabCommand = ItemTappedCommand;
+            pin.DeleteCommand = ItemDeleteCommand;
+            pin.EditCommand = ItemEditCommand;
+            pin.SwitchFavoritesCommand = SwitchFavoritesCommand;
+
+            Pins.Add(pin);
+        }
 
         private Task OnSwitchFavoritesCommandAsync(object item)
         {
@@ -290,14 +265,14 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        private Task OnItemEditCommandAsync(object item)
+        private async Task OnItemEditCommandAsync(object item)
         {
             var pin = item as UserPinWithCommand;
 
             INavigationParameters param = new NavigationParameters();
             param.Add("Pin", pin);
 
-            return _navigationService.NavigateAsync($"{nameof(EditPinsPage)}", param);
+            await _navigationService.NavigateAsync($"{nameof(EditPinsPage)}", param);
         }
 
         private async Task OnExitButtonCommandAsync()
@@ -321,14 +296,14 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        private Task OnGoSettingsButtonCommandAsync()
+        private async Task OnGoSettingsButtonCommandAsync()
         {
-            return _navigationService.NavigateAsync(nameof(SettingsPage));
+            await _navigationService.NavigateAsync(nameof(SettingsPage));
         }
 
-        private Task OnGoAddPinsPageCommandAsync()
+        private async Task OnGoAddPinsPageCommandAsync()
         {
-            return _navigationService.NavigateAsync(nameof(AddPinsPage));
+            await _navigationService.NavigateAsync(nameof(AddPinsPage));
         }
 
         #endregion

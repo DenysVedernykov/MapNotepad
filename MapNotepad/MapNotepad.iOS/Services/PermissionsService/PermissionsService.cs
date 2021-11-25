@@ -1,9 +1,5 @@
 ﻿using Foundation;
 using MapNotepad.Services.PermissionsService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Essentials;

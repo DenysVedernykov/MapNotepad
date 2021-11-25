@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Controls
 {
@@ -23,7 +16,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(LeftButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomToolBar),
-            defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
 
         public ICommand LeftButtonCommand
@@ -36,7 +28,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(RightButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomToolBar),
-            defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
 
         public ICommand RightButtonCommand

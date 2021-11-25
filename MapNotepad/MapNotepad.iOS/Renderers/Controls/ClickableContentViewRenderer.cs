@@ -1,6 +1,6 @@
-using System;
 using MapNotepad.Controls;
 using MapNotepad.iOS.Renderers.Controls;
+using System;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -111,6 +111,7 @@ namespace MapNotepad.iOS.Renderers.Controls
         {
             SetNeedsDisplay();
         }
+
         #endregion
     }
 }

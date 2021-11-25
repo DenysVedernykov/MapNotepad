@@ -1,17 +1,9 @@
 ﻿using MapNotepad.ViewModels;
-using Plugin.Geolocator;
-using Prism.Unity;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
-using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Views
 {
@@ -33,11 +25,11 @@ namespace MapNotepad.Views
                     map.MoveCamera(CameraUpdateFactory.NewPosition(position));
                 });
 
-            MessagingCenter.Subscribe<MapPageViewModel, Location>(
+            MessagingCenter.Subscribe<MapPageViewModel, Position>(
                 this,
                 "MoveToMyLocation",
-                async (sender, location) => {
-                    await map.MoveCamera(CameraUpdateFactory.NewPosition(new Position(location.Latitude, location.Longitude)));
+                async (sender, position) => {
+                    await map.MoveCamera(CameraUpdateFactory.NewPosition(position));
                 });
 
             InitializeComponent();
@@ -57,7 +49,6 @@ namespace MapNotepad.Views
             }
             catch (Exception e)
             {
-
             }
 
         }

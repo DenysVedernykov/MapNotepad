@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:controls="clr-namespace:MapNotepad.Controls"
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+                      xmlns:view="clr-namespace:MapNotepad.Views"
                       x:Class="MapNotepad.Views.SettingsPage"
-                      xmlns:view="clr-namespace:MapNotepad.Views" 
-                      xmlns:controls="clr-namespace:MapNotepad.Controls" 
-                      xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
-                      xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer"
                       BackgroundColor="{DynamicResource BackgroundColor}">
     
     <view:BaseContentPage.Content>
+        
         <StackLayout>
             
             <controls:CustomToolBar Title="{helpers:TranslateExtension Settings}"
@@ -16,6 +16,7 @@
                                     LeftButtonCommand="{Binding GoBackCommand}"/>
 
             <StackLayout Spacing="0">
+                
                 <StackLayout Orientation="Horizontal"
                              Padding="25, 20, 25, 20">
                     
@@ -78,5 +79,6 @@
             </StackLayout>
             
         </StackLayout>
+        
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

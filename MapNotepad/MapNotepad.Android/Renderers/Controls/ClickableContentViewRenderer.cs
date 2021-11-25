@@ -1,10 +1,9 @@
-
-using System;
-using System.Collections.Generic;
-using MapNotepad.Controls;
-using MapNotepad.Droid.Renderers.Controls;
 using Android.Runtime;
 using Android.Views;
+using MapNotepad.Controls;
+using MapNotepad.Droid.Renderers.Controls;
+using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -163,6 +162,7 @@ namespace MapNotepad.Droid.Renderers.Controls
             var metrics = Forms.Context.Resources.DisplayMetrics;
             return new Xamarin.Forms.Size(metrics.WidthPixels, metrics.HeightPixels);
         }
+
         #endregion
     }
 }

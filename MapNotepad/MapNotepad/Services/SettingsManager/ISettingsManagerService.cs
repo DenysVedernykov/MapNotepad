@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MapNotepad.Services.SettingsManager
+﻿namespace MapNotepad.Services.SettingsManager
 {
     public interface ISettingsManagerService
     {

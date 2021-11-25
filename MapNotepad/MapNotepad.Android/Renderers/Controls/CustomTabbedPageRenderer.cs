@@ -1,18 +1,14 @@
 ﻿using Android.Content;
-using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.BottomNavigation;
 using Google.Android.Material.Internal;
-using Google.Android.Material.Tabs;
 using MapNotepad.Controls;
 using MapNotepad.Droid.Renderers.Controls;
-using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
-using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 [assembly: ExportRenderer(typeof(CustomTabbedPage), typeof(CustomTabbedPageRenderer))]
 

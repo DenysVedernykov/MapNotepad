@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:prism="http://prismlibrary.com"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       x:Class="MapNotepad.Views.ConfirmAddPinQr"
-       xmlns:prism="http://prismlibrary.com" 
-       xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
-       xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
        xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer"
+       xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+       x:Class="MapNotepad.Views.ConfirmAddPinQr"
        prism:ViewModelLocator.AutowireViewModel="True"
        prism:DialogLayout.RelativeWidthRequest="{OnIdiom Default=0.75, Desktop=0.5}"
        HasShadow="false"
@@ -16,7 +15,9 @@
     </Frame.GestureRecognizers>
 
     <statecontainer:StateContainer State="{Binding Added}">
+        
         <statecontainer:StateCondition State="True">
+            
             <StackLayout BackgroundColor="{DynamicResource BackgroundColor}"
                          VerticalOptions="CenterAndExpand"
                          HorizontalOptions="CenterAndExpand">
@@ -28,113 +29,141 @@
                        VerticalTextAlignment="Center"/>
                 
             </StackLayout>
+            
         </statecontainer:StateCondition>
         
         <statecontainer:StateCondition State="False">
+            
             <StackLayout BackgroundColor="{DynamicResource BackgroundColor}">
 
                 <Label TextColor="{DynamicResource TextColor}"
-               FontFamily="Montserrat-Bold">
+                       FontFamily="Montserrat-Bold">
+                    
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
+                                
                                 <Span Text="{helpers:TranslateExtension Label}"/>
                                 <Span Text=": "/>
                                 <Span Text="{Binding Pin.Label}"
-                              FontFamily="Montserrat-Medium"/>
+                                      FontFamily="Montserrat-Medium"/>
+                                
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
+                    
                 </Label>
 
                 <Label TextColor="{DynamicResource TextColor}"
-               FontFamily="Montserrat-Bold">
+                       FontFamily="Montserrat-Bold">
+                    
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
+                                
                                 <Span Text="{helpers:TranslateExtension Favorites}"/>
                                 <Span Text=": "/>
                                 <Span Text="{Binding Pin.Favorites}"
-                              FontFamily="Montserrat-Medium"/>
+                                      FontFamily="Montserrat-Medium"/>
+                                
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
+                    
                 </Label>
 
                 <Label TextColor="{DynamicResource TextColor}"
-               FontFamily="Montserrat-Bold">
+                       FontFamily="Montserrat-Bold">
+                    
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
+                                
                                 <Span Text="{helpers:TranslateExtension Description}"/>
                                 <Span Text=": "/>
                                 <Span Text="{Binding Pin.Description}"
-                              FontFamily="Montserrat-Medium"/>
+                                      FontFamily="Montserrat-Medium"/>
+                                
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
+                    
                 </Label>
 
                 <Label TextColor="{DynamicResource TextColor}"
-               FontFamily="Montserrat-Bold">
+                       FontFamily="Montserrat-Bold">
+                    
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
+                                
                                 <Span Text="{helpers:TranslateExtension Latitude}"/>
                                 <Span Text=": "/>
                                 <Span Text="{Binding Pin.Latitude}"
-                              FontFamily="Montserrat-Medium"/>
+                                      FontFamily="Montserrat-Medium"/>
+                                
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
+                    
                 </Label>
 
                 <Label TextColor="{DynamicResource TextColor}"
-               FontFamily="Montserrat-Bold">
+                       FontFamily="Montserrat-Bold">
+                    
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
+                                
                                 <Span Text="{helpers:TranslateExtension Longitude}"/>
                                 <Span Text=": "/>
                                 <Span Text="{Binding Pin.Longitude}"
-                              FontFamily="Montserrat-Medium"/>
+                                      FontFamily="Montserrat-Medium"/>
+                                
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
+                    
                 </Label>
 
                 <Label TextColor="{DynamicResource TextColor}"
-               FontFamily="Montserrat-Bold">
+                       FontFamily="Montserrat-Bold">
+                    
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
+                                
                                 <Span Text="{helpers:TranslateExtension Address}"/>
                                 <Span Text=": "/>
                                 <Span Text="{Binding Pin.Address}"
-                              FontFamily="Montserrat-Medium"/>
+                                      FontFamily="Montserrat-Medium"/>
+                                
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
+                    
                 </Label>
 
                 <StackLayout Orientation="Horizontal"
-                     Margin="0, 20, 0, 0"
-                     Spacing="5">
+                             Margin="0, 20, 0, 0"
+                             Spacing="5">
 
                     <Button Text="{helpers:TranslateExtension Cancel}"
-                    Command="{Binding CancelCommand}"
-                    Style="{DynamicResource BlueButton}"
-                    HorizontalOptions="FillAndExpand"/>
+                            Command="{Binding CancelCommand}"
+                            Style="{DynamicResource BlueButton}"
+                            HorizontalOptions="FillAndExpand"/>
 
                     <Button Text="{helpers:TranslateExtension Ok}"
-                    Command="{Binding OkCommand}"
-                    Style="{DynamicResource BlueButton}"
-                    HorizontalOptions="FillAndExpand"/>
+                            Command="{Binding OkCommand}"
+                            Style="{DynamicResource BlueButton}"
+                            HorizontalOptions="FillAndExpand"/>
 
                 </StackLayout>
 
             </StackLayout>
+            
         </statecontainer:StateCondition>
+        
     </statecontainer:StateContainer>
     
 </Frame>

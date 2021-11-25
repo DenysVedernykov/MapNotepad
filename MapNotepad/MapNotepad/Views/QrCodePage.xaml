@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:prism="http://prismlibrary.com"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       x:Class="MapNotepad.Views.QrCodePage"
-       xmlns:prism="http://prismlibrary.com" 
        xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+       x:Class="MapNotepad.Views.QrCodePage"
        prism:ViewModelLocator.AutowireViewModel="True"
        prism:DialogLayout.RelativeWidthRequest="{OnIdiom Default=0.75, Desktop=0.5}"
        HasShadow="false"
@@ -22,4 +22,5 @@
             
         </forms:ZXingBarcodeImageView>
     </StackLayout>
+    
 </Frame>

@@ -1,12 +1,6 @@
-﻿using Android.App;
-using Android.Content;
-using Android.Content.Res;
+﻿using Android.Content;
 using MapNotepad.Controls;
 using MapNotepad.Droid.Renderers.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

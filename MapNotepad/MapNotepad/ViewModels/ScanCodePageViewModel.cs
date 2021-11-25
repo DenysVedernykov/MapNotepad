@@ -4,8 +4,6 @@ using Newtonsoft.Json;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -15,6 +13,8 @@ namespace MapNotepad.ViewModels
 {
     public class ScanCodePageViewModel : BaseViewModel
     {
+        private bool _shouldAnalyzing = true;
+
         private IDialogService _dialogService;
 
         public ScanCodePageViewModel(
@@ -48,8 +48,6 @@ namespace MapNotepad.ViewModels
             get => _shouldVisible;
             set => SetProperty(ref _shouldVisible, value);
         }
-
-        private bool _shouldAnalyzing = true;
 
         private ICommand _scanResultCommand;
         public ICommand ScanResultCommand => _scanResultCommand ??= SingleExecutionCommand.FromFunc(OnScanResultCommandAsync);
@@ -95,9 +93,9 @@ namespace MapNotepad.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnGoBackCommandAsync()
+        private async Task OnGoBackCommandAsync()
         {
-            return _navigationService.GoBackAsync();
+            await _navigationService.GoBackAsync();
         }
 
         #endregion

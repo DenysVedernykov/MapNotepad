@@ -1,14 +1,7 @@
-﻿using Acr.UserDialogs;
-using MapNotepad.Helpers;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MapNotepad.Helpers;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Controls
 {
@@ -90,7 +83,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(IsPassword),
             returnType: typeof(bool),
             declaringType: typeof(CustomEntry),
-            defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
         public bool IsPassword
@@ -103,7 +95,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(ShouldHidePassword),
             returnType: typeof(bool),
             declaringType: typeof(CustomEntry),
-            defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
         public bool ShouldHidePassword
@@ -116,7 +107,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(IsButtonVisible),
             returnType: typeof(bool),
             declaringType: typeof(CustomEntry),
-            defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
         public bool IsButtonVisible

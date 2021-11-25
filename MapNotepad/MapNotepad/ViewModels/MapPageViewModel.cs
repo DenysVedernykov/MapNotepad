@@ -1,9 +1,7 @@
 ﻿using Acr.UserDialogs;
 using MapNotepad.Helpers;
-using MapNotepad.Helpers.ProcessHelpers;
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
-using MapNotepad.Services.GeolocationService;
 using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using MapNotepad.Services.SettingsManager;
@@ -12,11 +10,9 @@ using Plugin.Geolocator;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -37,16 +33,13 @@ namespace MapNotepad.ViewModels
 
         private IPermissionsService _permissionsService;
 
-        private IGeolocationService _geolocationService;
-
         public MapPageViewModel(
             IDialogService dialogService, 
             INavigationService navigationService,
             IPinService pinService,
             IAuthorizationService authorizationService,
             ISettingsManagerService settingsManagerService,
-            IPermissionsService permissionsService,
-            IGeolocationService  geolocationService
+            IPermissionsService permissionsService
             )
             : base(navigationService)
         {
@@ -55,7 +48,6 @@ namespace MapNotepad.ViewModels
             _authorizationService = authorizationService;
             _settingsManagerService = settingsManagerService;
             _permissionsService = permissionsService;
-            _geolocationService = geolocationService;
 
             _pins = new ObservableCollection<Pin>();
             _searchResult = new ObservableCollection<UserPin>();
@@ -199,6 +191,7 @@ namespace MapNotepad.ViewModels
                 "DeletePin",
                 (sender, userPin) => {
                     DeletePin(sender, userPin);
+                    IsPinDescriptionVisible = false;
                 });
             
             MessagingCenter.Subscribe<PinsPageViewModel, UserPinWithCommand>(
@@ -220,6 +213,7 @@ namespace MapNotepad.ViewModels
                 "DeletePin",
                 (sender, userPin) => {
                     DeletePin(sender, userPin);
+                    IsPinDescriptionVisible = false;
                 });
 
             MessagingCenter.Subscribe<PinsPageViewModel, UserPin>(
@@ -294,11 +288,13 @@ namespace MapNotepad.ViewModels
                     
                     break;
                 case nameof(ShouldShowList):
+
                     if (!ShouldShowList)
                     {
                         SearchResult.Clear();
                         IsEmptySearchResult = false;
                     }
+
                     break;
             }
         }
@@ -365,14 +361,12 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        private Task OnShowQrCodeCommandAsync()
+        private async Task OnShowQrCodeCommandAsync()
         {
             var param = new DialogParameters();
             param.Add("UserPin", ClickedItem);
 
-            _dialogService.ShowDialog("QrCodePage", param);
-
-            return Task.CompletedTask;
+            await _dialogService.ShowDialogAsync("QrCodePage", param);
         }
 
         private async Task OnMoveToMyLocationCommandAsync()
@@ -385,11 +379,13 @@ namespace MapNotepad.ViewModels
                 {
                     try
                     {
-                        var location = await _geolocationService.GetCurrentPosition();
+                        var locator = CrossGeolocator.Current;
 
-                        if (location.IsSuccess)
+                        if (locator.IsGeolocationEnabled && locator.IsGeolocationAvailable)
                         {
-                            MessagingCenter.Send<MapPageViewModel, Location>(this, "MoveToMyLocation", location.Result);
+                            var position = await locator.GetPositionAsync();
+
+                            MessagingCenter.Send<MapPageViewModel, Position>(this, "MoveToMyLocation", new Position(position.Latitude, position.Longitude));
                         }
                     }
                     catch(Exception e)
@@ -447,9 +443,9 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        private Task OnGoSettingsButtonCommandAsync()
+        private async Task OnGoSettingsButtonCommandAsync()
         {
-            return _navigationService.NavigateAsync(nameof(SettingsPage));
+            await _navigationService.NavigateAsync(nameof(SettingsPage));
         }
 
         #endregion

@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      x:Class="MapNotepad.Views.EditPinsPage"
-                      xmlns:view="clr-namespace:MapNotepad.Views" 
-                      xmlns:controls="clr-namespace:MapNotepad.Controls" 
-                      xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
-                      xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
                       xmlns:behaviors="http://prismlibrary.com"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:controls="clr-namespace:MapNotepad.Controls"
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+                      xmlns:view="clr-namespace:MapNotepad.Views"
+                      x:Class="MapNotepad.Views.EditPinsPage"
                       BackgroundColor="{DynamicResource BackgroundColor}">
 
     <view:BaseContentPage.Content>
+        
         <Grid RowSpacing="0"
-              RowDefinitions="*">
+              RowDefinitions="auto">
 
             <StackLayout Grid.Row="0"
                          Spacing="0">
@@ -43,6 +43,7 @@
                            Margin="20, 27, 0, 8"/>
 
                     <StackLayout Orientation="Horizontal">
+                        
                         <controls:CustomEntry Text="{Binding Longitude}"
                                               BorderColor="{Binding BorderColorLongitude}"
                                               Placeholder="{helpers:TranslateExtension Longitude}"
@@ -54,6 +55,7 @@
                                               HorizontalOptions="FillAndExpand"/>
 
                     </StackLayout>
+                    
                 </StackLayout>
 
             </StackLayout>
@@ -84,5 +86,6 @@
                          HorizontalOptions="End"/>
             
         </Grid>
+        
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

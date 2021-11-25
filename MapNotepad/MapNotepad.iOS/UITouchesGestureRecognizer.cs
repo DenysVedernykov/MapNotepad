@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
 using CoreGraphics;
 using MapNotepad.Controls;
+using System;
+using System.Collections.Generic;
 using UIKit;
 using Xamarin.Forms;
-using System.Linq;
 
 namespace MapNotepad.iOS
 {

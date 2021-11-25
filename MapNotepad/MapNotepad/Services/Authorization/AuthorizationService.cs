@@ -1,10 +1,8 @@
-﻿using MapNotepad.Helpers.ProcessHelpers;
-using MapNotepad.Models;
+﻿using MapNotepad.Models;
 using MapNotepad.Services.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 

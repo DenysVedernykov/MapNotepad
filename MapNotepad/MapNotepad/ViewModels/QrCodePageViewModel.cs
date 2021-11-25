@@ -1,14 +1,9 @@
-﻿using MapNotepad.Helpers;
-using MapNotepad.Models;
+﻿using MapNotepad.Models;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using ZXing.Common;
 
 namespace MapNotepad.ViewModels
@@ -70,11 +65,6 @@ namespace MapNotepad.ViewModels
                 }
             }
         }
-
-        #endregion
-
-        #region -- Private methods --
-
 
         #endregion
 

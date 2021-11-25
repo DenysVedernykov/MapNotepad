@@ -3,14 +3,11 @@ using MapNotepad.Helpers;
 using MapNotepad.Services.Authorization;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -117,6 +114,7 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Email):
+
                     _correctEmail = false;
 
                     if (string.IsNullOrWhiteSpace(Email))
@@ -149,8 +147,10 @@ namespace MapNotepad.ViewModels
                     }
 
                     IsEnabledLogInButton = _correctEmail && _correctPassword;
+
                     break;
                 case nameof(Password):
+
                     _correctPassword = false;
 
                     if (string.IsNullOrWhiteSpace(Password))
@@ -175,6 +175,7 @@ namespace MapNotepad.ViewModels
                     }
 
                     IsEnabledLogInButton = _correctEmail && _correctPassword;
+
                     break;
             }
         }
@@ -183,14 +184,12 @@ namespace MapNotepad.ViewModels
 
         #region -- Private methods --
 
-        private Task OnGoBackCommandAsync()
+        private async Task OnGoBackCommandAsync()
         {
-            _navigationService.GoBackAsync();
-
-            return Task.CompletedTask;
+            await _navigationService.GoBackAsync();
         }
 
-        private Task OnLogInCommandAsync()
+        private async Task OnLogInCommandAsync()
         {
             if (_authorizationService.Login(Email, Password))
             {
@@ -198,7 +197,7 @@ namespace MapNotepad.ViewModels
                 _settingsManagerService.Email = Email;
                 _settingsManagerService.Password = Password;
 
-                _navigationService.NavigateAsync("/" + nameof(MainPage));
+                await _navigationService.NavigateAsync("/" + nameof(MainPage));
             }
             else
             {
@@ -207,14 +206,12 @@ namespace MapNotepad.ViewModels
                 Email = string.Empty;
                 Password = string.Empty;
 
-                UserDialogs.Instance.Alert(new AlertConfig()
+                await UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
                     Message = Resource.ResourceManager.GetString("InvalidLoginOrPass", Resource.Culture),
                     OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
                 });
             }
-
-            return Task.CompletedTask;
         }
 
         #endregion

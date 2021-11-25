@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      x:Class="MapNotepad.Views.LogInPage"
-                      xmlns:view="clr-namespace:MapNotepad.Views" 
-                      xmlns:controls="clr-namespace:MapNotepad.Controls" 
+                      xmlns:controls="clr-namespace:MapNotepad.Controls"
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+                      xmlns:view="clr-namespace:MapNotepad.Views"
+                      x:Class="MapNotepad.Views.LogInPage"
                       BackgroundColor="{DynamicResource BackgroundColor}">
+    
     <view:BaseContentPage.Content>
+        
         <StackLayout>
+            
             <controls:CustomToolBar Title="{helpers:TranslateExtension LogIn}"
                                     LeftButtonCommand="{Binding GoBackCommand}"
                                     LineColor="{DynamicResource BackgroundColor}"/>
@@ -54,5 +57,6 @@
             </StackLayout>
             
         </StackLayout>
+        
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

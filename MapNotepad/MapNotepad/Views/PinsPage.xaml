@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu"
                       xmlns:controls="clr-namespace:MapNotepad.Controls"
-                      xmlns:helpers="clr-namespace:MapNotepad.Helpers"
-                      xmlns:view="clr-namespace:MapNotepad.Views" 
-                      xmlns:behaviors="http://prismlibrary.com" 
-                      xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu" 
                       xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer"
+                      xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+                      xmlns:view="clr-namespace:MapNotepad.Views"
                       x:Class="MapNotepad.Views.PinsPage"
                       BackgroundColor="{DynamicResource BackgroundColor}">
     
@@ -18,6 +17,7 @@
     </view:BaseContentPage.Resources>
     
     <view:BaseContentPage.Content>
+        
         <Grid RowSpacing="0"
               RowDefinitions="Auto"
               BackgroundColor="{DynamicResource BackgroundColor}">
@@ -31,10 +31,10 @@
                                       RightButtonCommand="{Binding ExitButtonCommand}"/>
 
             <Label Grid.Row="1" 
-                    IsVisible="{Binding IsEmpty}" 
-                    Text="{helpers:TranslateExtension NoPinsAdded}" 
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center"/>
+                   IsVisible="{Binding IsEmpty}" 
+                   Text="{helpers:TranslateExtension NoPinsAdded}" 
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"/>
 
             <CollectionView Grid.Row="1"
                             x:Name="Collection"
@@ -43,62 +43,67 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
+                        
                         <context:SideContextMenuView>
                             <context:SideContextMenuView.View>
 
                                 <StackLayout Spacing="0"
-                                                 WidthRequest="{Binding Source={x:Reference Collection}, 
-                                    Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='0'}">
+                                             WidthRequest="{Binding Source={x:Reference Collection}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='0'}">
 
                                     <StackLayout Padding="20"
-                                                        Orientation="Horizontal">
+                                                 Orientation="Horizontal">
 
                                         <controls:ClickableContentView Command="{Binding SwitchFavoritesCommand}"
-                                                                            CommandParameter="{Binding .}">
+                                                                       CommandParameter="{Binding .}">
 
                                             <Frame Style="{DynamicResource imageFrame}">
 
                                                 <statecontainer:StateContainer State="{Binding Favorites}">
 
                                                     <statecontainer:StateCondition State="True">
+                                                        
                                                         <Image Aspect="AspectFill"
-                                                                    Source="ic_like_blue.png"
-                                                                    BackgroundColor="Transparent"/>
+                                                               Source="ic_like_blue.png"
+                                                               BackgroundColor="Transparent"/>
 
                                                     </statecontainer:StateCondition>
 
                                                     <statecontainer:StateCondition State="False">
+                                                        
                                                         <Image Aspect="AspectFill"
-                                                                    Source="ic_like_gray.png"
-                                                                    BackgroundColor="Transparent"/>
+                                                               Source="ic_like_gray.png"
+                                                               BackgroundColor="Transparent"/>
 
                                                     </statecontainer:StateCondition>
 
                                                 </statecontainer:StateContainer>
 
                                             </Frame>
+                                            
                                         </controls:ClickableContentView>
 
                                         <controls:ClickableContentView Command="{Binding TabCommand}"
-                                                                CommandParameter="{Binding .}"
-                                                                WidthRequest="{Binding Source={x:Reference Collection}, Path=Width}">
+                                                                       CommandParameter="{Binding .}">
+                                            
                                             <StackLayout Margin="10, 0, 0, 0">
 
                                                 <Label Text="{Binding Label}"
-                                                        FontSize="16"
-                                                        TextColor="{DynamicResource TextColor}"
-                                                        FontFamily="Montserrat-Medium"/>
+                                                       FontSize="16"
+                                                       TextColor="{DynamicResource TextColor}"
+                                                       FontFamily="Montserrat-Medium"/>
 
                                                 <Label FontSize="13"
-                                                        TextColor="{DynamicResource TextColor}"
-                                                        FontFamily="Montserrat-Regular">
+                                                       TextColor="{DynamicResource TextColor}"
+                                                       FontFamily="Montserrat-Regular">
 
                                                     <Label.FormattedText>
                                                         <FormattedString>
                                                             <FormattedString.Spans>
-                                                                <Span Text="{Binding Longitude}" />
+
+                                                                <Span Text="{Binding Longitude, StringFormat='{0:F8}'}" />
                                                                 <Span Text=", "/>
-                                                                <Span Text="{Binding Latitude}"/>
+                                                                <Span Text="{Binding Latitude, StringFormat='{0:F8}'}"/>
+                                                                
                                                             </FormattedString.Spans>
                                                         </FormattedString>
                                                     </Label.FormattedText>
@@ -106,16 +111,17 @@
                                                 </Label>
 
                                             </StackLayout>
+                                            
                                         </controls:ClickableContentView>
 
                                         <Image Source="ic_left_gray.png"
-                                                    HorizontalOptions="EndAndExpand"
-                                                    HeightRequest="30"/>
+                                               HorizontalOptions="EndAndExpand"
+                                               HeightRequest="30"/>
 
                                     </StackLayout>
 
                                     <BoxView BackgroundColor="{DynamicResource Variant}"
-                                                    HeightRequest="1"/>
+                                             HeightRequest="1"/>
 
                                 </StackLayout>
 
@@ -123,44 +129,49 @@
 
                             <context:SideContextMenuView.ContextTemplate>
                                 <DataTemplate>
+                                    
                                     <Frame Padding="0"
-                                            HasShadow="False"
+                                           HasShadow="False"
                                            BorderColor="Transparent"
                                            IsClippedToBounds="true">
 
                                         <StackLayout Orientation="Horizontal"
-                                                        Spacing="0">
+                                                     Spacing="0">
 
                                             <Frame Padding="20, 22"
-                                                    HasShadow="False"
-                                                    VerticalOptions="CenterAndExpand" 
-                                                    HorizontalOptions="EndAndExpand"
-                                                    CornerRadius="0"
-                                                    BackgroundColor="{DynamicResource Error}"
+                                                   HasShadow="False"
+                                                   VerticalOptions="CenterAndExpand" 
+                                                   HorizontalOptions="EndAndExpand"
+                                                   CornerRadius="0"
+                                                   BackgroundColor="{DynamicResource Error}"
                                                    BorderColor="{DynamicResource Error}">
 
                                                 <ImageButton Source="ic_delete.png"
-                                                                Command="{Binding DeleteCommand}"
-                                                                CommandParameter="{Binding .}"
-                                                                BackgroundColor="Transparent"/>
+                                                             Command="{Binding DeleteCommand}"
+                                                             CommandParameter="{Binding .}"
+                                                             BackgroundColor="Transparent"/>
+                                                
                                             </Frame>
 
                                             <Frame Padding="20, 22"
-                                                    HasShadow="False"
-                                                    VerticalOptions="CenterAndExpand" 
-                                                    HorizontalOptions="EndAndExpand"
-                                                    CornerRadius="0"
-                                                    BackgroundColor="{DynamicResource Primary}"
+                                                   HasShadow="False"
+                                                   VerticalOptions="CenterAndExpand" 
+                                                   HorizontalOptions="EndAndExpand"
+                                                   CornerRadius="0"
+                                                   BackgroundColor="{DynamicResource Primary}"
                                                    BorderColor="{DynamicResource Primary}">
 
                                                 <ImageButton Source="ic_edit.png"
-                                                                Command="{Binding EditCommand}"
-                                                                CommandParameter="{Binding .}"
-                                                                BackgroundColor="Transparent"/>
+                                                             Command="{Binding EditCommand}"
+                                                             CommandParameter="{Binding .}"
+                                                             BackgroundColor="Transparent"/>
+                                                
                                             </Frame>
 
                                         </StackLayout>
+                                        
                                     </Frame>
+                                    
                                 </DataTemplate>
                             </context:SideContextMenuView.ContextTemplate>
 
@@ -168,6 +179,7 @@
 
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                
             </CollectionView>
 
             <Frame Grid.Row="1"
@@ -178,8 +190,10 @@
                              Command="{Binding GoAddPinsPageCommand}">
 
                 </ImageButton>
+                
             </Frame>
                 
         </Grid>
+        
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

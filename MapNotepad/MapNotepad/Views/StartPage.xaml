@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      x:Class="MapNotepad.Views.StartPage"
-                      xmlns:view="clr-namespace:MapNotepad.Views" 
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers"
+                      xmlns:view="clr-namespace:MapNotepad.Views"
+                      x:Class="MapNotepad.Views.StartPage"
                       BackgroundColor="{DynamicResource BackgroundColor}">
     
     <view:BaseContentPage.Content>
+        
         <StackLayout>
             <StackLayout VerticalOptions="EndAndExpand"
                          Padding="16, 0, 16, 40" >
@@ -31,5 +32,6 @@
             </StackLayout>
             
         </StackLayout>
+        
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

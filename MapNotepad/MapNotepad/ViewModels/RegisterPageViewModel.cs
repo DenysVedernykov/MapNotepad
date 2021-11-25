@@ -1,17 +1,12 @@
 ﻿using MapNotepad.Helpers;
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
-using MapNotepad.Services.Repository;
-using MapNotepad.Themes;
 using MapNotepad.Views;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -20,18 +15,12 @@ namespace MapNotepad.ViewModels
 {
     class RegisterPageViewModel : BaseViewModel
     {
-
-        #region -- Private properties --
-
         private bool _correctName;
-
         private bool _correctEmail;
 
         private ResourceDictionary _resourceDictionary;
 
         IAuthorizationService _authorizationService;
-
-        #endregion
 
         public RegisterPageViewModel(INavigationService navigationService, IAuthorizationService authorizationService)
             : base(navigationService)
@@ -116,6 +105,7 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Name):
+
                     _correctName = false;
 
                     if (string.IsNullOrWhiteSpace(Name))
@@ -132,8 +122,10 @@ namespace MapNotepad.ViewModels
                     }
 
                     IsEnabledNextButton = _correctName && _correctEmail;
+
                     break;
                 case nameof(Email):
+
                     _correctEmail = false; 
                     
                     if (string.IsNullOrWhiteSpace(Email))
@@ -166,6 +158,7 @@ namespace MapNotepad.ViewModels
                     }
 
                     IsEnabledNextButton = _correctName && _correctEmail;
+
                     break;
             }
         }
@@ -174,7 +167,7 @@ namespace MapNotepad.ViewModels
 
         #region -- Private methods --
 
-        private Task OnGoNextCommandAsync()
+        private async Task OnGoNextCommandAsync()
         {
             User user = new User();
             user.Email = Email;
@@ -183,16 +176,12 @@ namespace MapNotepad.ViewModels
             NavigationParameters param = new NavigationParameters();
             param.Add("User", user);
 
-            _navigationService.NavigateAsync(nameof(RegisterPasswordPage), param);
-
-            return Task.CompletedTask;
+            await _navigationService.NavigateAsync(nameof(RegisterPasswordPage), param);
         }
 
-        private Task OnGoBackCommandAsync()
+        private async Task OnGoBackCommandAsync()
         {
-            _navigationService.GoBackAsync();
-
-            return Task.CompletedTask;
+            await _navigationService.GoBackAsync();
         }
 
         #endregion

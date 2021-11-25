@@ -1,22 +1,15 @@
-﻿using MapNotepad.Helpers.ProcessHelpers;
-using MapNotepad.Models;
+﻿using MapNotepad.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MapNotepad.Services.Repository
 {
     public class RepositoryService : IRepositoryService
     {
-
-        #region -- Private properties --
-
         private Lazy<SQLiteAsyncConnection> _database;
-
-        #endregion
 
         public RepositoryService()
         {

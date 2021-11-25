@@ -1,10 +1,5 @@
-﻿using Foundation;
-using MapNotepad.Controls;
+﻿using MapNotepad.Controls;
 using MapNotepad.iOS.Renderers.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;

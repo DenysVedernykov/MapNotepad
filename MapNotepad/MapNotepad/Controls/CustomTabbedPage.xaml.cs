@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace MapNotepad.Controls
 {
@@ -34,7 +27,6 @@ namespace MapNotepad.Controls
             propertyName: nameof(SelectedTab),
             returnType: typeof(int),
             declaringType: typeof(CustomTabbedPage),
-            defaultValue: 0,
             defaultBindingMode: BindingMode.TwoWay);
 
         public int SelectedTab
@@ -54,10 +46,12 @@ namespace MapNotepad.Controls
             switch (propertyName)
             {
                 case nameof(SelectedTab):
-                    if(SelectedTab >= 0 && SelectedTab < this.Children.Count)
+
+                    if(SelectedTab >= 0 && SelectedTab < Children.Count)
                     {
-                        this.CurrentPage = this.Children[SelectedTab];
+                        CurrentPage = Children[SelectedTab];
                     }
+
                     break;
             }
         }
@@ -66,9 +60,9 @@ namespace MapNotepad.Controls
         {
             base.OnCurrentPageChanged();
 
-            for(int i = 0; i < this.Children.Count; i++)
+            for(int i = 0; i < Children.Count; i++)
             {
-                if (this.CurrentPage == this.Children[i])
+                if (CurrentPage == Children[i])
                 {
                     SelectedTab = i;
                     break;

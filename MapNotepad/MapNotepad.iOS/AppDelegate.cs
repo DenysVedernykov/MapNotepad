@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ContextMenu.iOS;
+﻿using ContextMenu.iOS;
 using Foundation;
 using MapNotepad.iOS.Services.PermissionsService;
 using MapNotepad.Services.PermissionsService;

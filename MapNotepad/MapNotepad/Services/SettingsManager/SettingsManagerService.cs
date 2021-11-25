@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MapNotepad.Services.Settings;
-using Xamarin.Essentials;
+﻿using MapNotepad.Services.Settings;
 
 namespace MapNotepad.Services.SettingsManager
 {
     public class SettingsManagerService : ISettingsManagerService
     {
-
-        #region -- Private properties --
-
         private ISettingsService _settings;
-
-        #endregion
 
         public SettingsManagerService(ISettingsService settings)
         {

@@ -5,14 +5,12 @@ using MapNotepad.Services.Authorization;
 using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using Plugin.Geolocator;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -212,6 +210,7 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Label):
+
                     if (string.IsNullOrEmpty(Label))
                     {
                         BorderColorLabel = (Color)_resourceDictionary["Error"];
@@ -223,6 +222,7 @@ namespace MapNotepad.ViewModels
 
                     break;
                 case nameof(Longitude):
+
                     if (double.TryParse(Longitude, out sample))
                     {
                         var lng = double.Parse(Longitude);
@@ -245,6 +245,7 @@ namespace MapNotepad.ViewModels
 
                     break;
                 case nameof(Latitude):
+
                     if (double.TryParse(Latitude, out sample))
                     {
                         var lat = double.Parse(Latitude);
@@ -366,12 +367,16 @@ namespace MapNotepad.ViewModels
                     try
                     {
                         var locator = CrossGeolocator.Current;
-                        var position = await locator.GetPositionAsync();
 
-                        MessagingCenter.Send<EditPinsPageViewModel, Position>(
+                        if (locator.IsGeolocationEnabled && locator.IsGeolocationAvailable)
+                        {
+                            var position = await locator.GetPositionAsync();
+
+                            MessagingCenter.Send<EditPinsPageViewModel, Position>(
                             this,
                             "MoveToLocation",
                             new Position(position.Latitude, position.Longitude));
+                        }
                     }
                     catch(Exception e)
                     {

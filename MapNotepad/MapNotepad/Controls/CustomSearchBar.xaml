@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:local="clr-namespace:MapNotepad.Controls" 
-             xmlns:behaviors="http://prismlibrary.com" 
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:behaviors="http://prismlibrary.com"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MapNotepad.Controls"
              xmlns:helpers="clr-namespace:MapNotepad.Helpers"
              x:Class="MapNotepad.Controls.CustomSearchBar"
              x:Name="customSearchBar">
@@ -14,7 +14,9 @@
     </ContentView.Resources>
   
     <ContentView.Content>
+        
         <StackLayout Spacing="0">
+            
             <StackLayout Orientation="Horizontal"
                          Spacing="0"
                          Padding="5, 0, 5, 0"
@@ -28,6 +30,7 @@
                              Command="{Binding LeftButtonCommand, Source={x:Reference customSearchBar}}">
                     
                     <ImageButton.Triggers>
+                        
                         <DataTrigger TargetType="ImageButton"
                                      Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
                                      Value="True">
@@ -41,7 +44,9 @@
                             <Setter Property="IsVisible"
                                     Value="True"/>
                         </DataTrigger>
+                        
                     </ImageButton.Triggers>
+                    
                 </ImageButton>
                 
                 <ImageButton HorizontalOptions="Start"
@@ -52,6 +57,7 @@
                              Command="{Binding GoBackButtonCommand, Source={x:Reference customSearchBar}}">
                     
                     <ImageButton.Triggers>
+                        
                         <DataTrigger TargetType="ImageButton"
                                      Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
                                      Value="True">
@@ -65,7 +71,9 @@
                             <Setter Property="IsVisible"
                                     Value="False"/>
                         </DataTrigger>
+                        
                     </ImageButton.Triggers>
+                    
                 </ImageButton>
 
                 <StackLayout Orientation="Horizontal"
@@ -85,7 +93,9 @@
                         <local:CustomNoBorderEntry.Behaviors>
                             <behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customSearchBar}}" 
                                                               EventName="Focused"/>
+                            
                         </local:CustomNoBorderEntry.Behaviors>
+                        
                     </local:CustomNoBorderEntry>
 
                     <ImageButton Source="{Binding ClearImageSource, Source={x:Reference customSearchBar}}"
@@ -97,6 +107,7 @@
                                  BackgroundColor="Transparent">
                         
                         <ImageButton.Triggers>
+                            
                             <DataTrigger TargetType="ImageButton" 
                                          Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
                                          Value="True">
@@ -110,8 +121,11 @@
                                 <Setter Property="IsVisible" 
                                         Value="False"/>
                             </DataTrigger>
+                            
                         </ImageButton.Triggers>
+                        
                     </ImageButton>
+                    
                 </StackLayout>
 
                 <ImageButton Source="{Binding RightImageSource, Source={x:Reference customSearchBar}}"
@@ -122,6 +136,7 @@
                              BackgroundColor="Transparent">
                     
                     <ImageButton.Triggers>
+                        
                         <DataTrigger TargetType="ImageButton" 
                                      Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
                                      Value="True">
@@ -135,13 +150,17 @@
                             <Setter Property="IsVisible" 
                                     Value="True"/>
                         </DataTrigger>
+                        
                     </ImageButton.Triggers>
+                    
                 </ImageButton>
                 
             </StackLayout>
             
             <BoxView BackgroundColor="{Binding LineColor, Source={x:Reference customSearchBar}}"
                      HeightRequest="1"/>
+            
         </StackLayout>
+        
     </ContentView.Content>
 </ContentView>

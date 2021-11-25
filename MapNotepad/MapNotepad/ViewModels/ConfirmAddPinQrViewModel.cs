@@ -2,17 +2,13 @@
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
 using MapNotepad.Services.Pins;
-using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using ZXing.Common;
 
 namespace MapNotepad.ViewModels
 {
@@ -37,19 +33,6 @@ namespace MapNotepad.ViewModels
 
         #region -- Public properties --
 
-        private ICommand _okCommand;
-        public ICommand OkCommand => _okCommand ??= SingleExecutionCommand.FromFunc(OnOkCommandAsync);
-
-        private ICommand _cancelCommand;
-        public ICommand CancelCommand => _cancelCommand ??= SingleExecutionCommand.FromFunc(OnCancelCommandAsync);
-
-        public DelegateCommand CloseCommand { get; }
-
-        public event Action<IDialogParameters> RequestClose;
-
-        private bool _canCloseDialog;
-        public bool CanCloseDialog() => _canCloseDialog;
-
         private UserPin _pin;
         public UserPin Pin
         {
@@ -63,6 +46,19 @@ namespace MapNotepad.ViewModels
             get => _added;
             set => SetProperty(ref _added, value);
         }
+
+        private bool _canCloseDialog;
+        public bool CanCloseDialog() => _canCloseDialog;
+
+        public DelegateCommand CloseCommand { get; }
+
+        public event Action<IDialogParameters> RequestClose;
+
+        private ICommand _okCommand;
+        public ICommand OkCommand => _okCommand ??= SingleExecutionCommand.FromFunc(OnOkCommandAsync);
+
+        private ICommand _cancelCommand;
+        public ICommand CancelCommand => _cancelCommand ??= SingleExecutionCommand.FromFunc(OnCancelCommandAsync);
 
         #endregion
 

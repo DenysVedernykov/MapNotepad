@@ -1,7 +1,4 @@
 ﻿using MapNotepad.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MapNotepad.Services.Authorization
 {

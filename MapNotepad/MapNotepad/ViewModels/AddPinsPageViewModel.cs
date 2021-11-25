@@ -175,6 +175,7 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Label):
+
                     if (string.IsNullOrEmpty(Label))
                     {
                         BorderColorLabel = (Color)_resourceDictionary["Error"];
@@ -186,6 +187,7 @@ namespace MapNotepad.ViewModels
 
                     break;
                 case nameof(Longitude):
+
                     if (double.TryParse(Longitude, out sample))
                     {
                         var lng = double.Parse(Longitude);
@@ -208,6 +210,7 @@ namespace MapNotepad.ViewModels
 
                     break;
                 case nameof(Latitude):
+
                     if (double.TryParse(Latitude, out sample))
                     {
                         var lat = double.Parse(Latitude);
@@ -259,9 +262,9 @@ namespace MapNotepad.ViewModels
 
         #region -- Private methods --
 
-        private Task OnGoBackCommandAsync()
+        private async Task OnGoBackCommandAsync()
         {
-            return _navigationService.GoBackAsync();
+            await _navigationService.GoBackAsync();
         }
 
         private async Task OnSaveCommandAsync()
@@ -338,7 +341,6 @@ namespace MapNotepad.ViewModels
                 {
                 }
             }
-
         }
 
         private Task OnMapClickedCommandAsync(Position position)

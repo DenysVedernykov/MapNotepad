@@ -1,19 +1,14 @@
-﻿using System;
-
+﻿using Acr.UserDialogs;
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
 using Android.OS;
-using Acr.UserDialogs;
-using Xamarin.Forms.GoogleMaps.Android;
+using Android.Runtime;
+using ContextMenu.Droid;
+using MapNotepad.Droid.Services.PermissionsService;
 using MapNotepad.Services.PermissionsService;
+using Plugin.CurrentActivity;
 using Prism;
 using Prism.Ioc;
-using Prism.Unity;
-using MapNotepad.Droid.Services.PermissionsService;
-using ContextMenu.Droid;
-using Plugin.CurrentActivity;
-using Plugin.Permissions;
 
 namespace MapNotepad.Droid
 {

@@ -3,13 +3,10 @@ using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Themes;
 using MapNotepad.Views;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -103,9 +100,9 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        private Task OnGoBackCommandAsync()
+        private async Task OnGoBackCommandAsync()
         {
-            return _navigationService.GoBackAsync();
+            await _navigationService.GoBackAsync();
         }
 
         #endregion

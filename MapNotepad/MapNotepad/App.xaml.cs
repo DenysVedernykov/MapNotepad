@@ -1,6 +1,4 @@
 ﻿using MapNotepad.Services.Authorization;
-using MapNotepad.Services.GeolocationService;
-using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
@@ -11,10 +9,8 @@ using MapNotepad.Views;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MapNotepad
 {
@@ -33,7 +29,6 @@ namespace MapNotepad
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //Services
-            containerRegistry.RegisterInstance<IGeolocationService>(Container.Resolve<GeolocationService>());
             containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<ISettingsService>(Container.Resolve<SettingsService>());

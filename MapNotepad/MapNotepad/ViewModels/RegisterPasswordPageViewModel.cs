@@ -4,14 +4,11 @@ using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -20,22 +17,16 @@ namespace MapNotepad.ViewModels
 {
     class RegisterPasswordPageViewModel : BaseViewModel
     {
-
-        #region -- Private properties --
-
         private User user;
 
+        private bool _correctPassword; 
         private bool _correctRepeatPassword;
-
-        private bool _correctPassword;
 
         private ResourceDictionary _resourceDictionary;
 
         private IAuthorizationService _authorizationService;
 
         private ISettingsManagerService _settingsManagerService;
-
-        #endregion
 
         public RegisterPasswordPageViewModel(
             INavigationService navigationService, 
@@ -138,6 +129,7 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Password):
+
                     _correctPassword = false;
 
                     if (string.IsNullOrWhiteSpace(Password))
@@ -175,8 +167,10 @@ namespace MapNotepad.ViewModels
                         _correctPassword 
                         && _correctRepeatPassword 
                         && (Password == RepeatPassword);
+
                     break;
                 case nameof(RepeatPassword):
+
                     _correctRepeatPassword = false;
 
                     if (string.IsNullOrWhiteSpace(RepeatPassword))
@@ -214,6 +208,7 @@ namespace MapNotepad.ViewModels
                         _correctPassword
                         && _correctRepeatPassword
                         && (Password == RepeatPassword);
+
                     break;
             }
         }
@@ -244,11 +239,9 @@ namespace MapNotepad.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnGoBackCommandAsync()
+        private async Task OnGoBackCommandAsync()
         {
-            _navigationService.GoBackAsync();
-
-            return Task.CompletedTask;
+            await _navigationService.GoBackAsync();
         }
 
         #endregion
