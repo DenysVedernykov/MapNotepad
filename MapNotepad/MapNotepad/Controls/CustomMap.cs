@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapNotepad.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,9 +24,9 @@ namespace MapNotepad.Controls
         #region -- Public properties --
 
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
-            nameof(IEnumerable),
-            typeof(IEnumerable), 
-            typeof(CustomMap), 
+            nameof(ItemsSource),
+            typeof(IEnumerable),
+            typeof(CustomMap),
             default(IEnumerable),
             propertyChanged: (b, o, n) => 
             ((CustomMap)b).OnItemsSourcePropertyChanged((IEnumerable)o, (IEnumerable)n));
@@ -53,6 +54,7 @@ namespace MapNotepad.Controls
             }
 
             Pins.Clear();
+
             CreatePinItems(ItemsSource);
         }
 

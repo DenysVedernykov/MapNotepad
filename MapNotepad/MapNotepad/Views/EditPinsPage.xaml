@@ -21,8 +21,7 @@
                                         LineColor="{DynamicResource Variant}"
                                         LeftButtonCommand="{Binding GoBackCommand}"
                                         RightButtonCommand="{Binding SaveCommand}"
-                                        IsEnabledRightButton="{Binding IsEnableSaveButton}"
-                                        BackgroundColor="{DynamicResource BackgroundColor}"/>
+                                        IsEnabledRightButton="{Binding IsEnableSaveButton}"/>
 
                 <StackLayout Padding="20, 10, 20, 0"
                              Spacing="0">
@@ -32,8 +31,7 @@
 
                     <controls:CustomEntry Text="{Binding Label}"
                                           BorderColor="{Binding BorderColorLabel}"
-                                          Placeholder="{helpers:TranslateExtension EnterLabel}"
-                                          BackgroundColor="{DynamicResource BackgroundColor}"/>
+                                          Placeholder="{helpers:TranslateExtension EnterLabel}"/>
 
                     <Label Text="{helpers:TranslateExtension Description}"
                            Margin="19, 32, 0, 7"/>
@@ -48,13 +46,11 @@
                         <controls:CustomEntry Text="{Binding Longitude}"
                                               BorderColor="{Binding BorderColorLongitude}"
                                               Placeholder="{helpers:TranslateExtension Longitude}"
-                                              BackgroundColor="{DynamicResource BackgroundColor}"
                                               HorizontalOptions="FillAndExpand"/>
 
                         <controls:CustomEntry Text="{Binding Latitude}"
                                               BorderColor="{Binding BorderColorLatitude}"
                                               Placeholder="{helpers:TranslateExtension Latitude}"
-                                              BackgroundColor="{DynamicResource BackgroundColor}"
                                               HorizontalOptions="FillAndExpand"/>
 
                     </StackLayout>

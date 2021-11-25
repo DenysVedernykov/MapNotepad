@@ -30,14 +30,11 @@ namespace MapNotepad.Views
                     map.Pins.Add(pin);
                 });
 
-            MessagingCenter.Subscribe<EditPinsPageViewModel>(
+            MessagingCenter.Subscribe<EditPinsPageViewModel, Position>(
                 this,
-                "MoveToMyLocation",
-                async (sender) => {
-                    var locator = CrossGeolocator.Current;
-                    var position = await locator.GetPositionAsync();
-
-                    await map.MoveCamera(CameraUpdateFactory.NewPosition(new Position(position.Latitude, position.Longitude)));
+                "MoveToLocation",
+                async (sender, position) => {
+                    await map.MoveCamera(CameraUpdateFactory.NewPosition(position));
                 });
 
             InitializeComponent();

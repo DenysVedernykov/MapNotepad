@@ -156,7 +156,6 @@ namespace MapNotepad.ViewModels
         private ICommand _showQrCodeCommand;
         public ICommand ShowQrCodeCommand => _showQrCodeCommand ??= SingleExecutionCommand.FromFunc(OnShowQrCodeCommandAsync);
         
-
         private ICommand _itemTappedCommand;
         public ICommand ItemTappedCommand => _itemTappedCommand ??= SingleExecutionCommand.FromFunc(OnItemTappedCommandAsync);
 
@@ -214,6 +213,20 @@ namespace MapNotepad.ViewModels
                 "DeletePin",
                 (sender, userPin) => {
                     DeletePin(sender, userPin);
+                });
+
+            MessagingCenter.Subscribe<PinsPageViewModel, UserPin>(
+                this,
+                "ShowDescriptionPin",
+                (sender, pin) => {
+                    ClickedItem = pin;
+
+                    LabelPinDescription = pin.Label;
+                    LatitudePinDescription = pin.Latitude;
+                    LongitudePinDescription = pin.Longitude;
+                    PinDescription = pin.Description;
+
+                    IsPinDescriptionVisible = true;
                 });
 
             var allPins = await _pinService.AllPinsAsync();
@@ -361,17 +374,12 @@ namespace MapNotepad.ViewModels
 
             if (IsShowingUser)
             {
-                //var location = await _geolocationService.GetCurrentPosition();
+                var location = await _geolocationService.GetCurrentPosition();
 
-                //if (location.IsSuccess)
-                //{
-                //    MessagingCenter.Send<MapPageViewModel, Location>(this, "MoveToMyLocation", location.Result);
-                //}
-
-                Plugin.Geolocator.Abstractions.IGeolocator _locator = CrossGeolocator.Current;
-
-                var position = _locator.GetPositionAsync();
-
+                if (location.IsSuccess)
+                {
+                    MessagingCenter.Send<MapPageViewModel, Location>(this, "MoveToMyLocation", location.Result);
+                }
             }
         }
 
@@ -386,6 +394,8 @@ namespace MapNotepad.ViewModels
         {
             ShouldShowList = false;
             Text = "";
+
+            ClickedItem = SelectedItem;
 
             MessagingCenter.Send<MapPageViewModel, Position>(this, "MoveToPosition", new Position(SelectedItem.Latitude, SelectedItem.Longitude));
 

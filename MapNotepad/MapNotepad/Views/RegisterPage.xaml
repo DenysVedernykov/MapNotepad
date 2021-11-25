@@ -9,9 +9,9 @@
     
     <view:BaseContentPage.Content>
         <StackLayout>
-            <controls:CustomToolBar Title="{helpers:TranslateExtension CreateAnAccount}" 
+            <controls:CustomToolBar Title="{helpers:TranslateExtension CreateAnAccount}"
                                     LeftButtonCommand="{Binding GoBackCommand}"
-                                    BackgroundColor="{DynamicResource BackgroundColor}"/>
+                                    LineColor="{DynamicResource BackgroundColor}"/>
 
             <StackLayout Padding="20, 5, 30, 5"
                          Spacing="0">
@@ -21,7 +21,6 @@
                 
                 <controls:CustomEntry Placeholder="{helpers:TranslateExtension EnterYourName}" 
                                       BorderColor="{Binding BorderColorName}"
-                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       Text="{Binding Name}"/>
                 
                 <Label Text="{Binding ErrorMessageName}"
@@ -34,7 +33,6 @@
                 
                 <controls:CustomEntry Placeholder="{helpers:TranslateExtension EnterEmail}" 
                                       BorderColor="{Binding BorderColorEmail}"
-                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       Text="{Binding Email}"/>
                 
                 <Label Text="{Binding ErrorMessageEmail}"

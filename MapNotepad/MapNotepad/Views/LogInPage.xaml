@@ -10,7 +10,7 @@
         <StackLayout>
             <controls:CustomToolBar Title="{helpers:TranslateExtension LogIn}"
                                     LeftButtonCommand="{Binding GoBackCommand}"
-                                    BackgroundColor="{DynamicResource BackgroundColor}"/>
+                                    LineColor="{DynamicResource BackgroundColor}"/>
 
             <StackLayout Padding="20, 5, 30, 5"
                          Spacing="0">
@@ -20,7 +20,6 @@
                 
                 <controls:CustomEntry Placeholder="{helpers:TranslateExtension EnterEmail}"
                                       BorderColor="{Binding BorderColorEmail}"
-                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       Text="{Binding Email}"/>
                 
                 <Label Text="{Binding ErrorMessageEmail}"
@@ -33,7 +32,6 @@
                 
                 <controls:CustomEntry Placeholder="{helpers:TranslateExtension EnterPassword}"
                                       BorderColor="{Binding BorderColorPassword}"
-                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       Text="{Binding Password}"
                                       IsPassword="True"/>
                 
@@ -46,7 +44,6 @@
                         Command="{Binding LogInCommand}"
                         IsEnabled="{Binding IsEnabledLogInButton}"
                         Style="{DynamicResource BlueButton}"
-                        BackgroundColor="{DynamicResource BackgroundColor}"
                         Margin="0, 33, 0, 0"/>
 
                 <controls:CustomSeparator />

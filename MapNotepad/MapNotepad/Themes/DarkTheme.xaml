@@ -26,6 +26,7 @@
 
     <Color x:Key="BackgroundColor">#1E242B</Color>
     <Color x:Key="TextColor">#FEFEFD</Color>
+    <Color x:Key="LabelColor">#FEFEFD</Color>
 
     <!-- Base Style-->
     <Style x:Key="BaseButton" 
@@ -45,7 +46,7 @@
 
     <Style x:Key="GoogleButton" TargetType="ImageButton">
         <Setter Property="Source" Value="ic_google.png" />
-        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
         <Setter Property="BorderWidth" Value="1" />
@@ -63,17 +64,19 @@
            TargetType="Button"
            BasedOn="{StaticResource Key=BaseButton}">
         <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="TextColor" Value="{DynamicResource Primary}" />
     </Style>
 
     <Style TargetType="controls:CustomToolBar">
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
         <Setter Property="LeftImageSource" Value="ic_left_blue.png" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
+        <Setter Property="TitleColor" Value="{DynamicResource TextColor}" />
     </Style>
 
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="{DynamicResource DarkGray}" />
+        <Setter Property="TextColor" Value="{DynamicResource LabelColor}" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
     </Style>
 
@@ -107,10 +110,10 @@
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="FontFamily" Value="Montserrat-Light" />
-        <Setter Property="TextColor" Value="{DynamicResource Black}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
     </Style>
 
     <Style TargetType="controls:CustomSearchBar">
@@ -119,22 +122,20 @@
         <Setter Property="GoBackImageSource" Value="ic_left_blue.png" />
         <Setter Property="ClearImageSource" Value="ic_clear.png" />
         <Setter Property="FontFamily" Value="Montserrat-Light" />
-        <Setter Property="TextColor" Value="{DynamicResource Black}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
         <Setter Property="EntryBackgroundColor" Value="{DynamicResource Variant}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
     </Style>
 
     <Style x:Key="floatingButton" 
-           TargetType="ImageButton">
-        <Setter Property="BorderWidth" Value="8" />
-        <Setter Property="Source" Value="ic_plus.png" />
+           TargetType="Frame">
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
-        <Setter Property="CornerRadius" Value="35" />
-        <Setter Property="WidthRequest" Value="55" />
-        <Setter Property="HeightRequest" Value="55" />
+        <Setter Property="CornerRadius" Value="40" />
         <Setter Property="Padding" Value="12" />
-        <Setter Property="Margin" Value="0, 0, 17, 17" />
+        <Setter Property="Margin" Value="0, 0, 15, 15" />
+        <Setter Property="WidthRequest" Value="31" />
+        <Setter Property="HeightRequest" Value="31" />
         <Setter Property="VerticalOptions" Value="End" />
         <Setter Property="HorizontalOptions" Value="End" />
     </Style>

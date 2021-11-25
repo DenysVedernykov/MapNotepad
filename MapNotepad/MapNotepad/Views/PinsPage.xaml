@@ -19,13 +19,12 @@
     <view:BaseContentPage.Content>
         <Grid RowSpacing="0"
               RowDefinitions="Auto"
-              BackgroundColor="{DynamicResource White}">
+              BackgroundColor="{DynamicResource BackgroundColor}">
 
             <controls:CustomSearchBar Grid.Row="0"
                                       Text="{Binding Text}"
                                       Placeholder="{helpers:TranslateExtension Search}"
                                       LineColor="{DynamicResource Variant}"
-                                      BackgroundColor="{DynamicResource BackgroundColor}"
                                       ShouldShowList="{Binding ShouldShowList}"
                                       LeftButtonCommand="{Binding GoSettingsButtonCommand}"
                                       RightButtonCommand="{Binding ExitButtonCommand}"/>
@@ -42,9 +41,8 @@
                     
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-
-                    <context:SideContextMenuView>
-                        <context:SideContextMenuView.View>
+                        <context:SideContextMenuView>
+                            <context:SideContextMenuView.View>
 
                                 <controls:ClickableContentView Command="{Binding TabCommand}"
                                                                 CommandParameter="{Binding .}"
@@ -83,13 +81,13 @@
 
                                             <StackLayout Margin="10, 0, 0, 0">
                                                     
-                                                <Label Text="{Binding Label}" 
+                                                <Label Text="{Binding Label}"
                                                         FontSize="16"
-                                                        TextColor="{DynamicResource Black}"
+                                                        TextColor="{DynamicResource TextColor}"
                                                         FontFamily="Montserrat-Medium"/>
 
                                                 <Label FontSize="13"
-                                                        TextColor="{DynamicResource DarkGray}"
+                                                        TextColor="{DynamicResource TextColor}"
                                                         FontFamily="Montserrat-Regular">
                                                         
                                                     <Label.FormattedText>
@@ -124,7 +122,8 @@
                             <context:SideContextMenuView.ContextTemplate>
                                 <DataTemplate>
                                     <Frame Padding="0"
-                                            HasShadow="False">
+                                            HasShadow="False"
+                                           BorderColor="Transparent">
                                             
                                         <StackLayout Orientation="Horizontal"
                                                         Spacing="0">
@@ -134,7 +133,8 @@
                                                     VerticalOptions="CenterAndExpand" 
                                                     HorizontalOptions="EndAndExpand"
                                                     CornerRadius="0"
-                                                    BackgroundColor="{DynamicResource Error}">
+                                                    BackgroundColor="{DynamicResource Error}"
+                                                   BorderColor="{DynamicResource Error}">
 
                                                 <ImageButton Source="ic_delete.png"
                                                                 Command="{Binding DeleteCommand}"
@@ -147,7 +147,8 @@
                                                     VerticalOptions="CenterAndExpand" 
                                                     HorizontalOptions="EndAndExpand"
                                                     CornerRadius="0"
-                                                    BackgroundColor="{DynamicResource Primary}">
+                                                    BackgroundColor="{DynamicResource Primary}"
+                                                   BorderColor="{DynamicResource Primary}">
 
                                                 <ImageButton Source="ic_edit.png"
                                                                 Command="{Binding EditCommand}"
@@ -168,12 +169,10 @@
 
 
             <Frame Grid.Row="1"
-                   Margin="0, 0, 17, 17"
-                   WidthRequest="55"
-                   HeightRequest="55"
-                   CornerRadius="55">
-                
-                <ImageButton Style="{DynamicResource floatingButton}"
+                   Style="{DynamicResource floatingButton}">
+
+                <ImageButton Source="ic_plus.png"
+                             BackgroundColor="Transparent"
                              Command="{Binding GoAddPinsPageCommand}">
 
                 </ImageButton>

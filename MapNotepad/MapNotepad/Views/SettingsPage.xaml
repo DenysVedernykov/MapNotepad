@@ -7,6 +7,7 @@
                       xmlns:helpers="clr-namespace:MapNotepad.Helpers" 
                       xmlns:statecontainer="clr-namespace:MapNotepad.Controls.StateContainer"
                       BackgroundColor="{DynamicResource BackgroundColor}">
+    
     <view:BaseContentPage.Content>
         <StackLayout>
             
@@ -17,9 +18,10 @@
             <StackLayout Spacing="0">
                 <StackLayout Orientation="Horizontal"
                              Padding="25, 20, 25, 20">
+                    
                     <Label Text="{helpers:TranslateExtension DarkTheme}" 
+                           TextColor="{DynamicResource TextColor}"
                            FontSize="16"
-                           TextColor="{DynamicResource Black}"
                            FontFamily="Montserrat-Regular"/>
                     
                     <Switch HorizontalOptions="EndAndExpand"
@@ -36,7 +38,7 @@
                         
                         <Label Text="{helpers:TranslateExtension ColorClock}" 
                                FontSize="16"
-                               TextColor="{DynamicResource Black}"
+                               TextColor="{DynamicResource TextColor}"
                                FontFamily="Montserrat-Regular"/>
                         
                         <Image Source="ic_left_gray.png"
@@ -54,8 +56,8 @@
                                  Padding="25, 20, 25, 20">
                         
                         <Label Text="{helpers:TranslateExtension ScanCode}" 
+                               TextColor="{DynamicResource TextColor}"
                                FontSize="16"
-                               TextColor="{DynamicResource Black}"
                                FontFamily="Montserrat-Regular"/>
                         
                         <Image Source="ic_left_gray.png"
@@ -69,6 +71,7 @@
                          Color="{DynamicResource Variant}"/>
 
                 <Button Text="{helpers:TranslateExtension Apply}"
+                        Margin="0, 15, 0, 0"
                         Style="{DynamicResource BlueButton}"
                         Command="{Binding RefreshCommand}"/>
                 

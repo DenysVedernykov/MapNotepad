@@ -4,6 +4,7 @@ using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
 using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
+using Plugin.Geolocator;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
@@ -194,11 +195,19 @@ namespace MapNotepad.ViewModels
 
             base.OnPropertyChanged(args);
 
-            IsEnableSaveButton = !string.IsNullOrEmpty(Label);
-
             bool updatePin = false;
             bool truePosition = double.TryParse(Longitude, out sample)
                 && double.TryParse(Latitude, out sample);
+
+            if (truePosition)
+            {
+                var lng = double.Parse(Longitude);
+                var lat = double.Parse(Latitude);
+
+                truePosition &= (-180 <= lng) && (lng <= 180) && (-90 <= lat) && (lat <= 90);
+            }
+
+            IsEnableSaveButton = !string.IsNullOrEmpty(Label) && truePosition;
 
             switch (args.PropertyName)
             {
@@ -216,7 +225,16 @@ namespace MapNotepad.ViewModels
                 case nameof(Longitude):
                     if (double.TryParse(Longitude, out sample))
                     {
-                        BorderColorLongitude = (Color)_resourceDictionary["LightGray"];
+                        var lng = double.Parse(Longitude);
+
+                        if (-180 <= lng && lng <= 180)
+                        {
+                            BorderColorLongitude = (Color)_resourceDictionary["LightGray"];
+                        }
+                        else
+                        {
+                            BorderColorLongitude = (Color)_resourceDictionary["Error"];
+                        }
                     }
                     else
                     {
@@ -229,7 +247,16 @@ namespace MapNotepad.ViewModels
                 case nameof(Latitude):
                     if (double.TryParse(Latitude, out sample))
                     {
-                        BorderColorLatitude = (Color)_resourceDictionary["LightGray"];
+                        var lat = double.Parse(Latitude);
+
+                        if (-90 <= lat && lat <= 90)
+                        {
+                            BorderColorLatitude = (Color)_resourceDictionary["LightGray"];
+                        }
+                        else
+                        {
+                            BorderColorLatitude = (Color)_resourceDictionary["Error"];
+                        }
                     }
                     else
                     {
@@ -248,6 +275,11 @@ namespace MapNotepad.ViewModels
                 _currentPin.Position = new Position(double.Parse(Latitude), double.Parse(Longitude));
 
                 MessagingCenter.Send<EditPinsPageViewModel, Pin>(this, "AddPin", _currentPin);
+
+                MessagingCenter.Send<EditPinsPageViewModel, Position>(
+                    this,
+                    "MoveToLocation",
+                    _currentPin.Position);
             }
         }
 
@@ -323,16 +355,20 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        private Task OnMoveToMyLocationCommandAsync()
+        private async Task OnMoveToMyLocationCommandAsync()
         {
             CheckPermissions().Await();
 
             if (IsShowingUser)
             {
-                MessagingCenter.Send<EditPinsPageViewModel>(this, "MoveToMyLocation");
-            }
+                var locator = CrossGeolocator.Current;
+                var position = await locator.GetPositionAsync();
 
-            return Task.CompletedTask;
+                MessagingCenter.Send<EditPinsPageViewModel, Position>(
+                    this,
+                    "MoveToLocation",
+                    new Position(position.Latitude, position.Longitude));
+            }
         }
 
         private Task OnMapClickedCommandAsync(Position position)

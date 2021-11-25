@@ -8,10 +8,12 @@
                       xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms" 
                       xmlns:behaviors="http://prismlibrary.com"
                       BackgroundColor="{DynamicResource BackgroundColor}">
+    
     <view:BaseContentPage.Content>
-        <StackLayout>
+        <StackLayout Spacing="0">
             <controls:CustomToolBar Title="{helpers:TranslateExtension ScanCode}" 
-                                    LeftButtonCommand="{Binding GoBackCommand}"/>
+                                    LeftButtonCommand="{Binding GoBackCommand}"
+                                    LineColor="{DynamicResource Variant}"/>
 
             <forms:ZXingScannerView AutomationId="zxingScannerView"
                                     VerticalOptions="FillAndExpand"

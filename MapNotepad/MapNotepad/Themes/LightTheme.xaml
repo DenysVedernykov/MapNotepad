@@ -26,7 +26,8 @@
 
     <Color x:Key="BackgroundColor">#FEFEFD</Color>
     <Color x:Key="TextColor">#1E242B</Color>
-    
+    <Color x:Key="LabelColor">#3D4E61</Color>
+
     <!-- Base Style-->
     <Style x:Key="BaseButton" 
            TargetType="Button">
@@ -36,7 +37,7 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="BorderWidth" Value="1" />
     </Style>
-    
+
     <!-- Template 
     <Style x:Key="" TargetType="">
         <Setter Property="" Value="" />
@@ -45,12 +46,12 @@
 
     <Style x:Key="GoogleButton" TargetType="ImageButton">
         <Setter Property="Source" Value="ic_google.png" />
-        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
         <Setter Property="BorderWidth" Value="1" />
     </Style>
-    
+
     <Style x:Key="BlueButton" 
            TargetType="Button"
            BasedOn="{StaticResource Key=BaseButton}">
@@ -58,39 +59,41 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="TextColor" Value="{DynamicResource White}" />
     </Style>
-    
+
     <Style x:Key="WhiteButton" 
            TargetType="Button"
            BasedOn="{StaticResource Key=BaseButton}">
         <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="TextColor" Value="{DynamicResource Primary}" />
     </Style>
-    
+
     <Style TargetType="controls:CustomToolBar">
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
         <Setter Property="LeftImageSource" Value="ic_left_blue.png" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
+        <Setter Property="TitleColor" Value="{DynamicResource TextColor}" />
     </Style>
-    
+
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="{DynamicResource DarkGray}" />
+        <Setter Property="TextColor" Value="{DynamicResource LabelColor}" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
     </Style>
-    
+
     <Style TargetType="controls:CustomSeparator">
         <Setter Property="Text" Value="{helpers:TranslateExtension Or}" />
         <Setter Property="TextColor" Value="{DynamicResource LightGray}" />
         <Setter Property="LineColor" Value="{DynamicResource LightGray}" />
         <Setter Property="Margin" Value="0, 16, 0, 10" />
     </Style>
-    
+
     <Style x:Key="Logo" 
            TargetType="Image">
         <Setter Property="Source" Value="pic_enter_page.png" />
         <Setter Property="HeightRequest" Value="185" />
         <Setter Property="WidthRequest" Value="190" />
     </Style>
-    
+
     <Style x:Key="TextBrend" 
            TargetType="Label">
         <Setter Property="Text" Value="{helpers:TranslateExtension MapNotepad}" />
@@ -99,7 +102,7 @@
         <Setter Property="TextColor" Value="{DynamicResource Primary}" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
     </Style>
-    
+
     <Style TargetType="controls:CustomEntry">
         <Setter Property="ClearImageSource" Value="ic_clear.png" />
         <Setter Property="EyeOnImageSource" Value="ic_eye.png" />
@@ -107,37 +110,36 @@
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="FontFamily" Value="Montserrat-Light" />
-        <Setter Property="TextColor" Value="{DynamicResource Black}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
     </Style>
-    
+
     <Style TargetType="controls:CustomSearchBar">
         <Setter Property="LeftImageSource" Value="ic_settings.png" />
         <Setter Property="RightImageSource" Value="ic_exid.png" />
         <Setter Property="GoBackImageSource" Value="ic_left_blue.png" />
         <Setter Property="ClearImageSource" Value="ic_clear.png" />
         <Setter Property="FontFamily" Value="Montserrat-Light" />
-        <Setter Property="TextColor" Value="{DynamicResource Black}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
         <Setter Property="EntryBackgroundColor" Value="{DynamicResource Variant}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
     </Style>
-    
+
     <Style x:Key="floatingButton" 
-           TargetType="ImageButton">
-        <Setter Property="BorderWidth" Value="8" />
-        <Setter Property="Source" Value="ic_plus.png" />
+           TargetType="Frame">
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
-        <Setter Property="CornerRadius" Value="35" />
-        <Setter Property="WidthRequest" Value="55" />
-        <Setter Property="HeightRequest" Value="55" />
+        <Setter Property="CornerRadius" Value="40" />
         <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="0, 0, 15, 15" />
+        <Setter Property="WidthRequest" Value="31" />
+        <Setter Property="HeightRequest" Value="31" />
         <Setter Property="VerticalOptions" Value="End" />
         <Setter Property="HorizontalOptions" Value="End" />
     </Style>
-    
+
     <Style x:Key="imageFrame" 
            TargetType="Frame">
         <Setter Property="HeightRequest" Value="30" />
@@ -147,5 +149,5 @@
         <Setter Property="Padding" Value="10" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Variant}" />
     </Style>
-    
+
 </ResourceDictionary>

@@ -14,7 +14,7 @@ namespace MapNotepad.Services.Authorization
     {
         private const string _patternNumbers = @"[0-9]";
         private const string _patternUppercaseLetter = @"[A-Z]";
-        private const string _patternEmail = @"^[^@\s]{1,64}@[^@\s]+\.[^@\s]+";
+        private const string _patternEmail = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
 
         private readonly IRepositoryService _repositoryService;
 
