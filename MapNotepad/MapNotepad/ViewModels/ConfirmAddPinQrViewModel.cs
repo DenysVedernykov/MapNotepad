@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 using ZXing.Common;
 
 namespace MapNotepad.ViewModels
@@ -30,7 +31,6 @@ namespace MapNotepad.ViewModels
         private ICommand _cancelCommand;
         public ICommand CancelCommand => _cancelCommand ??= SingleExecutionCommand.FromFunc(OnCancelCommandAsync);
 
-
         public DelegateCommand CloseCommand { get; }
 
         public event Action<IDialogParameters> RequestClose;
@@ -45,8 +45,18 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _pin, value);
         }
 
+        private bool _added;
+        public bool Added
+        {
+            get => _added;
+            set => SetProperty(ref _added, value);
+        }
+
+        #endregion
+
         public void OnDialogClosed()
         {
+            MessagingCenter.Send<ConfirmAddPinQrViewModel>(this, "StartScanning");
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
@@ -57,23 +67,22 @@ namespace MapNotepad.ViewModels
             }
         }
 
-        #endregion
+        #region -- Private methods --
 
         private Task OnOkCommandAsync()
         {
-
-            RequestClose(null);
+            Added = true;
 
             return Task.CompletedTask;
         }
 
         private Task OnCancelCommandAsync()
         {
-
             RequestClose(null);
 
             return Task.CompletedTask;
         }
 
+        #endregion
     }
 }

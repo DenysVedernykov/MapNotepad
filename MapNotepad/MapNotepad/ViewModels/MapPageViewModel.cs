@@ -193,7 +193,6 @@ namespace MapNotepad.ViewModels
                     DeletePin(sender, userPin);
                 });
             
-            
             MessagingCenter.Subscribe<PinsPageViewModel, UserPinWithCommand>(
                 this,
                 "AddPin",

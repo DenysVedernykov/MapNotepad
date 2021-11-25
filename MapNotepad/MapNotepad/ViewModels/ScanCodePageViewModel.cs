@@ -23,6 +23,15 @@ namespace MapNotepad.ViewModels
                : base(navigationService)
         {
             _dialogService = dialogService;
+
+            MessagingCenter.Subscribe<ConfirmAddPinQrViewModel>(
+                this,
+                "StartScanning",
+                (sender) => {
+                    ShouldVisible = true;
+                    ShouldAnalyzing = true;
+                    ShouldScanning = true;
+                });
         }
 
         #region -- Public properties --
