@@ -105,10 +105,12 @@
                      Spacing="5">
             
             <Button Text="{helpers:TranslateExtension Cancel}"
+                    Command="{Binding CancelCommand}"
                     Style="{DynamicResource BlueButton}"
                     HorizontalOptions="FillAndExpand"/>
             
             <Button Text="{helpers:TranslateExtension Ok}"
+                    Command="{Binding OkCommand}"
                     Style="{DynamicResource BlueButton}"
                     HorizontalOptions="FillAndExpand"/>
             

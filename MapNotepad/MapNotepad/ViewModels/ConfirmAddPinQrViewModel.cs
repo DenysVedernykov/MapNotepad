@@ -24,6 +24,13 @@ namespace MapNotepad.ViewModels
 
         #region -- Public properties --
 
+        private ICommand _okCommand;
+        public ICommand OkCommand => _okCommand ??= SingleExecutionCommand.FromFunc(OnOkCommandAsync);
+
+        private ICommand _cancelCommand;
+        public ICommand CancelCommand => _cancelCommand ??= SingleExecutionCommand.FromFunc(OnCancelCommandAsync);
+
+
         public DelegateCommand CloseCommand { get; }
 
         public event Action<IDialogParameters> RequestClose;
@@ -51,6 +58,22 @@ namespace MapNotepad.ViewModels
         }
 
         #endregion
+
+        private Task OnOkCommandAsync()
+        {
+
+            RequestClose(null);
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnCancelCommandAsync()
+        {
+
+            RequestClose(null);
+
+            return Task.CompletedTask;
+        }
 
     }
 }
