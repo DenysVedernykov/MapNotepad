@@ -24,6 +24,7 @@
     <Color x:Key="Pressed">#3953FE</Color>
     <Color x:Key="Variant">#33374E</Color>
 
+    <Color x:Key="BackgroundSelectedTab">#33374E</Color>
     <Color x:Key="BackgroundColor">#1E242B</Color>
     <Color x:Key="TextColor">#FEFEFD</Color>
     <Color x:Key="LabelColor">#FEFEFD</Color>

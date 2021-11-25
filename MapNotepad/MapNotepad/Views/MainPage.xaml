@@ -9,7 +9,8 @@
                            SelectedTabColor="{DynamicResource Primary}"
                            UnselectedTabColor="{DynamicResource Primary}"
                            SelectedTab="{Binding SelectedTab}"
-                           BackgroundColor="{DynamicResource BackgroundColor}">
+                           BackgroundColor="{DynamicResource BackgroundColor}"
+                           BackgroundSelectedTab="{DynamicResource BackgroundSelectedTab}">
 
     <controls:CustomTabbedPage.Children>
         

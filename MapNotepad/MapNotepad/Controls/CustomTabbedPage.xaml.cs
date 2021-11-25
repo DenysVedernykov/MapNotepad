@@ -18,6 +18,18 @@ namespace MapNotepad.Controls
 
         #region -- Public properties --
 
+        public static readonly BindableProperty BackgroundSelectedTabProperty = BindableProperty.Create(
+            propertyName: nameof(BackgroundSelectedTab),
+            returnType: typeof(Color),
+            declaringType: typeof(CustomTabbedPage),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public Color BackgroundSelectedTab
+        {
+            set => SetValue(BackgroundSelectedTabProperty, value);
+            get => (Color)GetValue(BackgroundSelectedTabProperty);
+        }
+
         public static readonly BindableProperty SelectedTabProperty = BindableProperty.Create(
             propertyName: nameof(SelectedTab),
             returnType: typeof(int),

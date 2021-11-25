@@ -22,7 +22,7 @@ namespace MapNotepad.Droid.Renderers.Controls
     {
         bool firstStartOnLayout = true;
 
-        Xamarin.Forms.TabbedPage tabbedPage;
+        CustomTabbedPage tabbedPage;
 
         BottomNavigationView bottomNavigationView;
 
@@ -92,7 +92,7 @@ namespace MapNotepad.Droid.Renderers.Controls
             int itemWidth = (bottomNavigationView.Width / Element.Children.Count);
 
             SolidColorBrush brush = Brush.Silver;
-            brush.Color = new Xamarin.Forms.Color(0.945, 0.9529, 0.992);
+            brush.Color = tabbedPage.BackgroundSelectedTab;
 
             GradientDrawable button = new GradientDrawable();
             button.UpdateBackground(brush, itemHeight, itemWidth);
