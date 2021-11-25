@@ -1,4 +1,5 @@
 ﻿using MapNotepad.Helpers;
+using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Themes;
 using MapNotepad.Views;
@@ -11,6 +12,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MapNotepad.ViewModels
@@ -19,12 +21,17 @@ namespace MapNotepad.ViewModels
     {
         private ISettingsManagerService _settingsManagerService;
 
+        private IPermissionsService _permissionsService;
+
         public SettingsPageViewModel(
             INavigationService navigationService,
-            ISettingsManagerService settingsManagerService)
+            ISettingsManagerService settingsManagerService,
+            IPermissionsService permissionsService)
             : base(navigationService)
         {
             _settingsManagerService = settingsManagerService;
+            _permissionsService = permissionsService;
+
             IsToggled = _settingsManagerService.NightTheme;
         }
 
@@ -86,9 +93,14 @@ namespace MapNotepad.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnGoScanCodeCommandAsync()
+        private async Task OnGoScanCodeCommandAsync()
         {
-            return _navigationService.NavigateAsync(nameof(ScanCodePage));
+            var confirm = await _permissionsService.RequestAsync<Permissions.Camera>() == PermissionStatus.Granted;
+
+            if (confirm)
+            {
+                await _navigationService.NavigateAsync(nameof(ScanCodePage));
+            }
         }
 
         private Task OnGoBackCommandAsync()

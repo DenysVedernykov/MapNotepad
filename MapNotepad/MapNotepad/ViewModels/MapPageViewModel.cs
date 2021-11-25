@@ -11,6 +11,7 @@ using MapNotepad.Views;
 using Plugin.Geolocator;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -178,6 +179,13 @@ namespace MapNotepad.ViewModels
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
             CheckPermissions().Await();
+
+            MessagingCenter.Subscribe<ConfirmAddPinQrViewModel, UserPin>(
+                this,
+                "AddPin",
+                (sender, userPin) => {
+                    AddPin(sender, userPin.ToUserPinWithCommand());
+                });
 
             MessagingCenter.Subscribe<AddPinsPageViewModel, UserPin>(
                 this,
@@ -373,12 +381,22 @@ namespace MapNotepad.ViewModels
 
             if (IsShowingUser)
             {
-                var location = await _geolocationService.GetCurrentPosition();
-
-                if (location.IsSuccess)
+                Device.BeginInvokeOnMainThread(async () =>
                 {
-                    MessagingCenter.Send<MapPageViewModel, Location>(this, "MoveToMyLocation", location.Result);
-                }
+                    try
+                    {
+                        var location = await _geolocationService.GetCurrentPosition();
+
+                        if (location.IsSuccess)
+                        {
+                            MessagingCenter.Send<MapPageViewModel, Location>(this, "MoveToMyLocation", location.Result);
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                    }
+                    
+                });
             }
         }
 

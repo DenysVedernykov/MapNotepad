@@ -361,13 +361,23 @@ namespace MapNotepad.ViewModels
 
             if (IsShowingUser)
             {
-                var locator = CrossGeolocator.Current;
-                var position = await locator.GetPositionAsync();
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    try
+                    {
+                        var locator = CrossGeolocator.Current;
+                        var position = await locator.GetPositionAsync();
 
-                MessagingCenter.Send<EditPinsPageViewModel, Position>(
-                    this,
-                    "MoveToLocation",
-                    new Position(position.Latitude, position.Longitude));
+                        MessagingCenter.Send<EditPinsPageViewModel, Position>(
+                            this,
+                            "MoveToLocation",
+                            new Position(position.Latitude, position.Longitude));
+                    }
+                    catch(Exception e)
+                    {
+                    }
+                    
+                });
             }
         }
 

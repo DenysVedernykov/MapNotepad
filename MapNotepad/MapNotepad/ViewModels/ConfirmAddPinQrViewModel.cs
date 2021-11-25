@@ -1,5 +1,7 @@
 ﻿using MapNotepad.Helpers;
 using MapNotepad.Models;
+using MapNotepad.Services.Authorization;
+using MapNotepad.Services.Pins;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
@@ -16,9 +18,19 @@ namespace MapNotepad.ViewModels
 {
     class ConfirmAddPinQrViewModel : BaseViewModel, IDialogAware
     {
-        public ConfirmAddPinQrViewModel(INavigationService navigationService)
+        private IPinService _pinService;
+
+        private IAuthorizationService _authorizationService;
+
+        public ConfirmAddPinQrViewModel(
+            INavigationService navigationService,
+            IPinService pinService,
+            IAuthorizationService authorizationService)
             : base(navigationService)
         {
+            _pinService = pinService;
+            _authorizationService = authorizationService;
+
             _canCloseDialog = true;
             CloseCommand = new DelegateCommand(() => { RequestClose(null); });
         }
@@ -72,6 +84,18 @@ namespace MapNotepad.ViewModels
         private Task OnOkCommandAsync()
         {
             Added = true;
+
+            Pin.Autor = _authorizationService.Profile.Id;
+            Pin.CreationDate = DateTime.Now;
+
+            var result = _pinService.AddPinAsync(Pin);
+
+            if (result.Result.IsSuccess)
+            {
+                Pin.Id = result.Result.Result;
+
+                MessagingCenter.Send<ConfirmAddPinQrViewModel, UserPin>(this, "AddPin", Pin);
+            }
 
             return Task.CompletedTask;
         }

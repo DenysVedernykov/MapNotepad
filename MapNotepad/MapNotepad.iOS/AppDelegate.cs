@@ -55,9 +55,5 @@ namespace MapNotepad.iOS
 
             return base.ContinueUserActivity(application, userActivity, completionHandler);
         }
-
-        public override void PerformActionForShortcutItem(UIApplication application, UIApplicationShortcutItem shortcutItem, UIOperationHandler completionHandler)
-            => Xamarin.Essentials.Platform.PerformActionForShortcutItem(application, shortcutItem, completionHandler);
-
     }
 }

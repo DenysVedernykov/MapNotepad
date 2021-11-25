@@ -18,8 +18,10 @@
     <statecontainer:StateContainer State="{Binding Added}">
         <statecontainer:StateCondition State="True">
             <StackLayout BackgroundColor="{DynamicResource BackgroundColor}"
-                         VerticalOptions="End">
-                <Label Text="{helpers:TranslateExtension Ok}"
+                         VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="CenterAndExpand">
+                
+                <Label Text="{helpers:TranslateExtension Added}"
                        TextColor="{DynamicResource TextColor}"
                        FontSize="22"
                        HorizontalTextAlignment="Center"

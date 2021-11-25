@@ -12,6 +12,8 @@ using Prism.Ioc;
 using Prism.Unity;
 using MapNotepad.Droid.Services.PermissionsService;
 using ContextMenu.Droid;
+using Plugin.CurrentActivity;
+using Plugin.Permissions;
 
 namespace MapNotepad.Droid
 {
@@ -33,6 +35,8 @@ namespace MapNotepad.Droid
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
 
             ContextMenuViewRenderer.Preserve();
+
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
             LoadApplication(new App(new AndroidInitializer()));
         }

@@ -99,6 +99,22 @@ namespace MapNotepad.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
+            MessagingCenter.Subscribe<ConfirmAddPinQrViewModel, UserPin>(
+                this,
+                "AddPin",
+                (sender, pin) => {
+                    var userPin = pin.ToUserPinWithCommand();
+
+                    userPin.TabCommand = ItemTappedCommand;
+                    userPin.DeleteCommand = ItemDeleteCommand;
+                    userPin.EditCommand = ItemEditCommand;
+                    userPin.SwitchFavoritesCommand = SwitchFavoritesCommand;
+
+                    Pins.Add(userPin);
+
+                    IsEmpty = Pins.Count == 0;
+                });
+
             MessagingCenter.Subscribe<AddPinsPageViewModel, UserPin>(
                 this,
                 "AddPin",

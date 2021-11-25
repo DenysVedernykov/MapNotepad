@@ -19,8 +19,8 @@
                                     VerticalOptions="FillAndExpand"
                                     HorizontalOptions="FillAndExpand"
                                     IsVisible="{Binding ShouldVisible}"
-                                    IsScanning="{Binding ShouldScanning}"
-                                    IsAnalyzing="{Binding ShouldAnalyzing}"
+                                    IsScanning="True"
+                                    IsAnalyzing="True"
                                     ScanResultCommand="{Binding ScanResultCommand}"
                                     Result="{Binding Result, Mode=TwoWay}">
 

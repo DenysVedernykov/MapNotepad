@@ -28,9 +28,8 @@ namespace MapNotepad.ViewModels
                 this,
                 "StartScanning",
                 (sender) => {
+                    _shouldAnalyzing = true;
                     ShouldVisible = true;
-                    ShouldAnalyzing = true;
-                    ShouldScanning = true;
                 });
         }
 
@@ -50,19 +49,7 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _shouldVisible, value);
         }
 
-        private bool _shouldScanning = true;
-        public bool ShouldScanning
-        {
-            get => _shouldScanning;
-            set => SetProperty(ref _shouldScanning, value);
-        }
-
         private bool _shouldAnalyzing = true;
-        public bool ShouldAnalyzing
-        {
-            get => _shouldAnalyzing;
-            set => SetProperty(ref _shouldAnalyzing, value);
-        }
 
         private ICommand _scanResultCommand;
         public ICommand ScanResultCommand => _scanResultCommand ??= SingleExecutionCommand.FromFunc(OnScanResultCommandAsync);
@@ -78,24 +65,29 @@ namespace MapNotepad.ViewModels
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                ShouldAnalyzing = false;
-                ShouldScanning = false;
+                _shouldAnalyzing = false;
 
-                var recognized = JsonConvert.DeserializeObject<UserPin>(Result.Text);
-
-                if (recognized is UserPin && recognized is not null)
+                try
                 {
-                    var param = new DialogParameters();
-                    param.Add("UserPin", recognized);
+                    var recognized = JsonConvert.DeserializeObject<UserPin>(Result.Text);
 
-                    ShouldVisible = false;
+                    if (recognized is UserPin && recognized is not null)
+                    {
+                        var param = new DialogParameters();
+                        param.Add("UserPin", recognized);
 
-                    _dialogService.ShowDialog("ConfirmAddPinQr", param);
+                        ShouldVisible = false;
+
+                        _dialogService.ShowDialog("ConfirmAddPinQr", param);
+                    }
+                    else
+                    {
+                        _shouldAnalyzing = true;
+                    }
                 }
-                else
+                catch(Exception e)
                 {
-                    ShouldAnalyzing = true;
-                    ShouldScanning = true;
+                    _shouldAnalyzing = true;
                 }
 
             });

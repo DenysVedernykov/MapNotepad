@@ -5,14 +5,12 @@ using MapNotepad.Services.Authorization;
 using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
 using Plugin.Geolocator;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Unity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -254,7 +252,7 @@ namespace MapNotepad.ViewModels
 
         private async Task CheckPermissions()
         {
-            IsShowingUser = await _permissionsService.RequestAsync<Permissions.LocationWhenInUse>() == PermissionStatus.Granted;
+            IsShowingUser = await _permissionsService.RequestAsync<Permissions.LocationWhenInUse>() == Xamarin.Essentials.PermissionStatus.Granted;
         }
 
         #endregion
@@ -322,14 +320,25 @@ namespace MapNotepad.ViewModels
 
             if (IsShowingUser)
             {
-                var locator = CrossGeolocator.Current;
-                var position = await locator.GetPositionAsync();
+                try
+                {
+                    var locator = CrossGeolocator.Current;
+                    
+                    if (locator.IsGeolocationEnabled && locator.IsGeolocationAvailable)
+                    {
+                        var position = await locator.GetPositionAsync();
 
-                MessagingCenter.Send<AddPinsPageViewModel, Position>(
-                    this, 
-                    "MoveToLocation", 
-                    new Position(position.Latitude,position.Longitude));
+                        MessagingCenter.Send<AddPinsPageViewModel, Position>(
+                            this,
+                            "MoveToLocation",
+                            new Position(position.Latitude, position.Longitude));
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
             }
+
         }
 
         private Task OnMapClickedCommandAsync(Position position)
