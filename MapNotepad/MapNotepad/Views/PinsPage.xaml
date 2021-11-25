@@ -38,7 +38,7 @@
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding Pins}"
                             IsVisible="{Binding IsEmpty, Converter={StaticResource BoolConverter}}">
-                    
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <context:SideContextMenuView>
@@ -47,7 +47,7 @@
                                 <controls:ClickableContentView Command="{Binding TabCommand}"
                                                                 CommandParameter="{Binding .}"
                                                                 WidthRequest="420">
-                                        
+
                                     <StackLayout Spacing="0">
 
                                         <StackLayout Padding="20"
@@ -55,32 +55,32 @@
 
                                             <controls:ClickableContentView Command="{Binding SwitchFavoritesCommand}"
                                                                             CommandParameter="{Binding .}">
-                                                    
+
                                                 <Frame Style="{DynamicResource imageFrame}">
 
                                                     <statecontainer:StateContainer State="{Binding Favorites}">
-                                                            
+
                                                         <statecontainer:StateCondition State="True">
                                                             <Image Aspect="AspectFill"
                                                                     Source="ic_like_blue.png"
                                                                     BackgroundColor="Transparent"/>
-                                                                
+
                                                         </statecontainer:StateCondition>
 
                                                         <statecontainer:StateCondition State="False">
                                                             <Image Aspect="AspectFill"
                                                                     Source="ic_like_gray.png"
                                                                     BackgroundColor="Transparent"/>
-                                                                
+
                                                         </statecontainer:StateCondition>
-                                                            
+
                                                     </statecontainer:StateContainer>
 
                                                 </Frame>
                                             </controls:ClickableContentView>
 
                                             <StackLayout Margin="10, 0, 0, 0">
-                                                    
+
                                                 <Label Text="{Binding Label}"
                                                         FontSize="16"
                                                         TextColor="{DynamicResource TextColor}"
@@ -89,7 +89,7 @@
                                                 <Label FontSize="13"
                                                         TextColor="{DynamicResource TextColor}"
                                                         FontFamily="Montserrat-Regular">
-                                                        
+
                                                     <Label.FormattedText>
                                                         <FormattedString>
                                                             <FormattedString.Spans>
@@ -99,20 +99,20 @@
                                                             </FormattedString.Spans>
                                                         </FormattedString>
                                                     </Label.FormattedText>
-                                                        
+
                                                 </Label>
 
                                             </StackLayout>
-                                                
+
                                             <Image Source="ic_left_gray.png"
                                                     HorizontalOptions="EndAndExpand"
                                                     HeightRequest="30"/>
-                                                
+
                                         </StackLayout>
 
                                         <BoxView BackgroundColor="{DynamicResource Variant}"
                                                     HeightRequest="1"/>
-                                            
+
                                     </StackLayout>
 
                                 </controls:ClickableContentView>
@@ -124,10 +124,10 @@
                                     <Frame Padding="0"
                                             HasShadow="False"
                                            BorderColor="Transparent">
-                                            
+
                                         <StackLayout Orientation="Horizontal"
                                                         Spacing="0">
-                                                
+
                                             <Frame Padding="20, 33"
                                                     HasShadow="False"
                                                     VerticalOptions="CenterAndExpand" 
@@ -166,7 +166,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
 
             <Frame Grid.Row="1"
                    Style="{DynamicResource floatingButton}">

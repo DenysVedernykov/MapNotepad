@@ -132,7 +132,7 @@
     <Style x:Key="floatingButton" 
            TargetType="Frame">
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
-        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="CornerRadius" Value="27" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="Margin" Value="0, 0, 15, 15" />
         <Setter Property="WidthRequest" Value="31" />

@@ -145,7 +145,7 @@ namespace MapNotepad.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
-            CheckPermissions().Await();
+            await CheckPermissions();
         }
 
         #endregion
@@ -316,7 +316,7 @@ namespace MapNotepad.ViewModels
 
         private async Task OnMoveToMyLocationCommandAsync()
         {
-            CheckPermissions().Await();
+            await CheckPermissions();
 
             if (IsShowingUser)
             {

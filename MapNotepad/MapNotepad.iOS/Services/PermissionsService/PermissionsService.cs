@@ -15,7 +15,7 @@ namespace MapNotepad.iOS.Services.PermissionsService
         public Task<PermissionStatus> CheckStatusAsync<T>()
             where T : Permissions.BasePermission, new()
         {
-            return CheckStatusAsync<T>();
+            return Permissions.CheckStatusAsync<T>();
         }
 
         public async Task<PermissionStatus> RequestAsync<T>()
@@ -23,10 +23,23 @@ namespace MapNotepad.iOS.Services.PermissionsService
         {
             var status = await Permissions.CheckStatusAsync<T>();
 
+            //HACK for iOS 14
+            if (status == PermissionStatus.Unknown)
+            {
+                await Permissions.RequestAsync<T>();
+
+                while ((status = await Permissions.CheckStatusAsync<T>()) == PermissionStatus.Unknown)
+                {
+                    await Task.Delay(50);
+                }
+            }
+
             if (status == PermissionStatus.Denied)
             {
                 var okCanselAlertController = UIAlertController.Create(
-                    "Permission denied", "Change permission settings", UIAlertControllerStyle.Alert);
+                    "Permission denied", 
+                    "Change permission settings", 
+                    UIAlertControllerStyle.Alert);
 
                 okCanselAlertController.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, alert =>
                     UIApplication.SharedApplication.OpenUrl(new NSUrl("app-settings:"))));
