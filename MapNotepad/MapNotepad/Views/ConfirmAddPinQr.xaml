@@ -14,9 +14,9 @@
         <TapGestureRecognizer Command="{Binding CloseCommand}"/>
     </Frame.GestureRecognizers>
 
-    <StackLayout BackgroundColor="{DynamicResource White}">
+    <StackLayout BackgroundColor="{DynamicResource BackgroundColor}">
         
-        <Label TextColor="{DynamicResource Black}"
+        <Label TextColor="{DynamicResource TextColor}"
                FontFamily="Montserrat-Bold">
             <Label.FormattedText>
                 <FormattedString>
@@ -30,7 +30,7 @@
             </Label.FormattedText>
         </Label>
 
-        <Label TextColor="{DynamicResource Black}"
+        <Label TextColor="{DynamicResource TextColor}"
                FontFamily="Montserrat-Bold">
             <Label.FormattedText>
                 <FormattedString>
@@ -44,7 +44,7 @@
             </Label.FormattedText>
         </Label>
 
-        <Label TextColor="{DynamicResource Black}"
+        <Label TextColor="{DynamicResource TextColor}"
                FontFamily="Montserrat-Bold">
             <Label.FormattedText>
                 <FormattedString>
@@ -58,7 +58,7 @@
             </Label.FormattedText>
         </Label>
 
-        <Label TextColor="{DynamicResource Black}"
+        <Label TextColor="{DynamicResource TextColor}"
                FontFamily="Montserrat-Bold">
             <Label.FormattedText>
                 <FormattedString>
@@ -72,7 +72,7 @@
             </Label.FormattedText>
         </Label>
 
-        <Label TextColor="{DynamicResource Black}"
+        <Label TextColor="{DynamicResource TextColor}"
                FontFamily="Montserrat-Bold">
             <Label.FormattedText>
                 <FormattedString>
@@ -86,7 +86,7 @@
             </Label.FormattedText>
         </Label>
 
-        <Label TextColor="{DynamicResource Black}"
+        <Label TextColor="{DynamicResource TextColor}"
                FontFamily="Montserrat-Bold">
             <Label.FormattedText>
                 <FormattedString>
