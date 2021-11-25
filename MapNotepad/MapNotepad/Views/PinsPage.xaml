@@ -13,6 +13,7 @@
     <view:BaseContentPage.Resources>
         <ResourceDictionary>
             <helpers:BoolConverter x:Key="BoolConverter"/>
+            <helpers:MenuFitWidthConverter x:Key="MenuFitWidthConverter" />
         </ResourceDictionary>
     </view:BaseContentPage.Resources>
     
@@ -36,6 +37,7 @@
                     HorizontalOptions="Center"/>
 
             <CollectionView Grid.Row="1"
+                            x:Name="Collection"
                             ItemsSource="{Binding Pins}"
                             IsVisible="{Binding IsEmpty, Converter={StaticResource BoolConverter}}">
 
@@ -44,41 +46,42 @@
                         <context:SideContextMenuView>
                             <context:SideContextMenuView.View>
 
-                                <controls:ClickableContentView Command="{Binding TabCommand}"
-                                                                CommandParameter="{Binding .}"
-                                                                WidthRequest="420">
+                                <StackLayout Spacing="0"
+                                                 WidthRequest="{Binding Source={x:Reference Collection}, 
+                                    Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='0'}">
 
-                                    <StackLayout Spacing="0">
-
-                                        <StackLayout Padding="20"
+                                    <StackLayout Padding="20"
                                                         Orientation="Horizontal">
 
-                                            <controls:ClickableContentView Command="{Binding SwitchFavoritesCommand}"
+                                        <controls:ClickableContentView Command="{Binding SwitchFavoritesCommand}"
                                                                             CommandParameter="{Binding .}">
 
-                                                <Frame Style="{DynamicResource imageFrame}">
+                                            <Frame Style="{DynamicResource imageFrame}">
 
-                                                    <statecontainer:StateContainer State="{Binding Favorites}">
+                                                <statecontainer:StateContainer State="{Binding Favorites}">
 
-                                                        <statecontainer:StateCondition State="True">
-                                                            <Image Aspect="AspectFill"
+                                                    <statecontainer:StateCondition State="True">
+                                                        <Image Aspect="AspectFill"
                                                                     Source="ic_like_blue.png"
                                                                     BackgroundColor="Transparent"/>
 
-                                                        </statecontainer:StateCondition>
+                                                    </statecontainer:StateCondition>
 
-                                                        <statecontainer:StateCondition State="False">
-                                                            <Image Aspect="AspectFill"
+                                                    <statecontainer:StateCondition State="False">
+                                                        <Image Aspect="AspectFill"
                                                                     Source="ic_like_gray.png"
                                                                     BackgroundColor="Transparent"/>
 
-                                                        </statecontainer:StateCondition>
+                                                    </statecontainer:StateCondition>
 
-                                                    </statecontainer:StateContainer>
+                                                </statecontainer:StateContainer>
 
-                                                </Frame>
-                                            </controls:ClickableContentView>
+                                            </Frame>
+                                        </controls:ClickableContentView>
 
+                                        <controls:ClickableContentView Command="{Binding TabCommand}"
+                                                                CommandParameter="{Binding .}"
+                                                                WidthRequest="{Binding Source={x:Reference Collection}, Path=Width}">
                                             <StackLayout Margin="10, 0, 0, 0">
 
                                                 <Label Text="{Binding Label}"
@@ -103,19 +106,18 @@
                                                 </Label>
 
                                             </StackLayout>
+                                        </controls:ClickableContentView>
 
-                                            <Image Source="ic_left_gray.png"
+                                        <Image Source="ic_left_gray.png"
                                                     HorizontalOptions="EndAndExpand"
                                                     HeightRequest="30"/>
 
-                                        </StackLayout>
-
-                                        <BoxView BackgroundColor="{DynamicResource Variant}"
-                                                    HeightRequest="1"/>
-
                                     </StackLayout>
 
-                                </controls:ClickableContentView>
+                                    <BoxView BackgroundColor="{DynamicResource Variant}"
+                                                    HeightRequest="1"/>
+
+                                </StackLayout>
 
                             </context:SideContextMenuView.View>
 
@@ -123,12 +125,13 @@
                                 <DataTemplate>
                                     <Frame Padding="0"
                                             HasShadow="False"
-                                           BorderColor="Transparent">
+                                           BorderColor="Transparent"
+                                           IsClippedToBounds="true">
 
                                         <StackLayout Orientation="Horizontal"
                                                         Spacing="0">
 
-                                            <Frame Padding="20, 33"
+                                            <Frame Padding="20, 22"
                                                     HasShadow="False"
                                                     VerticalOptions="CenterAndExpand" 
                                                     HorizontalOptions="EndAndExpand"
@@ -142,7 +145,7 @@
                                                                 BackgroundColor="Transparent"/>
                                             </Frame>
 
-                                            <Frame Padding="20, 33"
+                                            <Frame Padding="20, 22"
                                                     HasShadow="False"
                                                     VerticalOptions="CenterAndExpand" 
                                                     HorizontalOptions="EndAndExpand"
