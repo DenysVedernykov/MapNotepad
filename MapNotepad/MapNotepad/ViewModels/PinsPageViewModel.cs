@@ -7,6 +7,7 @@ using MapNotepad.Services.Pins;
 using MapNotepad.Services.SettingsManager;
 using MapNotepad.Views;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -234,6 +235,16 @@ namespace MapNotepad.ViewModels
                 MessagingCenter.Send<PinsPageViewModel, UserPin>(this, "ShowDescriptionPin", pin.ToUserPin());
 
                 MessagingCenter.Send<PinsPageViewModel, int>(this, "SwitchTab", 0);
+            }
+            else
+            {
+                var toastConfig = new ToastConfig("Pin not favorites")
+                {
+                    Duration = TimeSpan.FromSeconds(2),
+                    Position = ToastPosition.Bottom,
+                };
+
+                UserDialogs.Instance.Toast(toastConfig);
             }
 
             return Task.CompletedTask;
