@@ -328,28 +328,39 @@ namespace MapNotepad.ViewModels
 
         private async Task OnSaveCommandAsync()
         {
-            var geoCoder = new Geocoder();
-
-            var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
-            var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
-
-            if (possibleAddresses is not null)
+            if (IsEnableSaveButton)
             {
-                userPin.Label = Label;
-                userPin.Address = possibleAddresses.FirstOrDefault();
-                userPin.Description = Description;
-                userPin.Latitude = double.Parse(Latitude);
-                userPin.Longitude = double.Parse(Longitude);
+                var geoCoder = new Geocoder();
 
-                var result = _pinService.UpdatePinAsync(userPin.ToUserPin());
+                var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
+                var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
 
-                if (result.Result.IsSuccess)
+                if (possibleAddresses is not null)
                 {
+                    userPin.Label = Label;
+                    userPin.Address = possibleAddresses.FirstOrDefault();
+                    userPin.Description = Description;
+                    userPin.Latitude = double.Parse(Latitude);
+                    userPin.Longitude = double.Parse(Longitude);
 
-                    MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "DeletePin", userOldPin);
-                    MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "AddPin", userPin);
+                    var result = _pinService.UpdatePinAsync(userPin.ToUserPin());
 
-                    await _navigationService.GoBackAsync();
+                    if (result.Result.IsSuccess)
+                    {
+
+                        MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "DeletePin", userOldPin);
+                        MessagingCenter.Send<EditPinsPageViewModel, UserPinWithCommand>(this, "AddPin", userPin);
+
+                        await _navigationService.GoBackAsync();
+                    }
+                    else
+                    {
+                        await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                        {
+                            OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                            Message = Resource.ResourceManager.GetString("ErrorEditPin", Resource.Culture)
+                        });
+                    }
                 }
                 else
                 {
@@ -364,8 +375,8 @@ namespace MapNotepad.ViewModels
             {
                 await UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
-                    OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
-                    Message = Resource.ResourceManager.GetString("ErrorEditPin", Resource.Culture)
+                    Message = Resource.ResourceManager.GetString("EnterCorrectData", Resource.Culture),
+                    OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
                 });
             }
         }

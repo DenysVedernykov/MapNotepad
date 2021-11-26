@@ -278,39 +278,60 @@ namespace MapNotepad.ViewModels
 
         private async Task OnGoBackCommandAsync()
         {
-            await _navigationService.GoBackAsync();
+            var confirm = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig()
+            {
+                OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                Message = Resource.ResourceManager.GetString("AlertNotSaved", Resource.Culture),
+                CancelText = Resource.ResourceManager.GetString("Cancel", Resource.Culture)
+            });
+
+            if (confirm)
+            {
+                await _navigationService.GoBackAsync();
+            }
         }
 
         private async Task OnSaveCommandAsync()
         {
-            var geoCoder = new Geocoder();
-
-            var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
-            var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
-
-            if (possibleAddresses != null)
+            if (IsEnableSaveButton)
             {
-                var userPin = new UserPin()
+                var geoCoder = new Geocoder();
+
+                var position = new Position(double.Parse(Latitude), double.Parse(Longitude));
+                var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
+
+                if (possibleAddresses != null)
                 {
-                    Autor = _authorizationService.Profile.Id,
-                    Label = Label,
-                    Address = possibleAddresses.FirstOrDefault(),
-                    Description = Description,
-                    Latitude = double.Parse(Latitude),
-                    Longitude = double.Parse(Longitude),
-                    Favorites = true,
-                    CreationDate = DateTime.Now
-                };
+                    var userPin = new UserPin()
+                    {
+                        Autor = _authorizationService.Profile.Id,
+                        Label = Label,
+                        Address = possibleAddresses.FirstOrDefault(),
+                        Description = Description,
+                        Latitude = double.Parse(Latitude),
+                        Longitude = double.Parse(Longitude),
+                        Favorites = true,
+                        CreationDate = DateTime.Now
+                    };
 
-                var result = _pinService.AddPinAsync(userPin);
+                    var result = _pinService.AddPinAsync(userPin);
 
-                if (result.Result.IsSuccess)
-                {
-                    userPin.Id = result.Result.Result;
+                    if (result.Result.IsSuccess)
+                    {
+                        userPin.Id = result.Result.Result;
 
-                    MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
+                        MessagingCenter.Send<AddPinsPageViewModel, UserPin>(this, "AddPin", userPin);
 
-                    await _navigationService.GoBackAsync();
+                        await _navigationService.GoBackAsync();
+                    }
+                    else
+                    {
+                        await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                        {
+                            OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
+                            Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
+                        });
+                    }
                 }
                 else
                 {
@@ -325,8 +346,8 @@ namespace MapNotepad.ViewModels
             {
                 await UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
-                    OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture),
-                    Message = Resource.ResourceManager.GetString("ErrorAddPin", Resource.Culture)
+                    Message = Resource.ResourceManager.GetString("EnterCorrectData", Resource.Culture),
+                    OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
                 });
             }
         }
