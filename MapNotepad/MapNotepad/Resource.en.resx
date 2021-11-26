@@ -261,6 +261,9 @@
   <data name="PasswordMismatch" xml:space="preserve">
     <value>Password mismatch</value>
   </data>
+  <data name="PinNotFavorites" xml:space="preserve">
+    <value>Pin not favorites</value>
+  </data>
   <data name="RepeatPassword" xml:space="preserve">
     <value>Repeat password</value>
   </data>
@@ -281,5 +284,8 @@
   </data>
   <data name="WrongEmail" xml:space="preserve">
     <value>Wrong Email</value>
+  </data>
+  <data name="YouMustAllowTheUseOfGeolocation" xml:space="preserve">
+    <value>You must allow the use of geolocation</value>
   </data>
 </root>

@@ -270,6 +270,17 @@ namespace MapNotepad.ViewModels
         private async Task CheckPermissions()
         {
             IsShowingUser = await _permissionsService.RequestAsync<Permissions.LocationWhenInUse>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+            if (!IsShowingUser)
+            {
+                var toastConfig = new ToastConfig(Resource.ResourceManager.GetString("YouMustAllowTheUseOfGeolocation", Resource.Culture))
+                {
+                    Duration = TimeSpan.FromSeconds(2),
+                    Position = ToastPosition.Bottom,
+                };
+
+                UserDialogs.Instance.Toast(toastConfig);
+            }
         }
 
         #endregion

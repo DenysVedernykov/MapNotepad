@@ -238,7 +238,7 @@ namespace MapNotepad.ViewModels
             }
             else
             {
-                var toastConfig = new ToastConfig("Pin not favorites")
+                var toastConfig = new ToastConfig(Resource.ResourceManager.GetString("PinNotFavorites", Resource.Culture))
                 {
                     Duration = TimeSpan.FromSeconds(2),
                     Position = ToastPosition.Bottom,
