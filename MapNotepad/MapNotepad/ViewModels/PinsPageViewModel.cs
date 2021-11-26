@@ -227,11 +227,14 @@ namespace MapNotepad.ViewModels
             ShouldShowList = false;
             Text = "";
 
-            MessagingCenter.Send<PinsPageViewModel, Position>(this, "MoveToPosition", new Position(pin.Latitude, pin.Longitude));
+            if (pin.Favorites)
+            {
+                MessagingCenter.Send<PinsPageViewModel, Position>(this, "MoveToPosition", new Position(pin.Latitude, pin.Longitude));
 
-            MessagingCenter.Send<PinsPageViewModel, UserPin>(this, "ShowDescriptionPin", pin.ToUserPin());
+                MessagingCenter.Send<PinsPageViewModel, UserPin>(this, "ShowDescriptionPin", pin.ToUserPin());
 
-            MessagingCenter.Send<PinsPageViewModel, int>(this, "SwitchTab", 0);
+                MessagingCenter.Send<PinsPageViewModel, int>(this, "SwitchTab", 0);
+            }
 
             return Task.CompletedTask;
         }
