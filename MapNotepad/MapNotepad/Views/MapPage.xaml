@@ -63,7 +63,8 @@
                               ItemsSource="{Binding SearchResult}"
                               IsVisible="{Binding ShouldShowList}"
                               SelectedItem="{Binding SelectedItem}"
-                              SeparatorColor="{DynamicResource Variant}">
+                              SeparatorColor="{DynamicResource Variant}"
+                              BackgroundColor="Transparent">
 
                         <ListView.Behaviors>
                             <behaviors:EventToCommandBehavior Command="{Binding ItemTappedCommand}" 

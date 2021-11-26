@@ -227,7 +227,7 @@ namespace MapNotepad.ViewModels
                 {
                     _settingsManagerService.Email = user.Email;
 
-                    await _navigationService.NavigateAsync($"{nameof(StartPage)}/{nameof(LogInPage)}");
+                    await _navigationService.NavigateAsync($"/{nameof(StartPage)}/{nameof(LogInPage)}");
                 }
                 else
                 {
