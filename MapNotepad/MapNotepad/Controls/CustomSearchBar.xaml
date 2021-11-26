@@ -21,60 +21,22 @@
                          Spacing="0"
                          Padding="5, 0, 5, 0"
                          Margin="11">
-                
+
                 <ImageButton HorizontalOptions="Start"
                              WidthRequest="30"
                              HeightRequest="30"
                              BackgroundColor="Transparent"
                              Source="{Binding LeftImageSource, Source={x:Reference customSearchBar}}"
-                             Command="{Binding LeftButtonCommand, Source={x:Reference customSearchBar}}">
-                    
-                    <ImageButton.Triggers>
-                        
-                        <DataTrigger TargetType="ImageButton"
-                                     Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                     Value="True">
-                            <Setter Property="IsVisible"
-                                    Value="False"/>
-                        </DataTrigger>
-                        
-                        <DataTrigger TargetType="ImageButton"
-                                     Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                     Value="False">
-                            <Setter Property="IsVisible"
-                                    Value="True"/>
-                        </DataTrigger>
-                        
-                    </ImageButton.Triggers>
-                    
-                </ImageButton>
-                
+                             Command="{Binding LeftButtonCommand, Source={x:Reference customSearchBar}}"
+                             IsVisible="{Binding ShouldShowList, Source={x:Reference customSearchBar}, Converter={StaticResource BoolConverter}}"/>
+
                 <ImageButton HorizontalOptions="Start"
                              WidthRequest="30"
                              HeightRequest="30"
                              BackgroundColor="Transparent"
                              Source="{Binding GoBackImageSource, Source={x:Reference customSearchBar}}"
-                             Command="{Binding GoBackButtonCommand, Source={x:Reference customSearchBar}}">
-                    
-                    <ImageButton.Triggers>
-                        
-                        <DataTrigger TargetType="ImageButton"
-                                     Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                     Value="True">
-                            <Setter Property="IsVisible"
-                                    Value="True"/>
-                        </DataTrigger>
-                        
-                        <DataTrigger TargetType="ImageButton"
-                                     Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                     Value="False">
-                            <Setter Property="IsVisible"
-                                    Value="False"/>
-                        </DataTrigger>
-                        
-                    </ImageButton.Triggers>
-                    
-                </ImageButton>
+                             Command="{Binding GoBackButtonCommand, Source={x:Reference customSearchBar}}"
+                             IsVisible="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HorizontalOptions="FillAndExpand"
@@ -104,28 +66,9 @@
                                  WidthRequest="24"
                                  Aspect="Fill"
                                  HorizontalOptions="End"
-                                 BackgroundColor="Transparent">
-                        
-                        <ImageButton.Triggers>
-                            
-                            <DataTrigger TargetType="ImageButton" 
-                                         Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                         Value="True">
-                                <Setter Property="IsVisible"
-                                        Value="True"/>
-                            </DataTrigger>
-                            
-                            <DataTrigger TargetType="ImageButton" 
-                                         Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                         Value="False">
-                                <Setter Property="IsVisible" 
-                                        Value="False"/>
-                            </DataTrigger>
-                            
-                        </ImageButton.Triggers>
-                        
-                    </ImageButton>
-                    
+                                 BackgroundColor="Transparent"
+                                 IsVisible="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"/>
+
                 </StackLayout>
 
                 <ImageButton Source="{Binding RightImageSource, Source={x:Reference customSearchBar}}"
@@ -133,28 +76,9 @@
                              HorizontalOptions="End"
                              WidthRequest="30"
                              HeightRequest="30"
-                             BackgroundColor="Transparent">
-                    
-                    <ImageButton.Triggers>
-                        
-                        <DataTrigger TargetType="ImageButton" 
-                                     Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                     Value="True">
-                            <Setter Property="IsVisible" 
-                                    Value="False"/>
-                        </DataTrigger>
-                        
-                        <DataTrigger TargetType="ImageButton" 
-                                     Binding="{Binding ShouldShowList, Source={x:Reference customSearchBar}}"
-                                     Value="False">
-                            <Setter Property="IsVisible" 
-                                    Value="True"/>
-                        </DataTrigger>
-                        
-                    </ImageButton.Triggers>
-                    
-                </ImageButton>
-                
+                             BackgroundColor="Transparent"
+                             IsVisible="{Binding ShouldShowList, Source={x:Reference customSearchBar}, Converter={StaticResource BoolConverter}}"/>
+
             </StackLayout>
             
             <BoxView BackgroundColor="{Binding LineColor, Source={x:Reference customSearchBar}}"

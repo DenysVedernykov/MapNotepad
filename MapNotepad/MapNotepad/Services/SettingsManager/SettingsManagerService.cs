@@ -36,10 +36,10 @@ namespace MapNotepad.Services.SettingsManager
             set => _settings.ColorOfTheClock = value;
         }
 
-        public bool NightTheme
+        public bool IsNightThemeEnabled
         {
-            get => _settings.NightTheme;
-            set => _settings.NightTheme = value;
+            get => _settings.IsNightThemeEnabled;
+            set => _settings.IsNightThemeEnabled = value;
         }
 
         #endregion

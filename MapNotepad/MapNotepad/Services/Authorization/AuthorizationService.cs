@@ -92,7 +92,7 @@ namespace MapNotepad.Services.Authorization
                 newUser.CreationDate = DateTime.Now;
 
                 Task<int> response = _repositoryService.InsertAsync(newUser);
-                if (response != null)
+                if (response is not null)
                 {
                     result = true;
                 }
@@ -107,7 +107,7 @@ namespace MapNotepad.Services.Authorization
             _profile = null;
 
             User user = SearchUserByEmail(email);
-            if (user != null)
+            if (user is not null)
             {
                 if (user.Password == password)
                 {
@@ -137,9 +137,9 @@ namespace MapNotepad.Services.Authorization
             {
                 Task<List<User>> response = _repositoryService.GetAllRowsAsync<User>();
 
-                if (response != null)
+                if (response is not null)
                 {
-                    if (response.Result != null)
+                    if (response.Result is not null)
                     {
                         result = response.Result.Where(row => row.Email == email).FirstOrDefault();
                     }

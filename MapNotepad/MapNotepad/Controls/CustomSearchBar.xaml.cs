@@ -15,39 +15,6 @@ namespace MapNotepad.Controls
 
         #region -- Public properties --
 
-        public static readonly BindableProperty LeftButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(LeftButtonCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(CustomSearchBar),
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public ICommand LeftButtonCommand
-        {
-            set => SetValue(LeftButtonCommandProperty, value);
-            get => (ICommand)GetValue(LeftButtonCommandProperty);
-        }
-
-        public static readonly BindableProperty RightButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(RightButtonCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(CustomSearchBar),
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public ICommand RightButtonCommand
-        {
-            set => SetValue(RightButtonCommandProperty, value);
-            get => (ICommand)GetValue(RightButtonCommandProperty);
-        }
-
-        private ICommand _goBackButtonCommand;
-        public ICommand GoBackButtonCommand => _goBackButtonCommand ??= SingleExecutionCommand.FromFunc(OnGoBackButtonCommandAsync);
-
-        private ICommand _clearButtonCommand;
-        public ICommand ClearButtonCommand => _clearButtonCommand ??= SingleExecutionCommand.FromFunc(OnClearButtonCommandAsync);
-
-        private ICommand _focusedCommand;
-        public ICommand FocusedCommand => _focusedCommand ??= SingleExecutionCommand.FromFunc(OnFocusedCommandAsync);
-
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
@@ -203,6 +170,39 @@ namespace MapNotepad.Controls
             set => SetValue(LineColorProperty, value);
             get => (Color)GetValue(LineColorProperty);
         }
+
+        public static readonly BindableProperty LeftButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(LeftButtonCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomSearchBar),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public ICommand LeftButtonCommand
+        {
+            set => SetValue(LeftButtonCommandProperty, value);
+            get => (ICommand)GetValue(LeftButtonCommandProperty);
+        }
+
+        public static readonly BindableProperty RightButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(RightButtonCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomSearchBar),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public ICommand RightButtonCommand
+        {
+            set => SetValue(RightButtonCommandProperty, value);
+            get => (ICommand)GetValue(RightButtonCommandProperty);
+        }
+
+        private ICommand _goBackButtonCommand;
+        public ICommand GoBackButtonCommand => _goBackButtonCommand ??= SingleExecutionCommand.FromFunc(OnGoBackButtonCommandAsync);
+
+        private ICommand _clearButtonCommand;
+        public ICommand ClearButtonCommand => _clearButtonCommand ??= SingleExecutionCommand.FromFunc(OnClearButtonCommandAsync);
+
+        private ICommand _focusedCommand;
+        public ICommand FocusedCommand => _focusedCommand ??= SingleExecutionCommand.FromFunc(OnFocusedCommandAsync);
 
         #endregion
 

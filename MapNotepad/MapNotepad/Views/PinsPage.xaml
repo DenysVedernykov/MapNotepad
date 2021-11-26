@@ -56,7 +56,7 @@
                                         <controls:ClickableContentView Command="{Binding SwitchFavoritesCommand}"
                                                                        CommandParameter="{Binding .}">
 
-                                            <Frame Style="{DynamicResource imageFrame}">
+                                            <Frame Style="{DynamicResource imageFrameStyle}">
 
                                                 <statecontainer:StateContainer State="{Binding Favorites}">
 
@@ -132,8 +132,9 @@
                                     
                                     <Frame Padding="0"
                                            HasShadow="False"
-                                           BorderColor="Transparent"
-                                           IsClippedToBounds="true">
+                                           BorderColor="{DynamicResource BackgroundColor}"
+                                           IsClippedToBounds="true"
+                                           BackgroundColor="{DynamicResource BackgroundColor}">
 
                                         <StackLayout Orientation="Horizontal"
                                                      Spacing="0">
@@ -183,7 +184,7 @@
             </CollectionView>
 
             <Frame Grid.Row="1"
-                   Style="{DynamicResource floatingButton}">
+                   Style="{DynamicResource floatingButtonStyle}">
 
                 <ImageButton Source="ic_plus.png"
                              BackgroundColor="Transparent"

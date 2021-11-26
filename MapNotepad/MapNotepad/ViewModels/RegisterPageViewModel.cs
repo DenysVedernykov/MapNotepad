@@ -1,4 +1,5 @@
-﻿using MapNotepad.Helpers;
+﻿using Acr.UserDialogs;
+using MapNotepad.Helpers;
 using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
 using MapNotepad.Views;
@@ -20,7 +21,7 @@ namespace MapNotepad.ViewModels
 
         private ResourceDictionary _resourceDictionary;
 
-        IAuthorizationService _authorizationService;
+        private IAuthorizationService _authorizationService;
 
         public RegisterPageViewModel(INavigationService navigationService, IAuthorizationService authorizationService)
             : base(navigationService)
@@ -30,7 +31,7 @@ namespace MapNotepad.ViewModels
             ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
             _resourceDictionary = mergedDictionaries.FirstOrDefault();
 
-            IsEnabledNextButton = false;
+            IsNextButtonEnabled = false;
 
             BorderColorName = (Color)_resourceDictionary["LightGray"];
             BorderColorEmail = (Color)_resourceDictionary["LightGray"];
@@ -80,17 +81,16 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _borderColorEmail, value);
         }
 
-        private bool _isEnabledNextButton;
-        public bool IsEnabledNextButton
+        private bool _isNextButtonEnabled;
+        public bool IsNextButtonEnabled
         {
-            get => _isEnabledNextButton;
-            set => SetProperty(ref _isEnabledNextButton, value);
+            get => _isNextButtonEnabled;
+            set => SetProperty(ref _isNextButtonEnabled, value);
         }
 
         private ICommand _goBackCommand;
         public ICommand GoBackCommand => _goBackCommand ??= SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
         
-
         private ICommand _goNextCommand;
         public ICommand GoNextCommand => _goNextCommand ??= SingleExecutionCommand.FromFunc(OnGoNextCommandAsync);
 
@@ -121,7 +121,7 @@ namespace MapNotepad.ViewModels
                         ErrorMessageName = string.Empty;
                     }
 
-                    IsEnabledNextButton = _correctName && _correctEmail;
+                    IsNextButtonEnabled = _correctName && _correctEmail;
 
                     break;
                 case nameof(Email):
@@ -157,7 +157,7 @@ namespace MapNotepad.ViewModels
                         }
                     }
 
-                    IsEnabledNextButton = _correctName && _correctEmail;
+                    IsNextButtonEnabled = _correctName && _correctEmail;
 
                     break;
             }
@@ -169,14 +169,25 @@ namespace MapNotepad.ViewModels
 
         private async Task OnGoNextCommandAsync()
         {
-            User user = new User();
-            user.Email = Email;
-            user.Name = Name;
+            if (IsNextButtonEnabled)
+            {
+                User user = new User();
+                user.Email = Email;
+                user.Name = Name;
 
-            NavigationParameters param = new NavigationParameters();
-            param.Add("User", user);
+                NavigationParameters param = new NavigationParameters();
+                param.Add("User", user);
 
-            await _navigationService.NavigateAsync(nameof(RegisterPasswordPage), param);
+                await _navigationService.NavigateAsync(nameof(RegisterPasswordPage), param);
+            }
+            else
+            {
+                await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                {
+                    Message = Resource.ResourceManager.GetString("EnterCorrectData", Resource.Culture),
+                    OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
+                });
+            }
         }
 
         private async Task OnGoBackCommandAsync()

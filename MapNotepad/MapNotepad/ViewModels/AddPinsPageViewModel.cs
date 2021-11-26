@@ -4,6 +4,7 @@ using MapNotepad.Models;
 using MapNotepad.Services.Authorization;
 using MapNotepad.Services.PermissionsService;
 using MapNotepad.Services.Pins;
+using MapNotepad.Services.SettingsManager;
 using Plugin.Geolocator;
 using Prism.Navigation;
 using Prism.Unity;
@@ -31,16 +32,20 @@ namespace MapNotepad.ViewModels
 
         private IPermissionsService _permissionsService;
 
+        private ISettingsManagerService _settingsManagerService;
+
         public AddPinsPageViewModel(
             INavigationService navigationService,
             IPinService pinService,
             IAuthorizationService authorizationService,
-            IPermissionsService permissionsService) 
+            IPermissionsService permissionsService,
+            ISettingsManagerService settingsManagerService) 
             : base(navigationService)
         {
             _pinService = pinService;
             _authorizationService = authorizationService;
             _permissionsService = permissionsService;
+            _settingsManagerService = settingsManagerService;
 
             _currentPin = new Pin();
             _currentPin.Label = "Point";
@@ -145,6 +150,15 @@ namespace MapNotepad.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
+            if (_settingsManagerService.IsNightThemeEnabled)
+            {
+                MessagingCenter.Send<AddPinsPageViewModel, string>(this, "ThemeChange", "MapNotepad.Themes.DarkMapTheme.txt");
+            }
+            else
+            {
+                MessagingCenter.Send<AddPinsPageViewModel, string>(this, "ThemeChange", "MapNotepad.Themes.LightMapTheme.txt");
+            }
+
             await CheckPermissions();
         }
 

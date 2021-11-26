@@ -1,4 +1,6 @@
 ﻿using MapNotepad.ViewModels;
+using System;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -27,6 +29,28 @@ namespace MapNotepad.Views
                 "MoveToLocation",
                 async (sender, position) => {
                     await map.MoveCamera(CameraUpdateFactory.NewPosition(position));
+                });
+
+            MessagingCenter.Subscribe<AddPinsPageViewModel, string>(
+                this,
+                "ThemeChange",
+                async (sender, path) => {
+                    try
+                    {
+                        var assembly = typeof(MapPage).Assembly;
+
+                        Stream stream = assembly.GetManifestResourceStream(path);
+                        string Json = "";
+                        using (var reader = new StreamReader(stream))
+                        {
+                            Json = reader.ReadToEnd();
+                        }
+
+                        map.MapStyle = MapStyle.FromJson(Json);
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 });
 
             InitializeComponent();

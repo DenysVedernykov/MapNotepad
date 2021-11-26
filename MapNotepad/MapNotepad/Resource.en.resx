@@ -180,6 +180,9 @@
   <data name="EmailTaken" xml:space="preserve">
     <value>This email is already taken</value>
   </data>
+  <data name="EnterCorrectData" xml:space="preserve">
+    <value>Enter the correct data</value>
+  </data>
   <data name="EnterEmail" xml:space="preserve">
     <value>Enter email</value>
   </data>

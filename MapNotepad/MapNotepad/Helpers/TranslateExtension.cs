@@ -17,7 +17,7 @@ namespace MapNotepad.Helpers
         {
             string result = string.Empty;
 
-            if (Text != null)
+            if (Text is not null)
             {
                 ResourceManager resmgr = new ResourceManager("MapNotepad.Resource", typeof(TranslateExtension).GetTypeInfo().Assembly);
 

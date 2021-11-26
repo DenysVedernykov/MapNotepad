@@ -150,12 +150,12 @@
 
                     <Button Text="{helpers:TranslateExtension Cancel}"
                             Command="{Binding CancelCommand}"
-                            Style="{DynamicResource BlueButton}"
+                            Style="{DynamicResource BlueButtonStyle}"
                             HorizontalOptions="FillAndExpand"/>
 
                     <Button Text="{helpers:TranslateExtension Ok}"
                             Command="{Binding OkCommand}"
-                            Style="{DynamicResource BlueButton}"
+                            Style="{DynamicResource BlueButtonStyle}"
                             HorizontalOptions="FillAndExpand"/>
 
                 </StackLayout>

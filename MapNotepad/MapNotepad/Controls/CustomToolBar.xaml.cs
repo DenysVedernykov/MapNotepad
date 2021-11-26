@@ -12,30 +12,6 @@ namespace MapNotepad.Controls
 
         #region -- Public properties --
 
-        public static readonly BindableProperty LeftButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(LeftButtonCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(CustomToolBar),
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public ICommand LeftButtonCommand
-        {
-            set => SetValue(LeftButtonCommandProperty, value);
-            get => (ICommand)GetValue(LeftButtonCommandProperty);
-        }
-
-        public static readonly BindableProperty RightButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(RightButtonCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(CustomToolBar),
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public ICommand RightButtonCommand
-        {
-            set => SetValue(RightButtonCommandProperty, value);
-            get => (ICommand)GetValue(RightButtonCommandProperty);
-        }
-
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
             propertyName: nameof(Title),
             returnType: typeof(string),
@@ -125,6 +101,30 @@ namespace MapNotepad.Controls
         {
             set => SetValue(LineColorProperty, value);
             get => (Color)GetValue(LineColorProperty);
+        }
+
+        public static readonly BindableProperty LeftButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(LeftButtonCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomToolBar),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public ICommand LeftButtonCommand
+        {
+            set => SetValue(LeftButtonCommandProperty, value);
+            get => (ICommand)GetValue(LeftButtonCommandProperty);
+        }
+
+        public static readonly BindableProperty RightButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(RightButtonCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomToolBar),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public ICommand RightButtonCommand
+        {
+            set => SetValue(RightButtonCommandProperty, value);
+            get => (ICommand)GetValue(RightButtonCommandProperty);
         }
 
         #endregion

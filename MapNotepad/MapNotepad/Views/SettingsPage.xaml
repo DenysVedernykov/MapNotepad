@@ -73,7 +73,7 @@
 
                 <Button Text="{helpers:TranslateExtension Apply}"
                         Margin="0, 15, 0, 0"
-                        Style="{DynamicResource BlueButton}"
+                        Style="{DynamicResource BlueButtonStyle}"
                         Command="{Binding RefreshCommand}"/>
                 
             </StackLayout>

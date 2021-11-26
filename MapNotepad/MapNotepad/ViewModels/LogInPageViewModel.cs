@@ -38,7 +38,7 @@ namespace MapNotepad.ViewModels
             ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
             _resourceDictionary = mergedDictionaries.FirstOrDefault();
 
-            IsEnabledLogInButton = false;
+            IsLogInButtonEnabled = false;
 
             BorderColorEmail = (Color)_resourceDictionary["LightGray"];
             BorderColorPassword = (Color)_resourceDictionary["LightGray"];
@@ -90,11 +90,11 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _borderColorPassword, value);
         }
 
-        private bool _isEnabledLogInButton;
-        public bool IsEnabledLogInButton
+        private bool _isLogInButtonEnabled;
+        public bool IsLogInButtonEnabled
         {
-            get => _isEnabledLogInButton;
-            set => SetProperty(ref _isEnabledLogInButton, value);
+            get => _isLogInButtonEnabled;
+            set => SetProperty(ref _isLogInButtonEnabled, value);
         }
 
         private ICommand _goBackCommand;
@@ -146,7 +146,7 @@ namespace MapNotepad.ViewModels
                         }
                     }
 
-                    IsEnabledLogInButton = _correctEmail && _correctPassword;
+                    IsLogInButtonEnabled = _correctEmail && _correctPassword;
 
                     break;
                 case nameof(Password):
@@ -174,7 +174,7 @@ namespace MapNotepad.ViewModels
                         }
                     }
 
-                    IsEnabledLogInButton = _correctEmail && _correctPassword;
+                    IsLogInButtonEnabled = _correctEmail && _correctPassword;
 
                     break;
             }
@@ -191,24 +191,35 @@ namespace MapNotepad.ViewModels
 
         private async Task OnLogInCommandAsync()
         {
-            if (_authorizationService.Login(Email, Password))
+            if (IsLogInButtonEnabled)
             {
-                _settingsManagerService.Session = "local";
-                _settingsManagerService.Email = Email;
-                _settingsManagerService.Password = Password;
+                if (_authorizationService.Login(Email, Password))
+                {
+                    _settingsManagerService.Session = "local";
+                    _settingsManagerService.Email = Email;
+                    _settingsManagerService.Password = Password;
 
-                await _navigationService.NavigateAsync("/" + nameof(MainPage));
+                    await _navigationService.NavigateAsync("/" + nameof(MainPage));
+                }
+                else
+                {
+                    _settingsManagerService.Email = string.Empty;
+
+                    Email = string.Empty;
+                    Password = string.Empty;
+
+                    await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                    {
+                        Message = Resource.ResourceManager.GetString("InvalidLoginOrPass", Resource.Culture),
+                        OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
+                    });
+                }
             }
             else
             {
-                _settingsManagerService.Email = string.Empty;
-
-                Email = string.Empty;
-                Password = string.Empty;
-
                 await UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
-                    Message = Resource.ResourceManager.GetString("InvalidLoginOrPass", Resource.Culture),
+                    Message = Resource.ResourceManager.GetString("EnterCorrectData", Resource.Culture),
                     OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
                 });
             }

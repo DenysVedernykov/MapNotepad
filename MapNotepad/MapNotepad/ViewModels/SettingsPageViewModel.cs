@@ -29,7 +29,7 @@ namespace MapNotepad.ViewModels
             _settingsManagerService = settingsManagerService;
             _permissionsService = permissionsService;
 
-            IsToggled = _settingsManagerService.NightTheme;
+            IsToggled = _settingsManagerService.IsNightThemeEnabled;
         }
 
         #region -- Public properties --
@@ -61,7 +61,7 @@ namespace MapNotepad.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(IsToggled):
-                    _settingsManagerService.NightTheme = IsToggled;
+                    _settingsManagerService.IsNightThemeEnabled = IsToggled;
                     break;
             }
         }
@@ -73,17 +73,21 @@ namespace MapNotepad.ViewModels
         private Task OnRefreshCommandAsync()
         {
             ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
-            if (mergedDictionaries != null)
+            if (mergedDictionaries is not null)
             {
                 mergedDictionaries.Clear();
 
                 if (IsToggled)
                 {
                     mergedDictionaries.Add(new DarkTheme());
+
+                    MessagingCenter.Send<SettingsPageViewModel, string>(this, "ThemeChange", "MapNotepad.Themes.DarkMapTheme.txt");
                 }
                 else
                 {
                     mergedDictionaries.Add(new LightTheme());
+
+                    MessagingCenter.Send<SettingsPageViewModel, string>(this, "ThemeChange", "MapNotepad.Themes.LightMapTheme.txt");
                 }
             }
 

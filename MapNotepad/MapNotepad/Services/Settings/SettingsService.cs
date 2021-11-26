@@ -30,10 +30,10 @@ namespace MapNotepad.Services.Settings
             set => Preferences.Set(nameof(ColorOfTheClock), value);
         }
 
-        public bool NightTheme
+        public bool IsNightThemeEnabled
         {
-            get => Preferences.Get(nameof(NightTheme), false);
-            set => Preferences.Set(nameof(NightTheme), value);
+            get => Preferences.Get(nameof(IsNightThemeEnabled), false);
+            set => Preferences.Set(nameof(IsNightThemeEnabled), value);
         }
 
         #endregion

@@ -61,11 +61,11 @@ namespace MapNotepad
             Resource.Culture = new System.Globalization.CultureInfo("en-US");
 
             ICollection<ResourceDictionary> mergedDictionaries = Resources.MergedDictionaries;
-            if (mergedDictionaries != null)
+            if (mergedDictionaries is not null)
             {
                 mergedDictionaries.Clear();
 
-                if (Container.Resolve<SettingsManagerService>().NightTheme)
+                if (Container.Resolve<SettingsManagerService>().IsNightThemeEnabled)
                 {
                     mergedDictionaries.Add(new DarkTheme());
                 }

@@ -45,13 +45,12 @@
                 
                 <Button Text="{helpers:TranslateExtension LogIn}"
                         Command="{Binding LogInCommand}"
-                        IsEnabled="{Binding IsEnabledLogInButton}"
-                        Style="{DynamicResource BlueButton}"
+                        Style="{DynamicResource BlueButtonStyle}"
                         Margin="0, 33, 0, 0"/>
 
                 <controls:CustomSeparator />
 
-                <ImageButton Style="{DynamicResource GoogleButton}"
+                <ImageButton Style="{DynamicResource GoogleButtonStyle}"
                              Margin="0, 12, 0, 0"/>
 
             </StackLayout>

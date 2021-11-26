@@ -170,6 +170,15 @@ namespace MapNotepad.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
+            if (_settingsManagerService.IsNightThemeEnabled)
+            {
+                MessagingCenter.Send<MapPageViewModel, string>(this, "ThemeChange", "MapNotepad.Themes.DarkMapTheme.txt");
+            }
+            else
+            {
+                MessagingCenter.Send<MapPageViewModel, string>(this, "ThemeChange", "MapNotepad.Themes.LightMapTheme.txt");
+            }
+
             await CheckPermissions();
 
             MessagingCenter.Subscribe<ConfirmAddPinQrViewModel, UserPin>(
@@ -345,7 +354,7 @@ namespace MapNotepad.ViewModels
 
             var userPin = _pinService.GetByIdAsync((int)pin.Tag);
 
-            if (userPin != null)
+            if (userPin is not null)
             {
                 if (userPin.Result.IsSuccess)
                 {

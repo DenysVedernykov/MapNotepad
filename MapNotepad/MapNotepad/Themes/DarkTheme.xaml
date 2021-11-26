@@ -30,7 +30,7 @@
     <Color x:Key="LabelColor">#FEFEFD</Color>
 
     <!-- Base Style-->
-    <Style x:Key="BaseButton" 
+    <Style x:Key="BaseButtonStyle" 
            TargetType="Button">
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
@@ -45,7 +45,7 @@
     </Style>
     -->
 
-    <Style x:Key="GoogleButton" TargetType="ImageButton">
+    <Style x:Key="GoogleButtonStyle" TargetType="ImageButton">
         <Setter Property="Source" Value="ic_google.png" />
         <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="Padding" Value="12" />
@@ -53,17 +53,17 @@
         <Setter Property="BorderWidth" Value="1" />
     </Style>
 
-    <Style x:Key="BlueButton" 
+    <Style x:Key="BlueButtonStyle" 
            TargetType="Button"
-           BasedOn="{StaticResource Key=BaseButton}">
+           BasedOn="{StaticResource Key=BaseButtonStyle}">
         <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="TextColor" Value="{DynamicResource White}" />
     </Style>
 
-    <Style x:Key="WhiteButton" 
+    <Style x:Key="WhiteButtonStyle" 
            TargetType="Button"
-           BasedOn="{StaticResource Key=BaseButton}">
+           BasedOn="{StaticResource Key=BaseButtonStyle}">
         <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="TextColor" Value="{DynamicResource Primary}" />
@@ -88,14 +88,14 @@
         <Setter Property="Margin" Value="0, 16, 0, 10" />
     </Style>
 
-    <Style x:Key="Logo" 
+    <Style x:Key="LogoStyle" 
            TargetType="Image">
         <Setter Property="Source" Value="pic_enter_page.png" />
         <Setter Property="HeightRequest" Value="185" />
         <Setter Property="WidthRequest" Value="190" />
     </Style>
 
-    <Style x:Key="TextBrend" 
+    <Style x:Key="TextBrendStyle" 
            TargetType="Label">
         <Setter Property="Text" Value="{helpers:TranslateExtension MapNotepad}" />
         <Setter Property="FontFamily" Value="Montserrat-Bold" />
@@ -129,7 +129,7 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
     </Style>
 
-    <Style x:Key="floatingButton" 
+    <Style x:Key="floatingButtonStyle" 
            TargetType="Frame">
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="CornerRadius" Value="27" />
@@ -141,7 +141,7 @@
         <Setter Property="HorizontalOptions" Value="End" />
     </Style>
 
-    <Style x:Key="imageFrame" 
+    <Style x:Key="imageFrameStyle" 
            TargetType="Frame">
         <Setter Property="HeightRequest" Value="30" />
         <Setter Property="WidthRequest" Value="30" />

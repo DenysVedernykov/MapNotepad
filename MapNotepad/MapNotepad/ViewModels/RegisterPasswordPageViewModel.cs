@@ -40,7 +40,7 @@ namespace MapNotepad.ViewModels
             ICollection<ResourceDictionary> mergedDictionaries = PrismApplication.Current.Resources.MergedDictionaries;
             _resourceDictionary = mergedDictionaries.FirstOrDefault();
 
-            IsEnabledCreateAccountButton = false;
+            IsCreateAccountButtonEnabled = false;
 
             BorderColorPassword = (Color)_resourceDictionary["LightGray"];
             BorderColorRepeatPassword = (Color)_resourceDictionary["LightGray"];
@@ -90,11 +90,11 @@ namespace MapNotepad.ViewModels
             set => SetProperty(ref _borderColorRepeatPassword, value);
         }
 
-        private bool _isEnabledCreateAccountButton;
-        public bool IsEnabledCreateAccountButton
+        private bool _isCreateAccountButtonEnabled;
+        public bool IsCreateAccountButtonEnabled
         {
-            get => _isEnabledCreateAccountButton;
-            set => SetProperty(ref _isEnabledCreateAccountButton, value);
+            get => _isCreateAccountButtonEnabled;
+            set => SetProperty(ref _isCreateAccountButtonEnabled, value);
         }
 
         private ICommand _goBackCommand;
@@ -111,7 +111,7 @@ namespace MapNotepad.ViewModels
         {
             if (parameters.Count > 0)
             {
-                if (parameters["User"] != null)
+                if (parameters["User"] is not null)
                 {
                     user = parameters["User"] as User;
                 }
@@ -163,7 +163,7 @@ namespace MapNotepad.ViewModels
                         }
                     }
 
-                    IsEnabledCreateAccountButton = 
+                    IsCreateAccountButtonEnabled = 
                         _correctPassword 
                         && _correctRepeatPassword 
                         && (Password == RepeatPassword);
@@ -204,7 +204,7 @@ namespace MapNotepad.ViewModels
                         }
                     }
 
-                    IsEnabledCreateAccountButton =
+                    IsCreateAccountButtonEnabled =
                         _correctPassword
                         && _correctRepeatPassword
                         && (Password == RepeatPassword);
@@ -217,26 +217,35 @@ namespace MapNotepad.ViewModels
 
         #region -- Private methods --
 
-        private Task OnCreateAcccountCommandAsync()
+        private async Task OnCreateAcccountCommandAsync()
         {
-            user.Password = Password;
-
-            if (_authorizationService.Registration(user))
+            if (IsCreateAccountButtonEnabled)
             {
-                _settingsManagerService.Email = user.Email;
+                user.Password = Password;
 
-                _navigationService.NavigateAsync(nameof(StartPage) + "/" + nameof(LogInPage));
+                if (_authorizationService.Registration(user))
+                {
+                    _settingsManagerService.Email = user.Email;
+
+                    await _navigationService.NavigateAsync($"{nameof(StartPage)}/{nameof(LogInPage)}");
+                }
+                else
+                {
+                    await UserDialogs.Instance.AlertAsync(new AlertConfig()
+                    {
+                        Message = Resource.ResourceManager.GetString("FailedRegister", Resource.Culture),
+                        OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
+                    });
+                }
             }
             else
             {
-                UserDialogs.Instance.Alert(new AlertConfig()
+                await UserDialogs.Instance.AlertAsync(new AlertConfig()
                 {
-                    Message = Resource.ResourceManager.GetString("FailedRegister", Resource.Culture),
+                    Message = Resource.ResourceManager.GetString("EnterCorrectData", Resource.Culture),
                     OkText = Resource.ResourceManager.GetString("Ok", Resource.Culture)
                 });
             }
-
-            return Task.CompletedTask;
         }
 
         private async Task OnGoBackCommandAsync()

@@ -12,8 +12,8 @@
             <StackLayout VerticalOptions="EndAndExpand"
                          Padding="16, 0, 16, 40" >
                 
-                <Image Style="{DynamicResource Logo}"/>
-                <Label Style="{DynamicResource TextBrend}"/>
+                <Image Style="{DynamicResource LogoStyle}"/>
+                <Label Style="{DynamicResource TextBrendStyle}"/>
                 
             </StackLayout>
             
@@ -22,11 +22,11 @@
                 
                 <Button Text="{helpers:TranslateExtension LogIn}"
                         Command="{Binding ShowLogInViewCommand}"
-                        Style="{DynamicResource BlueButton}"/>
+                        Style="{DynamicResource BlueButtonStyle}"/>
                 
                 <Button Text="{helpers:TranslateExtension CreateAccount}"
                         Command="{Binding ShowRegisterViewCommand}"
-                        Style="{DynamicResource WhiteButton}"
+                        Style="{DynamicResource WhiteButtonStyle}"
                         Margin="0, 14, 0, 0"/>
                 
             </StackLayout>

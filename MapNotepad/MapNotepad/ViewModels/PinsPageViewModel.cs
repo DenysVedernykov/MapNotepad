@@ -253,7 +253,7 @@ namespace MapNotepad.ViewModels
 
                 var result = _pinService.DeletePinAsync(userPin);
 
-                if (result != null)
+                if (result is not null)
                 {
                     if (result.Result.IsSuccess)
                     {

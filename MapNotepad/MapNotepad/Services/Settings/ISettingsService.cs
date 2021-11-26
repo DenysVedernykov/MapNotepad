@@ -10,6 +10,6 @@
 
         string ColorOfTheClock { get; set; }
 
-        bool NightTheme { get; set; }
+        bool IsNightThemeEnabled { get; set; }
     }
 }

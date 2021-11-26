@@ -32,13 +32,30 @@ namespace MapNotepad.Views
                     await map.MoveCamera(CameraUpdateFactory.NewPosition(position));
                 });
 
-            InitializeComponent();
+            MessagingCenter.Subscribe<SettingsPageViewModel, string>(
+                this,
+                "ThemeChange",
+                async (sender, path) => {
+                    OnThemeChange(path);
+                });
 
+            MessagingCenter.Subscribe<MapPageViewModel, string>(
+                this,
+                "ThemeChange",
+                async (sender, path) => {
+                    OnThemeChange(path);
+                });
+
+            InitializeComponent();
+        }
+
+        private void OnThemeChange(string path)
+        {
             try
             {
                 var assembly = typeof(MapPage).Assembly;
 
-                Stream stream = assembly.GetManifestResourceStream("MapNotepad.Themes.DarkMapTheme.txt");
+                Stream stream = assembly.GetManifestResourceStream(path);
                 string Json = "";
                 using (var reader = new StreamReader(stream))
                 {
@@ -50,7 +67,6 @@ namespace MapNotepad.Views
             catch (Exception e)
             {
             }
-
         }
     }
 }
